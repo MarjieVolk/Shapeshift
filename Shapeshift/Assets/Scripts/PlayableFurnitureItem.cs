@@ -2,8 +2,9 @@
 using System;
 
 [RequireComponent (typeof (FurnitureItem))]
-class PlayableFurnitureItem : MonoBehaviour {
+public class PlayableFurnitureItem : MonoBehaviour {
 
+    public string furnitureName;
     public int quality = 0;
 
     // Use this for initialization

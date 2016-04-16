@@ -8,7 +8,6 @@ public class FurnitureItem : MonoBehaviour {
     public int width;
     public int height;
 
-
     public RoomType[] roomTypes;
 
     // Use this for initialization
