@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System;
 
+[RequireComponent (typeof (FurnitureItem))]
 class PlayableFurnitureItem : MonoBehaviour {
 
     public int quality = 0;
