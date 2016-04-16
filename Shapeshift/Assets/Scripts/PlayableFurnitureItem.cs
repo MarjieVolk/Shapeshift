@@ -1,19 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using UnityEngine;
+using System;
 
-class PlayableFurnitureItem : FurnitureItem {
+class PlayableFurnitureItem : MonoBehaviour {
 
     public int quality = 0;
 
     // Use this for initialization
-    new void Start() {
-        base.Start();
+    void Start() {
+        
     }
 
     // Update is called once per frame
-    new void Update() {
-        base.Update();
+    void Update() {
+        
     }
 }
