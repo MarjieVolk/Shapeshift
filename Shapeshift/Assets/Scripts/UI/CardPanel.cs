@@ -1,19 +1,21 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 
 public class CardPanel : MonoBehaviour {
 
     public GameObject cardPrefab;
-    public PlayableFurnitureItem[] furnitureTypes;
+    public PlayableFurnitureItem[] startingFurnitureTypes;
+
+    private Dictionary<PlayableFurnitureItem, GameObject> buttons;
 
 	// Use this for initialization
 	void Start () {
-	    foreach (PlayableFurnitureItem type in furnitureTypes) {
-            GameObject button = Instantiate(cardPrefab);
-            button.transform.FindChild("Image").GetComponent<Image>().sprite = type.gameObject.GetComponent<FurnitureItem>().image;
-            button.transform.FindChild("Name").GetComponent<Text>().text = type.furnitureName;
-            button.transform.SetParent(this.transform);
+        buttons = new Dictionary<PlayableFurnitureItem, GameObject>();
+
+	    foreach (PlayableFurnitureItem type in startingFurnitureTypes) {
+            add(type);
         }
 	}
 	
@@ -21,4 +23,32 @@ public class CardPanel : MonoBehaviour {
 	void Update () {
 	
 	}
+
+    public void remove(PlayableFurnitureItem item) {
+        if (!buttons.ContainsKey(item)) {
+            return;
+        }
+
+        GameObject toRemove = buttons[item];
+        buttons.Remove(item);
+        toRemove.transform.SetParent(null);
+        Destroy(toRemove);
+    }
+
+    public void add(PlayableFurnitureItem item) {
+        if (buttons.ContainsKey(item)) {
+            return;
+        }
+
+        GameObject button = Instantiate(cardPrefab);
+        button.transform.FindChild("Image").GetComponent<Image>().sprite = item.gameObject.GetComponent<FurnitureItem>().image;
+        button.transform.FindChild("Name").GetComponent<Text>().text = item.furnitureName;
+        button.transform.SetParent(this.transform);
+
+        button.GetComponent<Button>().onClick.AddListener(() => {
+            Debug.Log("Clicked " + item.furnitureName);
+        });
+
+        buttons.Add(item, button);
+    }
 }
