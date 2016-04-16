@@ -1,8 +1,10 @@
 ﻿using UnityEngine;
 using System;
 
-class PlayableFurnitureItem : MonoBehaviour {
+[RequireComponent (typeof (FurnitureItem))]
+public class PlayableFurnitureItem : MonoBehaviour {
 
+    public string furnitureName;
     public int quality = 0;
 
     // Use this for initialization
