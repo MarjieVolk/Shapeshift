@@ -3,8 +3,8 @@ using System.Collections;
 
 public class Room : MonoBehaviour {
 
-    FurnitureItem[,] contents = new FurnitureItem[7, 7];
-    Sprite floorImage;
+    public FurnitureItem[,] contents = new FurnitureItem[7, 7];
+    public Sprite floorImage;
 
 	// Use this for initialization
 	void Start () {

@@ -3,11 +3,11 @@ using System.Collections;
 
 public class FurnitureItem : MonoBehaviour {
 
-    Sprite image;
-    int width;
-    int height;
+    public Sprite image;
+    public int width;
+    public int height;
 
-    RoomType[] roomTypes;
+    public RoomType[] roomTypes;
 
 	// Use this for initialization
 	protected void Start () {

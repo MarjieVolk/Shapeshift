@@ -5,7 +5,7 @@ using System.Text;
 
 class PlayableFurnitureItem : FurnitureItem {
 
-    int quality = 0;
+    public int quality = 0;
 
     // Use this for initialization
     new void Start() {
