@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[RequireComponent (typeof (TileItem))]
 public class Room : MonoBehaviour {
-    
+
     public Sprite floorImage;
     public Sprite backWallImage;
     public Sprite backDoorImage;
@@ -16,11 +17,11 @@ public class Room : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+
+    }
+
+    // Update is called once per frame
+    void Update () {
+
+    }
 }
