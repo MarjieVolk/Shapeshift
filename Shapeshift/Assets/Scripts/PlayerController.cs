@@ -6,6 +6,8 @@ using System.Collections.Generic;
 public class PlayerController : MonoBehaviour {
     public float Speed;
 
+    private bool movementEnabled = true;
+
     private Dictionary<KeyCode, Vector2> _keyConfiguration = new Dictionary<KeyCode, Vector2>();
 
 	// Use this for initialization
@@ -20,6 +22,11 @@ public class PlayerController : MonoBehaviour {
         _keyConfiguration[KeyCode.LeftArrow] = Vector2.left;
         _keyConfiguration[KeyCode.DownArrow] = Vector2.down;
         _keyConfiguration[KeyCode.RightArrow] = Vector2.right;
+
+        GetComponent<PlayerTransformer>().PlayerTransformed += (target) =>
+        {
+            movementEnabled = (target == null);
+        };
 	}
 	
 	// Update is called once per frame
@@ -35,6 +42,9 @@ public class PlayerController : MonoBehaviour {
 
         translation.Normalize();
         translation *= Speed;
-		GetComponent<TileItem>().MovePosition(transform.position + new Vector3(translation.x, translation.y));
+        if (movementEnabled)
+        {
+            gameObject.GetComponent<TileItem>().MovePosition(transform.position + new Vector3(translation.x, translation.y));
+        }
 	}
 }

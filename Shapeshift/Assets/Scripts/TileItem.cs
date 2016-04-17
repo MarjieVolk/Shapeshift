@@ -8,10 +8,10 @@ public class TileItem : MonoBehaviour
     public static float TILE_SIZE = 0.32f;
 	private static Dictionary<long, List<GameObject>> _tileMap;
 
-	private int tileX { get; set; }
-	private int tileY { get; set; }
-	public int tileW { get; set; } // TODO(aklen): Auto-set these based off of type/furniture type, etc.
-	public int tileH { get; set; }
+	public int tileX { get; private set; }
+	public int tileY { get; private set; }
+	public int tileW = 1;
+	public int tileH = 1;
 
     public void Start () {
         SnapToGrid ();
