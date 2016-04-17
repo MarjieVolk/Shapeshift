@@ -12,7 +12,7 @@ public class PlayerTransformer : MonoBehaviour {
 
     public void TransformPlayer(GameObject target)
     {
-        if(currentTransformation != null)
+        if (currentTransformation != null)
         {
             RevertPlayer();
         }
@@ -83,7 +83,6 @@ public class PlayerTransformer : MonoBehaviour {
         // Try them out.
         foreach (Tile tryAt in tryPositions) {
             if (!TileItem.DoesPlacementCollideWithThings(tryAt.X, tryAt.Y, width, height)) {
-                Debug.Log("Transforming at " + tryAt);
                 return tryAt;
             }
         }
