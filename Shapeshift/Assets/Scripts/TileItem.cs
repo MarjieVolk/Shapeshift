@@ -77,6 +77,12 @@ public class TileItem : MonoBehaviour
 		transform.position = newPos;
 		if (tilePosMoved) {
 			AddToTileMap ();
+
+			// TODO(aklen): This may be a bad idea.
+			SpriteRenderer maybeRenderer = GetComponent<SpriteRenderer> ();
+			if (maybeRenderer != null) {
+				maybeRenderer.sortingOrder = 10000 - Mathf.RoundToInt(transform.position.y / 3f);
+			}
 		}
 	}
 

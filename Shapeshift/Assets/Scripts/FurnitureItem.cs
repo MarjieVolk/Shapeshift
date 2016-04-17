@@ -13,6 +13,5 @@ public class FurnitureItem : MonoBehaviour {
 
     // Update is called once per frame
     protected void Update () {
-
     }
 }
