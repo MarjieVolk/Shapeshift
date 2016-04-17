@@ -6,6 +6,8 @@ using System.Collections.Generic;
 public class PlayerController : MonoBehaviour {
     public float Speed;
 
+    private Vector3 startPosition;
+
     private bool movementEnabled = true;
 
     private Dictionary<KeyCode, Vector2> _keyConfiguration = new Dictionary<KeyCode, Vector2>();
@@ -13,6 +15,8 @@ public class PlayerController : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
     {
+        startPosition = transform.position;
+
         _keyConfiguration[KeyCode.W] = Vector2.up;
         _keyConfiguration[KeyCode.A] = Vector2.left;
         _keyConfiguration[KeyCode.S] = Vector2.down;
@@ -49,6 +53,17 @@ public class PlayerController : MonoBehaviour {
 
         if (movementEnabled) {
             gameObject.GetComponent<TileItem>().SetGlobalPosition(transform.position + new Vector3(translation.x, translation.y));
+        }
+    }
+
+    public void catchPlayer() {
+        GameObject currentTransformation = GetComponent<PlayerTransformer>().getTransformation();
+        if (currentTransformation == null) {
+            // Transport player to beginning
+            gameObject.GetComponent<TileItem>().SetGlobalPosition(startPosition);
+        } else {
+            // Lose access to item, gain catching cooldown
+            FindObjectOfType<CardPanel>().remove(currentTransformation.GetComponent<PlayableFurnitureItem>());
         }
     }
 }
