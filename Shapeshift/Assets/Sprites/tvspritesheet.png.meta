@@ -1,14 +1,11 @@
 fileFormatVersion: 2
-<<<<<<< HEAD
-guid: e6b1f17de0bb94eef9f9dec5fbfe0849
-timeCreated: 1460865015
-=======
-guid: b2c60ccb03d3446a6b1e1a8338d4c2ce
-timeCreated: 1460864185
->>>>>>> 8ac9883c1f72dccc6f080b4531eab18dfac0f05b
+guid: 942d3b2c65e5fd7498fff6bb54fccc35
+timeCreated: 1460868137
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: tvspritesheet_0
+    21300002: tvspritesheet_1
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -35,11 +32,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     filterMode: -1
-<<<<<<< HEAD
-    aniso: -1
-=======
     aniso: 16
->>>>>>> 8ac9883c1f72dccc6f080b4531eab18dfac0f05b
     mipBias: -1
     wrapMode: 1
   nPOTScale: 0
@@ -47,7 +40,7 @@ TextureImporter:
   rGBM: 0
   compressionQuality: 50
   allowsAlphaSplitting: 0
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -55,14 +48,44 @@ TextureImporter:
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 100
   alphaIsTransparency: 1
-<<<<<<< HEAD
-=======
-  spriteTessellationDetail: -1
->>>>>>> 8ac9883c1f72dccc6f080b4531eab18dfac0f05b
   textureType: 8
   buildTargetSettings: []
   spriteSheet:
-    sprites: []
+    sprites:
+    - name: tvspritesheet_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 64
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -26, y: 16}
+        - {x: -26, y: -14}
+        - {x: -24, y: -16}
+        - {x: 23, y: -16}
+        - {x: 26, y: -15}
+        - {x: 26, y: 16}
+    - name: tvspritesheet_1
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 64
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -26, y: 16}
+        - {x: -26, y: -14}
+        - {x: -24, y: -16}
+        - {x: 23, y: -16}
+        - {x: 26, y: -15}
+        - {x: 26, y: 16}
     outline: []
   spritePackingTag: 
   userData: 

@@ -26,10 +26,14 @@ public class TileItem : MonoBehaviour
 	}
 
     public void Awake () {
-		tileW = startingTileWidth;
-		tileH = startingTileHeight;
+		_tileW = startingTileWidth;
+		_tileH = startingTileHeight;
         SnapToGrid ();
 		AddToTileMap ();
+    }
+
+    void OnDestroy() {
+        RemoveFromTileMap();
     }
 
     public void SnapToGrid () {
@@ -60,7 +64,7 @@ public class TileItem : MonoBehaviour
 	 * Set the tile position and underlying transform; update the tile map.
 	 */
 	public void setTilePosition(int newTileX, int newTileY) {
-		_SetPosition (newTileX, newTileX, new Vector3(newTileX * TILE_SIZE, newTileY * TILE_SIZE));
+        _SetPosition (newTileX, newTileX, new Vector3(newTileX * TILE_SIZE, newTileY * TILE_SIZE, transform.position.z));
 	}
 
 	private void _SetPosition(int newTileX, int newTileY, Vector3 newPos) {
