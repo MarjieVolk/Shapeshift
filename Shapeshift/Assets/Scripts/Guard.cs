@@ -121,9 +121,9 @@ public class Guard : MonoBehaviour {
 
 		// If the player is blocking the way, recalculate a route that goes around the player.
 		if (TileItem.GetObjectsAtPosition<PlayerController> (goalTile.X, goalTile.Y).Count > 0) {
-			//moveInterruptedByPlayer = true;
-			//InitializeLook ();
-			//return;
+			moveInterruptedByPlayer = true;
+			InitializeLook ();
+			return;
 		}
 
 		if (ManhattanDistance (transform.position, goalPos) > 1.1 * ManhattanDistance (oldPos, goalPos)) {
