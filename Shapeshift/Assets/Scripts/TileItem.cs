@@ -28,6 +28,7 @@ public class TileItem : MonoBehaviour
     public void Awake () {
 		_tileW = startingTileWidth;
 		_tileH = startingTileHeight;
+		transform.position = new Vector3 (transform.position.x, transform.position.y, transform.position.y);
         SnapToGrid ();
 		AddToTileMap ();
     }
@@ -55,6 +56,7 @@ public class TileItem : MonoBehaviour
 
 	/**
 	 * Call anytime you want to change position in order to update tile positions.
+	 * Overwrites z.
 	 */
 	public void SetGlobalPosition(Vector3 newPos) {
 		_SetPosition (GlobalToTilePosition (newPos.x), GlobalToTilePosition (newPos.y), newPos);
@@ -64,7 +66,7 @@ public class TileItem : MonoBehaviour
 	 * Set the tile position and underlying transform; update the tile map.
 	 */
 	public void setTilePosition(int newTileX, int newTileY) {
-        _SetPosition (newTileX, newTileX, new Vector3(newTileX * TILE_SIZE, newTileY * TILE_SIZE, transform.position.z));
+        _SetPosition (newTileX, newTileX, new Vector3(newTileX * TILE_SIZE, newTileY * TILE_SIZE));
 	}
 
 	private void _SetPosition(int newTileX, int newTileY, Vector3 newPos) {
@@ -74,15 +76,9 @@ public class TileItem : MonoBehaviour
 		}
 		tileX = newTileX;
 		tileY = newTileY;
-		transform.position = newPos;
+		transform.position = new Vector3(newPos.x, newPos.y, newPos.y);
 		if (tilePosMoved) {
 			AddToTileMap ();
-
-			// TODO(aklen): This may be a bad idea.
-			SpriteRenderer maybeRenderer = GetComponent<SpriteRenderer> ();
-			if (maybeRenderer != null) {
-				maybeRenderer.sortingOrder = 10000 - Mathf.RoundToInt(transform.position.y / 3f);
-			}
 		}
 	}
 

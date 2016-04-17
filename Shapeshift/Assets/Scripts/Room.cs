@@ -25,7 +25,6 @@ public class Room : MonoBehaviour {
                     ROOM_TILE_Z_INDEX);
 				SpriteRenderer sprite = floorTile.AddComponent<SpriteRenderer> ();
 				sprite.sprite = tileSet.floor;
-				sprite.sortingOrder = -1000;
             }
         }
     }

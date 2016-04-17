@@ -72,12 +72,12 @@ public class WallMaker : MonoBehaviour {
         g.AddComponent<BoxCollider2D>();
 
         g.transform.Rotate (0, 0, angle);
-        g.transform.Translate (0, 0, Room.ROOM_TILE_Z_INDEX);
 
         g.AddComponent<Wall>();
 
 		TileItem ti = g.AddComponent<TileItem> ();
 		ti.setTilePosition (x, y);
+		g.transform.Translate (0, 0, Room.ROOM_TILE_Z_INDEX); // TODO(aklen): Hack.
 	}
 	
 	// Update is called once per frame

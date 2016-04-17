@@ -31,8 +31,6 @@ public class PlayerController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		GetComponent<SpriteRenderer>().sortingOrder = Mathf.RoundToInt(transform.position.y) * -1;
-
         Vector2 translation = Vector2.zero;
         foreach (KeyValuePair<KeyCode, Vector2> key in _keyConfiguration)
         {
