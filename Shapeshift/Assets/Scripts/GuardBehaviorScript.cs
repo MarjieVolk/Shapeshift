@@ -13,6 +13,6 @@ public class GuardBehaviorScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		transform.position = transform.position + new Vector3(1, 1);
+		GetComponent<TileItem>().MovePosition(transform.position + new Vector3(1, 1));
 	}
 }
