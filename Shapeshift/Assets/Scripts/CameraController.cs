@@ -5,10 +5,9 @@ using System.Collections.Generic;
 public class CameraController : MonoBehaviour {
 
     private const float SCALE = 1.0f;
+    private const float CAMERA_SPEED = 0.4f;
 
     private TileItem playerTileItem;
-    private Room previousRoom;
-    private Room currentRoom;
 
 	// Use this for initialization
 	void Start () {
@@ -16,19 +15,20 @@ public class CameraController : MonoBehaviour {
 
         Camera.main.orthographicSize = Screen.height / (100.0f * 2.0f * SCALE);
         Debug.Log("Screen height: " + Screen.height + "  Camera size: " + Camera.main.orthographicSize);
-
-        previousRoom = getCurrentRoom();
-        transform.position = previousRoom.transform.position;
+        
+        transform.position = getCurrentRoom().transform.position;
     }
 
     void Update() {
         Room room = getCurrentRoom();
-        
-        if (room != previousRoom) {
 
+        Vector3 diff = room.transform.position - transform.position;
+
+        if (diff.magnitude < CAMERA_SPEED) {
+            transform.position = room.transform.position;
+        } else {
+            transform.position += diff.normalized * CAMERA_SPEED;
         }
-
-        previousRoom = room;
     }
 
     private Room getCurrentRoom() {
