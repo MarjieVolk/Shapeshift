@@ -44,7 +44,7 @@ public class PlayerController : MonoBehaviour {
         translation *= Speed;
         if (movementEnabled)
         {
-            GetComponent<TileItem>().MovePosition(transform.position + new Vector3(translation.x, translation.y));
+            gameObject.GetComponent<TileItem>().MovePosition(transform.position + new Vector3(translation.x, translation.y));
         }
 	}
 }
