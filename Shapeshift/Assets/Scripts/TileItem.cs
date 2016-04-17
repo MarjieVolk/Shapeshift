@@ -6,14 +6,28 @@ using System;
 public class TileItem : MonoBehaviour
 {
     public static float TILE_SIZE = 0.32f;
-	private static Dictionary<long, List<GameObject>> _tileMap;
+	private static Dictionary<long, List<GameObject>> _tileMap = new Dictionary<long, List<GameObject>>();
 
 	public int tileX { get; private set; }
 	public int tileY { get; private set; }
-	public int tileW = 1;
-	public int tileH = 1;
+
+	public int startingTileWidth = 1;
+	public int startingTileHeight = 1;
+
+	private int _tileW;
+	public int tileW {
+		get { return _tileW; }
+		set { _SetSize(value, _tileH); }
+	}
+	private int _tileH;
+	public int tileH {
+		get { return _tileH; }
+		set { _SetSize (_tileW, value); }
+	}
 
     public void Start () {
+		tileW = startingTileWidth;
+		tileH = startingTileHeight;
         SnapToGrid ();
 		AddToTileMap ();
     }
@@ -62,6 +76,18 @@ public class TileItem : MonoBehaviour
 		}
 	}
 
+	private void _SetSize(int newWidth, int newHeight) {
+		bool tileResized = newWidth != _tileW || newHeight != _tileH;
+		if (tileResized) {
+			RemoveFromTileMap ();
+		}
+		_tileW = newWidth;
+		_tileH = newHeight;
+		if (tileResized) {
+			AddToTileMap ();
+		}
+	}
+
 	private void RemoveFromTileMap() {
 		List<GameObject> ents;
 		ForEachOfMyTiles ((int x, int y) => {
@@ -93,12 +119,18 @@ public class TileItem : MonoBehaviour
 		}
 	}
 
-	public static List<GameObject> GetObjectsAtPosition(int tileX, int tileY) {
-		List<GameObject> entities;
-		if (_tileMap.TryGetValue (ToKey (tileX, tileY), out entities)) {
-			return entities;
+	public static List<T> GetObjectsAtPosition<T>(int tileX, int tileY) where T: Component {
+		List<T> matchingEntities = new List<T>();
+		List<GameObject> allEntities;
+		if (_tileMap.TryGetValue (ToKey (tileX, tileY), out allEntities)) {
+			foreach (GameObject go in allEntities) {
+				T nullableT = go.GetComponent<T> ();
+				if (nullableT != null) {
+					matchingEntities.Add (nullableT);
+				}
+			}
 		}
-		return new List<GameObject>();
+		return matchingEntities;
 	}
 }
 

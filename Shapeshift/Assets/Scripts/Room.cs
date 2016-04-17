@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 [RequireComponent (typeof (TileItem))]
 public class Room : MonoBehaviour {
@@ -8,13 +9,14 @@ public class Room : MonoBehaviour {
 
     public RoomTileSet tileSet;
 
-    public int width;
-    public int height;
+    private TileItem tileItem;
 
     // Use this for initialization
     void Start () {
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < height; j++) {
+        tileItem = gameObject.GetComponent<TileItem>();
+
+        for (int i = 0; i < tileItem.tileW; i++) {
+            for (int j = 0; j < tileItem.tileH; j++) {
                 GameObject floorTile = new GameObject();
                 floorTile.transform.SetParent(this.transform);
                 floorTile.transform.position = new Vector3(
@@ -29,5 +31,21 @@ public class Room : MonoBehaviour {
     // Update is called once per frame
     void Update () {
 
+    }
+
+    public HashSet<FurnitureItem> getAllFurniture() {
+        HashSet<FurnitureItem> furniture = new HashSet<FurnitureItem>();
+        for (int x = tileItem.tileX; x < tileItem.tileX + tileItem.tileW; x++) {
+            for (int y = tileItem.tileY; y < tileItem.tileY + tileItem.tileH; y++) {
+                List<FurnitureItem> furnitureAt = TileItem.GetObjectsAtPosition<FurnitureItem>(x, y);
+                furniture.UnionWith(furnitureAt);
+
+                if (furnitureAt.Count > 1) {
+                    Debug.LogError("Found " + furnitureAt.Count + " furniture items at (" + x + ", " + y + ")");
+                }
+            }
+        }
+
+        return furniture;
     }
 }
