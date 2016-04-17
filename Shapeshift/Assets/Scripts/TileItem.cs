@@ -6,12 +6,12 @@ using System;
 public class TileItem : MonoBehaviour
 {
     public static float TILE_SIZE = 0.32f;
-	private static Dictionary<long, List<MonoBehaviour>> _tileMap;
+	private static Dictionary<long, List<GameObject>> _tileMap;
 
-    public int tileX;
-    public int tileY;
-	private int tileW;
-	private int tileH;
+	private int tileX { get; set; }
+	private int tileY { get; set; }
+	public int tileW { get; set; } // TODO(aklen): Auto-set these based off of type/furniture type, etc.
+	public int tileH { get; set; }
 
     public void Start () {
         SnapToGrid ();
@@ -54,23 +54,23 @@ public class TileItem : MonoBehaviour
 	}
 
 	private void RemoveFromTileMap() {
-		List<MonoBehaviour> ents;
+		List<GameObject> ents;
 		ForEachOfMyTiles ((int x, int y) => {
 			if (_tileMap.TryGetValue (ToKey (x, y), out ents)) {
-				ents.Remove (this);
+				ents.Remove (gameObject);
 			}
 		});
 	}
 
 	private void AddToTileMap() {
-		List<MonoBehaviour> ents;
+		List<GameObject> ents;
 		ForEachOfMyTiles ((int x, int y) => {
 			long key = ToKey (x, y);
 			if (_tileMap.TryGetValue (key, out ents)) {
-				ents.Add (this);
+				ents.Add (gameObject);
 			} else {
-				ents = new List<MonoBehaviour>();
-				ents.Add(this);
+				ents = new List<GameObject>();
+				ents.Add(gameObject);
 				_tileMap.Add(key, ents);
 			}
 		});
@@ -84,12 +84,12 @@ public class TileItem : MonoBehaviour
 		}
 	}
 
-	public static List<MonoBehaviour> LookupTiles(int tileX, int tileY) {
-		List<MonoBehaviour> entities;
+	public static List<GameObject> GetObjectsAtPosition(int tileX, int tileY) {
+		List<GameObject> entities;
 		if (_tileMap.TryGetValue (ToKey (tileX, tileY), out entities)) {
 			return entities;
 		}
-		return new List<MonoBehaviour>();
+		return new List<GameObject>();
 	}
 }
 
