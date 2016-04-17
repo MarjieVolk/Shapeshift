@@ -33,6 +33,7 @@ public class PlayerTransformer : MonoBehaviour {
         PlayerTransformed += (target) =>
         {
             GetComponent<SpriteRenderer>().enabled = (target == null);
+            GetComponent<Rigidbody2D>().isKinematic = (target != null);
         };
         PlayerTransformed += (target) =>
         {
