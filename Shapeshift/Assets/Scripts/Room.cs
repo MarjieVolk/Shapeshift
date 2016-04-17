@@ -23,7 +23,9 @@ public class Room : MonoBehaviour {
                     transform.position.x + (i * TileItem.TILE_SIZE), 
                     transform.position.y + (j * TileItem.TILE_SIZE),
                     ROOM_TILE_Z_INDEX);
-                floorTile.AddComponent<SpriteRenderer>().sprite = tileSet.floor;
+				SpriteRenderer sprite = floorTile.AddComponent<SpriteRenderer> ();
+				sprite.sprite = tileSet.floor;
+				sprite.sortingOrder = -1000;
             }
         }
     }
