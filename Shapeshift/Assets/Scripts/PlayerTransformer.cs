@@ -41,7 +41,7 @@ public class PlayerTransformer : MonoBehaviour {
             if (target != null)
             {
                 currentTransformation = (GameObject)Instantiate(target, transform.position, Quaternion.identity);
-                currentTransformation.transform.parent = transform;
+                currentTransformation.transform.SetParent(transform);
             }
         };
 	}
