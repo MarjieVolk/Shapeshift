@@ -1,8 +1,10 @@
 ﻿using UnityEngine;
+using UnityEditor;
 using System.Collections;
 using System.Collections.Generic;
 
 [RequireComponent (typeof (TileItem))]
+[ExecuteInEditMode]
 public class Room : MonoBehaviour {
 
     public const int ROOM_TILE_Z_INDEX = 999;
@@ -11,27 +13,57 @@ public class Room : MonoBehaviour {
 
     private TileItem tileItem;
 
+    private GameObject floorTileParent;
+
     // Use this for initialization
     void Start () {
         tileItem = gameObject.GetComponent<TileItem>();
 
-        for (int i = 0; i < tileItem.tileW; i++) {
-            for (int j = 0; j < tileItem.tileH; j++) {
-                GameObject floorTile = new GameObject();
-                floorTile.transform.SetParent(this.transform);
-                floorTile.transform.position = new Vector3(
-                    transform.position.x + (i * TileItem.TILE_SIZE), 
-                    transform.position.y + (j * TileItem.TILE_SIZE),
-                    ROOM_TILE_Z_INDEX);
-				SpriteRenderer sprite = floorTile.AddComponent<SpriteRenderer> ();
-				sprite.sprite = tileSet.floor;
-            }
-        }
+        floorTileParent = new GameObject();
+        floorTileParent.name = "Floor Tile Parent";
+        floorTileParent.transform.SetParent(this.transform);
+
+        generateFloorSprites();
     }
 
     // Update is called once per frame
     void Update () {
 
+    }
+
+    public void generateFloorSprites() {
+        clearFloorSprites();
+        
+        if (tileItem.tileW == 0) {
+            // Being called in editor
+            _generateFloorSprites(tileItem.startingTileWidth, tileItem.startingTileHeight);
+        } else {
+            _generateFloorSprites(tileItem.tileW, tileItem.tileH);
+        }
+    }
+
+    private void _generateFloorSprites(int width, int height) {
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                GameObject floorTile = new GameObject();
+                floorTile.name = "floorTile (" + i + ", " + j + ")";
+                floorTile.transform.SetParent(floorTileParent.transform);
+                floorTile.transform.position = new Vector3(
+                    transform.position.x + (i * TileItem.TILE_SIZE),
+                    transform.position.y + (j * TileItem.TILE_SIZE),
+                    ROOM_TILE_Z_INDEX);
+                SpriteRenderer sprite = floorTile.AddComponent<SpriteRenderer>();
+                sprite.sprite = tileSet.floor;
+            }
+        }
+    }
+
+    public void clearFloorSprites() {
+        if (floorTileParent != null) {
+            while (floorTileParent.transform.childCount > 0) {
+                DestroyImmediate(floorTileParent.transform.GetChild(0).gameObject);
+            }
+        }
     }
 
     public HashSet<FurnitureItem> getAllFurniture() {

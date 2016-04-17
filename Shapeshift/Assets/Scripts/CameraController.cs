@@ -14,18 +14,17 @@ public class CameraController : MonoBehaviour {
         playerTileItem = FindObjectOfType<PlayerController>().gameObject.GetComponent<TileItem>();
 
         Camera.main.orthographicSize = Screen.height / (100.0f * 2.0f * SCALE);
-        Debug.Log("Screen height: " + Screen.height + "  Camera size: " + Camera.main.orthographicSize);
-        
+
         transform.position = getCurrentRoom().transform.position;
     }
 
     void Update() {
         Room room = getCurrentRoom();
 
-                // Ignore hallways (aka tiny rooms less than 3 tall and less than 2 wide)
-                if (room.GetComponent<TileItem> ().tileH < 3 && room.GetComponent<TileItem> ().tileW < 2) {
-                        return;
-                }
+        // Ignore hallways (aka tiny rooms less than 3 tall and less than 2 wide)
+        if (room.GetComponent<TileItem> ().tileH < 3 && room.GetComponent<TileItem> ().tileW < 2) {
+            return;
+        }
 
         Vector3 diff = room.transform.position - transform.position;
 
