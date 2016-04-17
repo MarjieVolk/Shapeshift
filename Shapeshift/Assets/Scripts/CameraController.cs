@@ -22,6 +22,11 @@ public class CameraController : MonoBehaviour {
     void Update() {
         Room room = getCurrentRoom();
 
+                // Ignore hallways (aka tiny rooms less than 3 tall and less than 2 wide)
+                if (room.GetComponent<TileItem> ().tileH < 3 && room.GetComponent<TileItem> ().tileW < 2) {
+                        return;
+                }
+
         Vector3 diff = room.transform.position - transform.position;
 
         if (diff.magnitude < CAMERA_SPEED) {

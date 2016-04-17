@@ -120,15 +120,10 @@ public class Guard : MonoBehaviour {
 		Vector3 oldPos = new Vector3 (oldX, oldY);
 
 		// If the player is blocking the way, recalculate a route that goes around the player.
-		if (TileItem.GetObjectsAtPosition<PlayerController> (goalTile.X, goalTile.Y).Count > 0) {
+		if (TileItem.GetObjectsAtPosition<PlayerController> (goalTile.X, goalTile.Y).Count > 0 ||
+	      TileItem.GetObjectsAtPosition<PlayerController> (oldTile.X, oldTile.Y).Count > 0) {
 			moveInterruptedByPlayer = true;
 			InitializeLook ();
-			return;
-		}
-
-		if (ManhattanDistance (transform.position, goalPos) > 1.1 * ManhattanDistance (oldPos, goalPos)) {
-			// If you overshoot the goal, recalculate A* in an attempt to dig out of your own mess. :(
-			StartMove (false);
 			return;
 		}
 
