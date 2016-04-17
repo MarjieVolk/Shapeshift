@@ -10,8 +10,8 @@ public class TileItem : MonoBehaviour
 
 	public int tileX { get; private set; }
 	public int tileY { get; private set; }
-	public int tileW { get; set; } = 1;
-	public int tileH { get; set; } = 1;
+	public int tileW = 1;
+	public int tileH = 1;
 
     public void Start () {
         SnapToGrid ();
