@@ -74,6 +74,8 @@ public class WallMaker : MonoBehaviour {
         g.transform.Rotate (0, 0, angle);
         g.transform.Translate (0, 0, Room.ROOM_TILE_Z_INDEX);
 
+        g.AddComponent<Wall>();
+
 		TileItem ti = g.AddComponent<TileItem> ();
 		ti.setTilePosition (x, y);
 	}
