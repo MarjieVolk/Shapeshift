@@ -63,7 +63,7 @@ public class PlayerController : MonoBehaviour {
             gameObject.GetComponent<TileItem>().SetGlobalPosition(startPosition);
         } else {
             // Lose access to item, gain catching cooldown
-            FindObjectOfType<CardPanel>().remove(currentTransformation.GetComponent<PlayableFurnitureItem>());
+            UnlockState.INSTANCE.reset(currentTransformation.GetComponent<PlayableFurnitureItem>().furnitureType);
             GetComponent<PlayerTransformer>().TransformPlayer(null);
         }
     }
