@@ -35,6 +35,10 @@ public class FurnitureRenderer : MonoBehaviour {
     }
 
     private PlayableFurnitureItem getData(FurnitureType type, int quality) {
+        while (quality >= 0 && !furniture.ContainsKey(FurnitureKey.getKey(type, quality))) {
+            quality--;
+        }
+
         return furniture[FurnitureKey.getKey(type, quality)];
     }
 
