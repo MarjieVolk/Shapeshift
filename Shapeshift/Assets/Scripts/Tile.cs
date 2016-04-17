@@ -18,4 +18,20 @@ public class Tile {
 		this.xPos = xPos;
 		this.yPos = yPos;
 	}
+
+	public bool Equals(Tile other) {
+		return (xPos.Equals (other.X) && yPos.Equals (other.Y));
+	}
+
+	public override bool Equals (object obj)
+	{
+		if (ReferenceEquals(null, obj)) return false;
+		if (ReferenceEquals(this, obj)) return true;
+		if (obj.GetType() != typeof (Tile)) return false;
+		return Equals((Tile) obj);
+	}
+
+	public override int GetHashCode() {
+		return xPos.GetHashCode () ^ yPos.GetHashCode ();
+	}
 }

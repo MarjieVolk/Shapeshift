@@ -6,13 +6,14 @@ using System.Collections.Generic;
 [RequireComponent (typeof (TileItem))]
 public class Guard : MonoBehaviour {
 
-	public float Speed = 0.01f;
-	public int LookTime = 200;
+	public float Speed;
+	public int LookTime;
 	public Direction FirstDirection = Direction.SOUTH;
 
 	private GuardWaypoint[] waypoints;
 	private GuardWaypoint currentWaypoint;
 	private GuardAction currentAction;
+	private Direction currentDirection;
 
 	enum GuardAction {
 		MOVE,
@@ -21,15 +22,17 @@ public class Guard : MonoBehaviour {
 	}
 
 	// Put data for MOVE here.
-	private Tile[] currentPath;
-	private int currentGoalInPath;
+	private List<Tile> currentPath;
+	private int currentGoalInPath;  // Should always be greater than 1.
 
 	// Put data for LOOK here.
-	private Direction currentDirection;
 	private int lookTimer;
 
 	// Use this for initialization
 	void Start () {
+		// Initialize the direction first thing.
+		currentDirection = FirstDirection;
+
 		// A Guard must have GuardDuty as a parent.
 		waypoints = gameObject.GetComponentInParent<GuardDuty> ().GetWaypoints ();
 
@@ -41,8 +44,9 @@ public class Guard : MonoBehaviour {
 	void Update () {
 		if (currentAction == GuardAction.LOOK) {
 			UpdateLook ();
+		} else if (currentAction == GuardAction.MOVE) {
+			UpdateMove ();
 		}
-		GetComponent<TileItem>().SetGlobalPosition(new Vector3(transform.position.x + Speed, transform.position.y + Speed));
 	}
 
 	// MOVE initialization.
@@ -51,10 +55,48 @@ public class Guard : MonoBehaviour {
 
 		// Look up the next waypoint.  Checks length to avoid an infinite loop.
 		if (waypoints.Length > 0) {
-			currentWaypoint = GetNextWaypoint (Int32.MinValue);
+			if (currentWaypoint == null) {
+				currentWaypoint = GetNextWaypoint (Int32.MinValue);
+			} else {
+				currentWaypoint = GetNextWaypoint (currentWaypoint.Ordering);
+			}
 		} else {
 			InitializeLook ();
 		}
+
+		currentPath = FindPath (false);
+		currentGoalInPath = 1;
+	}
+
+	// Update in MOVE mode.
+	void UpdateMove() {
+		Tile goalTile = currentPath [currentGoalInPath];
+		float goalX = TileItem.TileToGlobalPosition (goalTile.X);
+		float goalY = TileItem.TileToGlobalPosition (goalTile.Y);
+		Vector3 goalPos = new Vector3 (goalX, goalY);
+
+		// The current goal has been reached.  Move on to the next tile.
+		if (Math.Abs(goalPos.y - transform.position.y) + Math.Abs(goalPos.x - transform.position.x) < Speed * 2) {
+			currentGoalInPath++;
+			// If you have reached the final goal, start looking around.
+			if (currentGoalInPath == currentPath.Count) {
+				InitializeLook ();
+			} else {
+				// Change directions if necessary.
+				currentDirection = GetDirectionFromTiles(goalTile, currentPath[currentGoalInPath]);
+			}
+		}
+
+		// Proceed to goal.
+		Tile oldTile = currentPath[currentGoalInPath - 1];
+		float oldX = TileItem.TileToGlobalPosition (oldTile.X);
+		float oldY = TileItem.TileToGlobalPosition (oldTile.Y);
+		Vector3 oldPos = new Vector3 (oldX, oldY);
+
+		Vector3 increment = (goalPos - oldPos);
+		increment.Normalize ();
+		increment *= Speed;
+		GetComponent<TileItem>().SetGlobalPosition(transform.position + increment);
 	}
 
 	// LOOK initialization.
@@ -110,6 +152,20 @@ public class Guard : MonoBehaviour {
 		}
 	}
 
+	Direction GetDirectionFromTiles(Tile fromMe, Tile toMe) {
+		int xDiff = toMe.X - fromMe.X;
+		int yDiff = toMe.Y - fromMe.Y;
+		if (xDiff == 1) {
+			return Direction.EAST;
+		} else if (xDiff == -1) {
+			return Direction.WEST;
+		} else if (yDiff == 1) {
+			return Direction.NORTH;
+		} else {
+			return Direction.SOUTH;
+		}
+	}
+
 	/* PATHFINDING CODE BELOW HERE. */
 
 	List<Tile> FindPath(bool includePlayer) {
@@ -121,25 +177,58 @@ public class Guard : MonoBehaviour {
 
 		Dictionary<Tile, Tile> predecessors = new Dictionary<Tile, Tile> ();
 		Dictionary<Tile, float> costs = new Dictionary<Tile, float> ();
-		SortedList<Tile, float> priorityQueue = new SortedList<Tile, float> ();
+		SortedList<ScoredTile, float> priorityQueue = new SortedList<ScoredTile, float> ();
 
 		predecessors.Add (startTile, null);
-		costs.Add (startTile, 0);
-		priorityQueue.Add (startTile, 0);
+		costs[startTile] = 0;
+		priorityQueue.Add(new ScoredTile(startTile, 0), 0);
 
 		while (true) {
 			// Pop lowest-cost node from priority queue.
-			Tile currentTile = priorityQueue.Keys[0];
+			Tile currentTile = priorityQueue.Keys[0].EnclosedTile;
 			priorityQueue.RemoveAt (0);
 
-			List<Tile> neighbors = GetNeighbors (currentTile, includePlayer);
-			foreach (Tile neighbor in neighbors) {
-				float cost;
+			// Add neighbors if a new lowest-cost path can be made through them.
+			foreach (Tile neighbor in GetNeighbors (currentTile, includePlayer)) {
+				float newCost = costs [currentTile] + 1 + GetDistance (currentTile, neighbor);
+				if (!(costs.ContainsKey (neighbor) && costs [neighbor] <= newCost)) {
+					// Remove old cost in priorityQueue if necessary.
+					if (costs.ContainsKey(neighbor)) {
+						ScoredTile oldNeighbor = new ScoredTile (neighbor, costs [neighbor]);
+						if (priorityQueue.ContainsKey(oldNeighbor)) {
+							priorityQueue.Remove (oldNeighbor);
+						}
+					}
+					costs [neighbor] = newCost;
+					predecessors [neighbor] = currentTile;
+					priorityQueue.Add(new ScoredTile(neighbor, newCost), newCost);
+				}
 			}
-			break;
+
+			// Ending condition.
+			if (costs.ContainsKey (goalTile)) {
+				float goalCost = costs [goalTile];
+				foreach (float cost in priorityQueue.Values) {
+					if (cost < goalCost) {
+						continue;
+					}
+				}
+				break;
+			}
+
+			// TODO: Handle the case where there is no path.  Also handle case where player
+			// is directly in your way.
 		}
 
-		return new List<Tile> ();
+		// Adds everything, including the start tile, to the path.
+		List<Tile> tracedPath = new List<Tile> ();
+		Tile traceTile = goalTile;
+		while (traceTile != null) {
+			tracedPath.Add (traceTile);
+			traceTile = predecessors [traceTile];
+		}
+		tracedPath.Reverse ();
+		return tracedPath;
 	}
 
 	List<Tile> GetNeighbors(Tile fromMe, bool includePlayer) {
@@ -160,7 +249,14 @@ public class Guard : MonoBehaviour {
 	}
 
 	bool IsViable(Tile tile, bool includePlayer) {
-		return false;
+		if (TileItem.GetObjectsAtPosition<FurnitureItem> (tile.X, tile.Y).Count > 0) {
+			return false;
+		} else if (TileItem.GetObjectsAtPosition<Wall> (tile.X, tile.Y).Count > 0) {
+			return false;
+		} else if (includePlayer && TileItem.GetObjectsAtPosition<PlayerController> (tile.X, tile.Y).Count > 0) {
+			return false;
+		}
+		return true;
 	}
 
 	float GetDistance(Tile tile1, Tile tile2) {
