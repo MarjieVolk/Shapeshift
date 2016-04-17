@@ -100,17 +100,18 @@ public class Guard : MonoBehaviour {
 		// The current goal has been reached.  Move on to the next tile.
 		if (ManhattanDistance(goalPos, transform.position) <= 2 * Speed) {
 			currentGoalInPath++;
+
+			// Course correct.
+			gameObject.GetComponent<TileItem> ().SnapToGrid ();
+
 			// If you have reached the final goal, start looking around.
 			if (currentGoalInPath == currentPath.Count) {
-				// Land completely on the waypoint.
-				gameObject.GetComponent<TileItem> ().SnapToGrid ();
-
 				InitializeLook ();
-				return;
 			} else {
 				// Change directions if necessary.
 				currentDirection = GetDirectionFromTiles(goalTile, currentPath[currentGoalInPath]);
 			}
+			return;
 		}
 
 		// Proceed to goal.
@@ -121,7 +122,10 @@ public class Guard : MonoBehaviour {
 
 		// If the player is blocking the way, recalculate a route that goes around the player.
 		if (GetPlayerTile().Equals(goalTile)) {
-			moveInterruptedByPlayer = true;
+			// Corner case where player is blocking the waypoint.
+			if (!(goalTile.Equals(currentPath[currentPath.Count - 1]))) {
+				moveInterruptedByPlayer = true;
+			}
 			InitializeLook ();
 			return;
 		}
@@ -224,13 +228,14 @@ public class Guard : MonoBehaviour {
 		costs[startTile] = 0;
 		priorityQueue.Add(new ScoredTile(startTile, 0), 0);
 
+		int numIter = 0;;
 		while (true) {
 			// Pop lowest-cost node from priority queue.
 			Tile currentTile = priorityQueue.Keys[0].EnclosedTile;
 			priorityQueue.RemoveAt (0);
 
 			// Add neighbors if a new lowest-cost path can be made through them.
-			foreach (Tile neighbor in GetNeighbors (currentTile, includePlayer)) {
+			foreach (Tile neighbor in GetNeighbors (currentTile, goalTile, includePlayer)) {
 				float newCost = costs [currentTile] + 1 + GetDistance (currentTile, neighbor);
 				if (!(costs.ContainsKey (neighbor) && costs [neighbor] <= newCost)) {
 					// Remove old cost in priorityQueue if necessary.
@@ -257,12 +262,12 @@ public class Guard : MonoBehaviour {
 				break;
 			}
 
-			if (priorityQueue.Count == 0) {
+			numIter++;
+			if (priorityQueue.Count == 0 || numIter > 1000) {
 				// There is no path. :(
 				return null;
 			}
 		}
-
 		// Adds everything, including the start tile, to the path.
 		List<Tile> tracedPath = new List<Tile> ();
 		Tile traceTile = goalTile;
@@ -274,25 +279,27 @@ public class Guard : MonoBehaviour {
 		return tracedPath;
 	}
 
-	List<Tile> GetNeighbors(Tile fromMe, bool includePlayer) {
+	List<Tile> GetNeighbors(Tile fromMe, Tile goalTile, bool includePlayer) {
 		List<Tile> neighbors = new List<Tile> (4);
 
 		Tile right = new Tile (fromMe.X + 1, fromMe.Y);
-		if (IsViable(right, includePlayer)) { neighbors.Add(right); }
+		if (IsViable(right, goalTile, includePlayer)) { neighbors.Add(right); }
 
 		Tile up = new Tile (fromMe.X, fromMe.Y + 1);
-		if (IsViable(up, includePlayer)) { neighbors.Add(up); }
+		if (IsViable(up, goalTile, includePlayer)) { neighbors.Add(up); }
 
 		Tile left = new Tile (fromMe.X - 1, fromMe.Y);
-		if (IsViable(left, includePlayer)) { neighbors.Add(left); }
+		if (IsViable(left, goalTile, includePlayer)) { neighbors.Add(left); }
 
 		Tile down = new Tile (fromMe.X, fromMe.Y - 1);
-		if (IsViable(down, includePlayer)) { neighbors.Add(down); }
+		if (IsViable(down, goalTile, includePlayer)) { neighbors.Add(down); }
 		return neighbors;
 	}
 
-	bool IsViable(Tile tile, bool includePlayer) {
-		if (TileItem.GetObjectsAtPosition<FurnitureItem> (tile.X, tile.Y).Count > 0) {
+	bool IsViable(Tile tile, Tile goalTile, bool includePlayer) {
+		if (tile.Equals (goalTile)) {
+			return true;
+		} else if (TileItem.GetObjectsAtPosition<FurnitureItem> (tile.X, tile.Y).Count > 0) {
 			return false;
 		} else if (TileItem.GetObjectsAtPosition<Wall> (tile.X, tile.Y).Count > 0) {
 			return false;

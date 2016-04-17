@@ -12,6 +12,10 @@ public class PlayerController : MonoBehaviour {
 
     private Dictionary<KeyCode, Vector2> _keyConfiguration = new Dictionary<KeyCode, Vector2>();
 
+    private Animator animator;
+
+    private Vector2[] animationDirections;
+
 	// Use this for initialization
 	void Start ()
     {
@@ -30,6 +34,16 @@ public class PlayerController : MonoBehaviour {
         GetComponent<PlayerTransformer>().PlayerTransformed += (target) =>
         {
             movementEnabled = (target == null);
+        };
+
+        this.animator = GetComponent<Animator>();
+
+        animationDirections = new Vector2[]
+        {
+            Vector2.down,
+            Vector2.right,
+            Vector2.up,
+            Vector2.left
         };
 	}
 	
@@ -52,7 +66,21 @@ public class PlayerController : MonoBehaviour {
         }
 
         if (movementEnabled) {
-            gameObject.GetComponent<TileItem>().SetGlobalPosition(transform.position + new Vector3(translation.x, translation.y));
+            if (translation.magnitude > 0)
+            {
+                gameObject.GetComponent<TileItem>().SetGlobalPosition(transform.position + new Vector3(translation.x, translation.y));
+                for (int i = 0; i < animationDirections.Length; i++)
+                {
+                    if (Vector2.Dot(translation.normalized, animationDirections[i]) > Mathf.Sqrt(2) / 2 + 0.01)
+                    {
+                        animator.SetInteger("Direction", i);
+                    }
+                }
+            }
+            else
+            {
+                animator.SetInteger("Direction", -1);
+            }
         }
     }
 
