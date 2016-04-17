@@ -33,6 +33,7 @@ public class PlayerTransformer : MonoBehaviour {
         PlayerTransformed += (target) =>
         {
             GetComponent<SpriteRenderer>().enabled = (target == null);
+            GetComponent<Rigidbody2D>().isKinematic = (target != null);
         };
         PlayerTransformed += (target) =>
         {
@@ -40,7 +41,7 @@ public class PlayerTransformer : MonoBehaviour {
             if (target != null)
             {
                 currentTransformation = (GameObject)Instantiate(target, transform.position, Quaternion.identity);
-                currentTransformation.transform.parent = transform;
+                currentTransformation.transform.SetParent(transform);
             }
         };
 	}
