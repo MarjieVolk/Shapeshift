@@ -119,12 +119,18 @@ public class TileItem : MonoBehaviour
 		}
 	}
 
-	public static List<GameObject> GetObjectsAtPosition(int tileX, int tileY) {
-		List<GameObject> entities;
-		if (_tileMap.TryGetValue (ToKey (tileX, tileY), out entities)) {
-			return entities;
+	public static List<T> GetObjectsAtPosition<T>(int tileX, int tileY) where T: Component {
+		List<T> matchingEntities = new List<T>();
+		List<GameObject> allEntities;
+		if (_tileMap.TryGetValue (ToKey (tileX, tileY), out allEntities)) {
+			foreach (GameObject go in allEntities) {
+				T nullableT = go.GetComponent<T> ();
+				if (nullableT != null) {
+					matchingEntities.Add (nullableT);
+				}
+			}
 		}
-		return new List<GameObject>();
+		return matchingEntities;
 	}
 }
 
