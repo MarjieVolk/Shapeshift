@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class GuardDuty : MonoBehaviour {
 
@@ -13,16 +14,8 @@ public class GuardDuty : MonoBehaviour {
 	
 	}
 
-	public IEnumerable getWaypoints()
+	public GuardWaypoint[] GetWaypoints()
 	{
-		return new Waypoints ();
-	}
-
-	public class Waypoints : IEnumerable
-	{
-		public IEnumerator GetEnumerator()
-		{
-			yield return 1;
-		}
+		return gameObject.GetComponentsInChildren<GuardWaypoint> ();
 	}
 }
