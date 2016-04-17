@@ -37,6 +37,7 @@ public class PlayerTransformer : MonoBehaviour {
         };
         PlayerTransformed += (target) =>
         {
+
             Destroy(currentTransformation);
             if (target != null)
             {
@@ -45,6 +46,10 @@ public class PlayerTransformer : MonoBehaviour {
             }
         };
 	}
+
+    public GameObject getTransformation() {
+        return currentTransformation;
+    }
 	
 	// Update is called once per frame
 	void Update () {
