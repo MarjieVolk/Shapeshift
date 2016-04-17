@@ -1,13 +1,6 @@
 fileFormatVersion: 2
-<<<<<<< HEAD
 guid: 955753035d92b40a58dc9b0e5d4f344b
-timeCreated: 1460930924
-licenseType: Free
-TextureImporter:
-  fileIDToRecycleName: {}
-=======
-guid: 6711393d3a4ea8742a6d0d9e030fa4e3
-timeCreated: 1460929788
+timeCreated: 1460935046
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -15,7 +8,6 @@ TextureImporter:
     21300002: spybackspritesheet_1
     21300004: spybackspritesheet_2
     21300006: spybackspritesheet_3
->>>>>>> 493a772f2b442cfdc699ea622dfc78c1e58033c5
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -42,11 +34,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     filterMode: -1
-<<<<<<< HEAD
-    aniso: -1
-=======
     aniso: 16
->>>>>>> 493a772f2b442cfdc699ea622dfc78c1e58033c5
     mipBias: -1
     wrapMode: 1
   nPOTScale: 0
@@ -54,11 +42,7 @@ TextureImporter:
   rGBM: 0
   compressionQuality: 50
   allowsAlphaSplitting: 0
-<<<<<<< HEAD
-  spriteMode: 1
-=======
   spriteMode: 2
->>>>>>> 493a772f2b442cfdc699ea622dfc78c1e58033c5
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -69,9 +53,6 @@ TextureImporter:
   textureType: 8
   buildTargetSettings: []
   spriteSheet:
-<<<<<<< HEAD
-    sprites: []
-=======
     sprites:
     - name: spybackspritesheet_0
       rect:
@@ -150,7 +131,6 @@ TextureImporter:
         - {x: 12, y: -9}
         - {x: 12, y: 6}
         - {x: 11, y: 13}
->>>>>>> 493a772f2b442cfdc699ea622dfc78c1e58033c5
     outline: []
   spritePackingTag: 
   userData: 
