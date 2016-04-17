@@ -17,4 +17,9 @@ public class GuardWaypoint : MonoBehaviour {
 	void Update () {
 	
 	}
+
+	public Tile getTile() {
+		TileItem tileItem = gameObject.GetComponent<TileItem> ();
+		return new Tile (tileItem.tileX, tileItem.tileY);
+	}
 }
