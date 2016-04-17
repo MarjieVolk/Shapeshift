@@ -3,14 +3,8 @@ using System.Collections;
 
 [RequireComponent (typeof (TileItem))]
 public class Room : MonoBehaviour {
-
-    public Sprite floorImage;
-    public Sprite backWallImage;
-    public Sprite backDoorImage;
-    public Sprite sideWallImage;
-    public Sprite sideDoorImage;
-    public Sprite frontWallImage;
-    public Sprite frontDoorImage;
+    
+    public RoomTileSet tileSet;
 
     int width;
     int height;
