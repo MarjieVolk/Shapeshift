@@ -66,10 +66,14 @@ public class WallMaker : MonoBehaviour {
 	// Uses the given sprite rotated angle degrees counter-clockwise
 	void instantiateWall(int x, int y, Sprite sprite, int angle) {
 		GameObject g = new GameObject ();
+
 		SpriteRenderer sr = g.AddComponent<SpriteRenderer> ();
-		g.transform.Rotate (0, 0, angle);
-                g.transform.Translate (0, 0, Room.ROOM_TILE_Z_INDEX);
-		sr.sprite = sprite;
+        sr.sprite = sprite;
+        g.AddComponent<BoxCollider2D>();
+
+        g.transform.Rotate (0, 0, angle);
+        g.transform.Translate (0, 0, Room.ROOM_TILE_Z_INDEX);
+
 		TileItem ti = g.AddComponent<TileItem> ();
 		ti.setTilePosition (x, y);
 	}
