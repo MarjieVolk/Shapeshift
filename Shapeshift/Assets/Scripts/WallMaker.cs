@@ -96,9 +96,9 @@ public class WallMaker : MonoBehaviour {
 
 						// Determine whether wallpaper continues left or right of you
 						int xLeft = xIndex - 1;
-						bool wallLeft = xLeft >= 0 && wallpaperFlags [xLeft, yIndex];
+						bool wallLeft = xLeft >= 0 & !roomFlags [xLeft, yIndex] && wallpaperFlags [xLeft, yIndex];
 						int xRight = xIndex + 1;
-						bool wallRight = xRight < floorwidth && wallpaperFlags [xRight, yIndex];
+						bool wallRight = xRight < floorwidth && !roomFlags [xRight, yIndex] && wallpaperFlags [xRight, yIndex];
 
 						// Instantiate with the proper sprite (and manipulation)
 						if (wallLeft && wallRight) {
