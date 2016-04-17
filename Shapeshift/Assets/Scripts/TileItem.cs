@@ -25,7 +25,7 @@ public class TileItem : MonoBehaviour
 		set { _SetSize (_tileW, value); }
 	}
 
-    public void Start () {
+    public void Awake () {
 		tileW = startingTileWidth;
 		tileH = startingTileHeight;
         SnapToGrid ();
