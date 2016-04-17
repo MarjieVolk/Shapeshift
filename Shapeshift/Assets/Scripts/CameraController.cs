@@ -8,6 +8,7 @@ public class CameraController : MonoBehaviour {
     private const float CAMERA_SPEED = 0.4f;
 
     private TileItem playerTileItem;
+    private Room previousRoom;
 
 	// Use this for initialization
 	void Start () {
@@ -21,6 +22,10 @@ public class CameraController : MonoBehaviour {
     void Update() {
         Room room = getCurrentRoom();
 
+        if (room == null) {
+            room = previousRoom;
+        }
+
         // Ignore hallways (aka tiny rooms less than 3 tall and less than 2 wide)
         if (room.GetComponent<TileItem> ().tileH < 3 && room.GetComponent<TileItem> ().tileW < 2) {
             return;
@@ -33,15 +38,21 @@ public class CameraController : MonoBehaviour {
         } else {
             transform.position += diff.normalized * CAMERA_SPEED;
         }
+
+        previousRoom = room;
     }
 
     private Room getCurrentRoom() {
         List<Room> potentialRooms = TileItem.GetObjectsAtPosition<Room>(playerTileItem.tileX, playerTileItem.tileY);
 
-        if (potentialRooms.Count != 1) {
+        if (potentialRooms.Count > 1) {
             Debug.LogError("Found " + potentialRooms.Count + " rooms at (" + playerTileItem.tileX + ", " + playerTileItem.tileY + ")");
         }
 
-        return potentialRooms[0];
+        if (potentialRooms.Count == 0) {
+            return null;
+        } else {
+            return potentialRooms[0];
+        }
     }
 }
