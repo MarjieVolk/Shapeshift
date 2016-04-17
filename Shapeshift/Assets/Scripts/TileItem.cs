@@ -38,9 +38,18 @@ public class TileItem : MonoBehaviour
 	/**
 	 * Call anytime you want to change position in order to update tile positions.
 	 */
-	public void MovePosition(Vector3 newPos) {
-		int newTileX = GlobalToTilePosition (newPos.x);
-		int newTileY = GlobalToTilePosition (newPos.y);
+	public void SetGlobalPosition(Vector3 newPos) {
+		_SetPosition (GlobalToTilePosition (newPos.x), GlobalToTilePosition (newPos.y), newPos);
+	}
+
+	/**
+	 * Set the tile position and underlying transform; update the tile map.
+	 */
+	public void setTilePosition(int newTileX, int newTileY) {
+		_SetPosition (newTileX, newTileX, new Vector3(newTileX * TILE_SIZE, newTileY * TILE_SIZE));
+	}
+
+	private void _SetPosition(int newTileX, int newTileY, Vector3 newPos) {
 		bool tilePosMoved = newTileX != tileX || newTileY != tileY;
 		if (tilePosMoved) {
 			RemoveFromTileMap ();

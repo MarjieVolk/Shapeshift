@@ -16,7 +16,7 @@ public class Guard : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		GetComponent<TileItem>().MovePosition(transform.position + new Vector3(1, 1));
+		GetComponent<TileItem>().SetGlobalPosition(transform.position + new Vector3(1, 1));
 	}
 
 	int GetNextWaypoint() {
