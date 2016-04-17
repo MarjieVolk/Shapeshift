@@ -39,7 +39,7 @@ public class PlayerTransformer : MonoBehaviour {
             Destroy(currentTransformation);
             if (target != null)
             {
-                currentTransformation = Instantiate<GameObject>(target);
+                currentTransformation = (GameObject)Instantiate(target, transform.position, Quaternion.identity);
                 currentTransformation.transform.parent = transform;
             }
         };
