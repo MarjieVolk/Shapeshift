@@ -71,7 +71,7 @@ public class PlayerController : MonoBehaviour {
                 gameObject.GetComponent<TileItem>().SetGlobalPosition(transform.position + new Vector3(translation.x, translation.y));
                 for (int i = 0; i < animationDirections.Length; i++)
                 {
-                    if (Vector2.Dot(translation.normalized, animationDirections[i]) > 0.5)
+                    if (Vector2.Dot(translation.normalized, animationDirections[i]) > Mathf.Sqrt(2) / 2 + 0.01)
                     {
                         animator.SetInteger("Direction", i);
                     }
