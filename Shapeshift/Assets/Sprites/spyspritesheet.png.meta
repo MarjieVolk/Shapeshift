@@ -1,6 +1,10 @@
 fileFormatVersion: 2
 guid: c161e5224a9ca134fa326a08ca3114e2
+<<<<<<< HEAD
 timeCreated: 1460865663
+=======
+timeCreated: 1460868153
+>>>>>>> e405f06157c01af27ae3ad52d859b5a2b018e60a
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -54,7 +58,6 @@ TextureImporter:
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 100
   alphaIsTransparency: 1
-  spriteTessellationDetail: -1
   textureType: 8
   buildTargetSettings: []
   spriteSheet:
@@ -66,6 +69,7 @@ TextureImporter:
         y: 0
         width: 32
         height: 32
+<<<<<<< HEAD
       alignment: 1
       pivot: {x: 0, y: 1}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -79,6 +83,20 @@ TextureImporter:
         - {x: 28, y: -12}
         - {x: 26, y: -3}
       tessellationDetail: 0
+=======
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 8, y: 15}
+        - {x: -11, y: 15}
+        - {x: -11, y: -11}
+        - {x: -7, y: -16}
+        - {x: 8, y: -16}
+        - {x: 12, y: -12}
+        - {x: 12, y: 4}
+        - {x: 10, y: 13}
+>>>>>>> e405f06157c01af27ae3ad52d859b5a2b018e60a
     - name: spyspritesheet_1
       rect:
         serializedVersion: 2
@@ -86,6 +104,7 @@ TextureImporter:
         y: 0
         width: 32
         height: 32
+<<<<<<< HEAD
       alignment: 1
       pivot: {x: 0, y: 1}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -101,6 +120,22 @@ TextureImporter:
         - {x: 28, y: -15}
         - {x: 25, y: -5}
       tessellationDetail: 0
+=======
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 7, y: 14}
+        - {x: -4, y: 14}
+        - {x: -10, y: 12}
+        - {x: -12, y: 8}
+        - {x: -12, y: -14}
+        - {x: -11, y: -16}
+        - {x: 8, y: -16}
+        - {x: 12, y: -12}
+        - {x: 12, y: 1}
+        - {x: 9, y: 11}
+>>>>>>> e405f06157c01af27ae3ad52d859b5a2b018e60a
     - name: spyspritesheet_2
       rect:
         serializedVersion: 2
@@ -108,6 +143,7 @@ TextureImporter:
         y: 0
         width: 32
         height: 32
+<<<<<<< HEAD
       alignment: 1
       pivot: {x: 0, y: 1}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -121,6 +157,20 @@ TextureImporter:
         - {x: 28, y: -12}
         - {x: 26, y: -3}
       tessellationDetail: 0
+=======
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 8, y: 15}
+        - {x: -11, y: 15}
+        - {x: -11, y: -11}
+        - {x: -7, y: -16}
+        - {x: 8, y: -16}
+        - {x: 12, y: -12}
+        - {x: 12, y: 4}
+        - {x: 10, y: 13}
+>>>>>>> e405f06157c01af27ae3ad52d859b5a2b018e60a
     - name: spyspritesheet_3
       rect:
         serializedVersion: 2
@@ -128,6 +178,7 @@ TextureImporter:
         y: 0
         width: 32
         height: 32
+<<<<<<< HEAD
       alignment: 1
       pivot: {x: 0, y: 1}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,6 +192,20 @@ TextureImporter:
         - {x: 29, y: -16}
         - {x: 24, y: -2}
       tessellationDetail: 0
+=======
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -6, y: 14}
+        - {x: -10, y: 12}
+        - {x: -11, y: 8}
+        - {x: -11, y: -16}
+        - {x: 12, y: -16}
+        - {x: 13, y: -14}
+        - {x: 13, y: 0}
+        - {x: 8, y: 14}
+>>>>>>> e405f06157c01af27ae3ad52d859b5a2b018e60a
     - name: spyspritesheet_4
       rect:
         serializedVersion: 2
@@ -148,6 +213,7 @@ TextureImporter:
         y: 0
         width: 32
         height: 32
+<<<<<<< HEAD
       alignment: 1
       pivot: {x: 0, y: 1}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -161,6 +227,20 @@ TextureImporter:
         - {x: 28, y: -12}
         - {x: 26, y: -3}
       tessellationDetail: 0
+=======
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 8, y: 15}
+        - {x: -11, y: 15}
+        - {x: -11, y: -11}
+        - {x: -7, y: -16}
+        - {x: 8, y: -16}
+        - {x: 12, y: -12}
+        - {x: 12, y: 4}
+        - {x: 10, y: 13}
+>>>>>>> e405f06157c01af27ae3ad52d859b5a2b018e60a
     - name: spyspritesheet_5
       rect:
         serializedVersion: 2
@@ -168,6 +248,7 @@ TextureImporter:
         y: 0
         width: 32
         height: 32
+<<<<<<< HEAD
       alignment: 1
       pivot: {x: 0, y: 1}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -183,6 +264,22 @@ TextureImporter:
         - {x: 28, y: -15}
         - {x: 25, y: -5}
       tessellationDetail: 0
+=======
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 7, y: 14}
+        - {x: -4, y: 14}
+        - {x: -10, y: 12}
+        - {x: -12, y: 8}
+        - {x: -12, y: -14}
+        - {x: -11, y: -16}
+        - {x: 8, y: -16}
+        - {x: 12, y: -12}
+        - {x: 12, y: 1}
+        - {x: 9, y: 11}
+>>>>>>> e405f06157c01af27ae3ad52d859b5a2b018e60a
     - name: spyspritesheet_6
       rect:
         serializedVersion: 2
@@ -190,6 +287,7 @@ TextureImporter:
         y: 0
         width: 32
         height: 32
+<<<<<<< HEAD
       alignment: 1
       pivot: {x: 0, y: 1}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -203,6 +301,20 @@ TextureImporter:
         - {x: 28, y: -12}
         - {x: 26, y: -3}
       tessellationDetail: 0
+=======
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 8, y: 15}
+        - {x: -11, y: 15}
+        - {x: -11, y: -11}
+        - {x: -7, y: -16}
+        - {x: 8, y: -16}
+        - {x: 12, y: -12}
+        - {x: 12, y: 4}
+        - {x: 10, y: 13}
+>>>>>>> e405f06157c01af27ae3ad52d859b5a2b018e60a
     - name: spyspritesheet_7
       rect:
         serializedVersion: 2
@@ -210,6 +322,7 @@ TextureImporter:
         y: 0
         width: 32
         height: 32
+<<<<<<< HEAD
       alignment: 1
       pivot: {x: 0, y: 1}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -224,6 +337,21 @@ TextureImporter:
         - {x: 29, y: -17}
         - {x: 27, y: -2}
       tessellationDetail: 0
+=======
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 7, y: 15}
+        - {x: -8, y: 15}
+        - {x: -10, y: 13}
+        - {x: -11, y: 7}
+        - {x: -11, y: -16}
+        - {x: 12, y: -16}
+        - {x: 13, y: -12}
+        - {x: 13, y: -1}
+        - {x: 11, y: 14}
+>>>>>>> e405f06157c01af27ae3ad52d859b5a2b018e60a
     outline: []
   spritePackingTag: 
   userData: 

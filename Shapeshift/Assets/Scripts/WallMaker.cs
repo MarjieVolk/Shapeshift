@@ -68,6 +68,7 @@ public class WallMaker : MonoBehaviour {
 		GameObject g = new GameObject ();
 		SpriteRenderer sr = g.AddComponent<SpriteRenderer> ();
 		g.transform.Rotate (0, 0, angle);
+                g.transform.Translate (0, 0, Room.ROOM_TILE_Z_INDEX);
 		sr.sprite = sprite;
 		TileItem ti = g.AddComponent<TileItem> ();
 		ti.setTilePosition (x, y);
