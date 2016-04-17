@@ -20,9 +20,13 @@ public class VisibilityHelper : MonoBehaviour
             Vector2 size = blockingCollider.size;
             Vector2 position = blockingCollider.offset + (Vector2) blockingCollider.transform.position;
             points.Add(position + size / 2.01f);
+            points.Add(position + size / 1.99f);
             points.Add(position - size / 2.01f);
+            points.Add(position - size / 1.99f);
             points.Add(position + Vector2.Reflect(size, Vector2.right) / 2.01f);
+            points.Add(position + Vector2.Reflect(size, Vector2.right) / 1.99f);
             points.Add(position - Vector2.Reflect(size, Vector2.right) / 2.01f);
+            points.Add(position - Vector2.Reflect(size, Vector2.right) / 1.99f);
         }
 
         // cast a ray for each corners to find the enclosing polygon
@@ -40,8 +44,9 @@ public class VisibilityHelper : MonoBehaviour
         List<Vector3> meshVertices = new List<Vector3>();
         meshVertices.Add(Vector2.zero);
         meshVertices.AddRange(extremeVisiblePoints
-            .OrderBy((p) => (p.x) / (p.y))
+            .OrderBy((p) => -Mathf.Atan2(p.y, p.x))
             .Select((v2) => new Vector3(v2.x, v2.y)));
+        meshVertices.Add(meshVertices[1]);
         Mesh visibleMesh = new Mesh();
         visibleMesh.SetVertices(meshVertices);
         List<int> triangleIndices = new List<int>();
@@ -64,17 +69,5 @@ public class VisibilityHelper : MonoBehaviour
         filter.mesh.Clear();
         filter.mesh = visibleMesh;
         GetComponent<MeshRenderer>();
-
-        Debug.Log(blockers.Length + " blockers.");
-        Debug.Log(visibleMesh.vertexCount + " vertices.");
-        foreach (Vector3 vertex in visibleMesh.vertices)
-        {
-            Debug.Log(vertex);
-        }
-        Debug.Log(visibleMesh.triangles.Length);
-        foreach (int index in visibleMesh.triangles)
-        {
-            Debug.Log(index);
-        }
     }
 }
