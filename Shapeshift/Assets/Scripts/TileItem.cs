@@ -32,6 +32,10 @@ public class TileItem : MonoBehaviour
 		AddToTileMap ();
     }
 
+    void OnDestroy() {
+        RemoveFromTileMap();
+    }
+
     public void SnapToGrid () {
         // Set tile position based off of starting transform.
         tileX = GlobalToTilePosition (transform.position.x);
