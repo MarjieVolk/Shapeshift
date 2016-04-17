@@ -66,39 +66,54 @@ public class WallMaker : MonoBehaviour {
 				bottom = ti.tileY - 1;
 			}
 		}
-
-		// Make a two dimensional array, mark out the rooms, draw walls everywhere a room isn't
+        
 		int floorwidth = right - left;
 		int floorheight = top - bottom;
-		bool [,] roomFlags = new bool[floorwidth, floorheight];
-		bool [,] wallpaperFlags = new bool[floorwidth, floorheight];
-		RoomTileSet[,] wallPaperSets = new RoomTileSet[floorwidth, floorheight];
+		bool [,] wallFlags = new bool[floorwidth, floorheight]; // Where walls should go
+		bool [,] wallpaperFlags = new bool[floorwidth, floorheight]; // Where wallpaper should go
+		RoomTileSet[,] wallPaperSets = new RoomTileSet[floorwidth, floorheight]; // What wallpaper sprites should be used where
 
-
+        // Add walls around each room
 		foreach (Room room in rooms) {
-			ti = room.GetComponent<TileItem> ();
-			for (int x = ti.tileX; x < ti.tileX + ti.tileW; x++) {
-				for (int y = ti.tileY; y < ti.tileY + ti.tileH; y++) {
-					roomFlags [x-left, y-bottom] = true;
-				}
-				wallpaperFlags [x - left, ti.tileY + ti.tileH - bottom] = true;
-				wallPaperSets [x - left, ti.tileY + ti.tileH - bottom] = room.tileSet;
-			}
-		}
+            ti = room.GetComponent<TileItem>();
+            for (int x = ti.tileX; x < ti.tileX + ti.tileW; x++) {
+                wallFlags[x - left, ti.tileY + ti.tileH - bottom + 1] = true;
+                wallFlags[x - left, ti.tileY + ti.tileH - bottom] = true;
+                wallFlags[x - left, ti.tileY - bottom - 1] = true;
+
+                wallpaperFlags[x - left, ti.tileY + ti.tileH - bottom] = true;
+                wallPaperSets[x - left, ti.tileY + ti.tileH - bottom] = room.tileSet;
+            }
+
+            for (int y = ti.tileY - 1; y < ti.tileY + ti.tileH + 2; y++) {
+                wallFlags[ti.tileX - left - 1, y - bottom] = true;
+                wallFlags[ti.tileX - left + ti.tileW, y - bottom] = true;
+            }
+        }
+
+        // Remove any walls that are overlapping a room's floor
+        foreach (Room room in rooms) {
+            ti = room.GetComponent<TileItem>();
+            for (int x = ti.tileX; x < ti.tileX + ti.tileW; x++) {
+                for (int y = ti.tileY; y < ti.tileY + ti.tileH; y++) {
+                    wallFlags[x - left, y - bottom] = false;
+                }
+            }
+        }
 
 		// Debug.Log ("(top, bottom, left, right): (" + top + ", " + bottom + ", " + left + ", " + right + ")");
 		for (int x = left; x < right; x++) {
 			for (int y = bottom; y < top; y++) {
 				int xIndex = x - left;
 				int yIndex = y - bottom;
-				if (!roomFlags [xIndex, yIndex]) {
+				if (wallFlags [xIndex, yIndex]) {
 					if (wallpaperFlags [xIndex, yIndex]) {
 
 						// Determine whether wallpaper continues left or right of you
 						int xLeft = xIndex - 1;
-						bool wallLeft = xLeft >= 0 & !roomFlags [xLeft, yIndex] && wallpaperFlags [xLeft, yIndex];
+						bool wallLeft = xLeft >= 0 & wallFlags [xLeft, yIndex] && wallpaperFlags [xLeft, yIndex];
 						int xRight = xIndex + 1;
-						bool wallRight = xRight < floorwidth && !roomFlags [xRight, yIndex] && wallpaperFlags [xRight, yIndex];
+						bool wallRight = xRight < floorwidth && wallFlags [xRight, yIndex] && wallpaperFlags [xRight, yIndex];
 
 						// Instantiate with the proper sprite (and manipulation)
 						if (wallLeft && wallRight) {
@@ -114,16 +129,16 @@ public class WallMaker : MonoBehaviour {
 
 						// Determine whether the walls continue in each direction (ternary convert bool to int for table lookup)
 						int yAbove = yIndex + 1;
-						int wallAbove = yAbove < floorheight && !roomFlags [xIndex, yAbove] && !wallpaperFlags [xIndex, yAbove]
+						int wallAbove = yAbove < floorheight && wallFlags [xIndex, yAbove] && !wallpaperFlags [xIndex, yAbove]
 							? 1 : 0;
 						int yBelow = yIndex - 1;
-						int wallBelow = yBelow >= 0 && !roomFlags [xIndex, yBelow] && !wallpaperFlags [xIndex, yBelow]
+						int wallBelow = yBelow >= 0 && wallFlags [xIndex, yBelow] && !wallpaperFlags [xIndex, yBelow]
 							? 1 : 0;
 						int xLeft = xIndex - 1;
-						int wallLeft = xLeft >= 0 && !roomFlags [xLeft, yIndex] && !wallpaperFlags [xLeft, yIndex]
+						int wallLeft = xLeft >= 0 && wallFlags [xLeft, yIndex] && !wallpaperFlags [xLeft, yIndex]
 							? 1 : 0;
 						int xRight = xIndex + 1;
-						int wallRight = xRight < floorwidth && !roomFlags [xRight, yIndex] && !wallpaperFlags [xRight, yIndex]
+						int wallRight = xRight < floorwidth && wallFlags [xRight, yIndex] && !wallpaperFlags [xRight, yIndex]
 							? 1 : 0;
 
 						// Instantiate the proper wall type and rotation based on table lookups

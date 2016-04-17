@@ -120,7 +120,7 @@ public class Guard : MonoBehaviour {
 		Vector3 oldPos = new Vector3 (oldX, oldY);
 
 		// If the player is blocking the way, recalculate a route that goes around the player.
-		if (TileItem.GetObjectsAtPosition<PlayerController> (goalTile.X, goalTile.Y).Count > 0) {
+		if (GetPlayerTile().Equals(goalTile)) {
 			moveInterruptedByPlayer = true;
 			InitializeLook ();
 			return;
@@ -296,10 +296,23 @@ public class Guard : MonoBehaviour {
 			return false;
 		} else if (TileItem.GetObjectsAtPosition<Wall> (tile.X, tile.Y).Count > 0) {
 			return false;
-		} else if (includePlayer && TileItem.GetObjectsAtPosition<PlayerController> (tile.X, tile.Y).Count > 0) {
+		} else if (includePlayer && GetPlayerTile().Equals(tile)) {
 			return false;
 		}
 		return true;
+	}
+
+	Tile GetPlayerTile() {
+		GameObject player;
+		foreach (GameObject go in gameObject.scene.GetRootGameObjects()) {
+			if (go.GetComponents<PlayerController> ().Length > 0) {
+				player = go;
+				return new Tile(
+					TileItem.GlobalToTilePosition (player.transform.position.x), 
+					TileItem.GlobalToTilePosition(player.transform.position.y));
+			}
+		}
+		return null;
 	}
 
 	float GetDistance(Tile tile1, Tile tile2) {

@@ -19,9 +19,16 @@ public class Room : MonoBehaviour {
     void Start () {
         tileItem = gameObject.GetComponent<TileItem>();
 
-        floorTileParent = new GameObject();
-        floorTileParent.name = "Floor Tile Parent";
-        floorTileParent.transform.SetParent(this.transform);
+        if (floorTileParent == null) {
+            Transform maybeFloorTileParent = transform.FindChild("Floor Tile Parent");
+            if (maybeFloorTileParent != null) {
+                floorTileParent = maybeFloorTileParent.gameObject;
+            } else {
+                floorTileParent = new GameObject();
+                floorTileParent.name = "Floor Tile Parent";
+                floorTileParent.transform.SetParent(this.transform);
+            }
+        }
 
         generateFloorSprites();
     }
