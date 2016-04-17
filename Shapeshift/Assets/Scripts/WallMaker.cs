@@ -86,7 +86,7 @@ public class WallMaker : MonoBehaviour {
 			}
 		}
 
-		Debug.Log ("(top, bottom, left, right): (" + top + ", " + bottom + ", " + left + ", " + right + ")");
+		// Debug.Log ("(top, bottom, left, right): (" + top + ", " + bottom + ", " + left + ", " + right + ")");
 		for (int x = left; x < right; x++) {
 			for (int y = bottom; y < top; y++) {
 				int xIndex = x - left;
@@ -107,7 +107,7 @@ public class WallMaker : MonoBehaviour {
 						int xRight = xIndex + 1;
 						int wallRight = xRight < floorwidth && !roomFlags [xRight, yIndex] && !wallpaperFlags [xRight, yIndex]
 							? 1 : 0;
-						Debug.Log ("At (" + x + ", " + y + "): (" + wallAbove + ", " + wallBelow + ", " + wallLeft + ", " + wallRight + ")");
+						// Debug.Log ("At (" + x + ", " + y + "): (" + wallAbove + ", " + wallBelow + ", " + wallLeft + ", " + wallRight + ")");
 						instantiateWall (x, y, spriteConfig[wallAbove, wallBelow, wallLeft, wallRight],
 							rotationConfig[wallAbove, wallBelow, wallLeft, wallRight]);
 					}
@@ -125,7 +125,7 @@ public class WallMaker : MonoBehaviour {
 	// Create a wall segment with x and y tile coordinates
 	// Uses the given sprite rotated angle degrees counter-clockwise
 	void instantiateWall(int x, int y, Sprite sprite, int angle) {
-		Debug.Log ("Adding a " + sprite.name + " wall at (" + x + ", " + y + "), rotated " + angle);
+		// Debug.Log ("Adding a " + sprite.name + " wall at (" + x + ", " + y + "), rotated " + angle);
 		GameObject g = new GameObject ();
 
 		SpriteRenderer sr = g.AddComponent<SpriteRenderer> ();
