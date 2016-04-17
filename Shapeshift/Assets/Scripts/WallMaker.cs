@@ -15,7 +15,6 @@ public class WallMaker : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		Debug.Log ("Hello world");
 		// get the list of rooms
 		Room[] rooms = FindObjectsOfType<Room> ();
 
@@ -66,7 +65,6 @@ public class WallMaker : MonoBehaviour {
 	// Create a wall segment with x and y tile coordinates
 	// Uses the given sprite rotated angle degrees counter-clockwise
 	void instantiateWall(int x, int y, Sprite sprite, int angle) {
-		Debug.Log ("Adding " + sprite.name + " wall at (" + x + ", " + y + ")");
 		GameObject g = new GameObject ();
 		SpriteRenderer sr = g.AddComponent<SpriteRenderer> ();
 		g.transform.Rotate (0, 0, angle);
