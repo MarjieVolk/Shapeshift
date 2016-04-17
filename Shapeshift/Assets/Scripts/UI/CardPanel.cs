@@ -8,11 +8,11 @@ public class CardPanel : MonoBehaviour {
     public GameObject cardPrefab;
     public PlayableFurnitureItem[] startingFurnitureTypes;
 
-    private Dictionary<PlayableFurnitureItem, GameObject> buttons;
+    private Dictionary<string, GameObject> buttons;
 
 	// Use this for initialization
 	void Start () {
-        buttons = new Dictionary<PlayableFurnitureItem, GameObject>();
+        buttons = new Dictionary<string, GameObject>();
 
 	    foreach (PlayableFurnitureItem type in startingFurnitureTypes) {
             add(type);
@@ -25,18 +25,18 @@ public class CardPanel : MonoBehaviour {
 	}
 
     public void remove(PlayableFurnitureItem item) {
-        if (!buttons.ContainsKey(item)) {
+        if (!buttons.ContainsKey(item.furnitureName)) {
             return;
         }
 
-        GameObject toRemove = buttons[item];
-        buttons.Remove(item);
+        GameObject toRemove = buttons[item.furnitureName];
+        buttons.Remove(item.furnitureName);
         toRemove.transform.SetParent(null);
         Destroy(toRemove);
     }
 
     public void add(PlayableFurnitureItem item) {
-        if (buttons.ContainsKey(item)) {
+        if (buttons.ContainsKey(item.furnitureName)) {
             return;
         }
 
@@ -49,6 +49,6 @@ public class CardPanel : MonoBehaviour {
             FindObjectOfType<PlayerTransformer>().TransformPlayer(item.gameObject);
         });
 
-        buttons.Add(item, button);
+        buttons.Add(item.furnitureName, button);
     }
 }

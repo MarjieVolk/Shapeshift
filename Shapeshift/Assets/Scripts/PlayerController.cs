@@ -66,6 +66,7 @@ public class PlayerController : MonoBehaviour {
         } else {
             // Lose access to item, gain catching cooldown
             FindObjectOfType<CardPanel>().remove(currentTransformation.GetComponent<PlayableFurnitureItem>());
+            GetComponent<PlayerTransformer>().TransformPlayer(null);
         }
     }
 }
