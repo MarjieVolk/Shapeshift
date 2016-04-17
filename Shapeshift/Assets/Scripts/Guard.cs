@@ -98,7 +98,7 @@ public class Guard : MonoBehaviour {
 		Vector3 goalPos = new Vector3 (goalX, goalY);
 
 		// The current goal has been reached.  Move on to the next tile.
-		if (ManhattanDistance(goalPos, transform.position) <= Speed) {
+		if (ManhattanDistance(goalPos, transform.position) <= 2 * Speed) {
 			currentGoalInPath++;
 			// If you have reached the final goal, start looking around.
 			if (currentGoalInPath == currentPath.Count) {
@@ -120,11 +120,14 @@ public class Guard : MonoBehaviour {
 		Vector3 oldPos = new Vector3 (oldX, oldY);
 
 		// If the player is blocking the way, recalculate a route that goes around the player.
-		if (TileItem.GetObjectsAtPosition<PlayerController> (goalTile.X, goalTile.Y).Count > 0 ||
-	      TileItem.GetObjectsAtPosition<PlayerController> (oldTile.X, oldTile.Y).Count > 0) {
-			moveInterruptedByPlayer = true;
-			InitializeLook ();
-			return;
+		if (TileItem.GetObjectsAtPosition<PlayerController> (goalTile.X, goalTile.Y).Count > 0) {
+			//moveInterruptedByPlayer = true;
+			//InitializeLook ();
+			//return;
+		}
+
+		if (ManhattanDistance (transform.position, goalPos) > 1.1 * ManhattanDistance (oldPos, goalPos)) {
+			StartMove (false);
 		}
 
 		Vector3 increment = (goalPos - oldPos);

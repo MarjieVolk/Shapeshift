@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class VisibilityHelper : MonoBehaviour
 {
+    public float maxVisibilityDistance;
+
     public void Update()
     {
         // collect LOS blocking item in the scene
@@ -61,7 +63,8 @@ public class VisibilityHelper : MonoBehaviour
         List<Vector2> uvs = new List<Vector2>();
         foreach (Vector3 vertex in meshVertices)
         {
-            uvs.Add(new Vector2(vertex.x, vertex.y));
+            uvs.Add(new Vector2(vertex.magnitude / maxVisibilityDistance, 0));
+            //Debug.Log(vertex.magnitude * 100);
         }
         visibleMesh.uv = uvs.ToArray();
         
