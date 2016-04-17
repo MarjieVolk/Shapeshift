@@ -5,7 +5,7 @@ using System.Collections;
 public class GuardWaypoint : MonoBehaviour {
 
 	// A lower ordering is earlier in a guard's route.
-	// Must be a positive integer.
+	// Should preferably be a positive integer, although making it negative won't break the game.
 	public int Ordering;
 
 	// Use this for initialization

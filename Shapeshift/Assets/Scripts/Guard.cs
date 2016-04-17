@@ -22,6 +22,7 @@ public class Guard : MonoBehaviour {
 	}
 
 	// Put data for MOVE here.
+	private bool moveInterruptedByPlayer = false;
 	private List<Tile> currentPath;
 	private int currentGoalInPath;  // Should always be greater than 1.
 
@@ -51,7 +52,11 @@ public class Guard : MonoBehaviour {
 
 	// MOVE initialization.
 	void InitializeMove() {
-		currentAction = GuardAction.MOVE;
+		if (moveInterruptedByPlayer) {
+			StartMove (true);
+			moveInterruptedByPlayer = false;
+			return;
+		}
 
 		// Look up the next waypoint.  Checks length to avoid an infinite loop.
 		if (waypoints.Length > 0) {
@@ -62,10 +67,27 @@ public class Guard : MonoBehaviour {
 			}
 		} else {
 			InitializeLook ();
+			return;
 		}
 
-		currentPath = FindPath (false);
+		StartMove (false);
+	}
+
+	// Gets the guard actually moving.
+	void StartMove(bool includePlayer) {
+		currentAction = GuardAction.MOVE;
+
+		currentPath = FindPath (includePlayer);
 		currentGoalInPath = 1;
+
+		// Precautionary snap to grid.
+		gameObject.GetComponent<TileItem> ().SnapToGrid ();
+
+		// Move on if no path can be found.
+		if (currentPath == null) {
+			InitializeLook ();
+			return;
+		}
 	}
 
 	// Update in MOVE mode.
@@ -76,11 +98,15 @@ public class Guard : MonoBehaviour {
 		Vector3 goalPos = new Vector3 (goalX, goalY);
 
 		// The current goal has been reached.  Move on to the next tile.
-		if (Math.Abs(goalPos.y - transform.position.y) + Math.Abs(goalPos.x - transform.position.x) < Speed * 2) {
+		if (ManhattanDistance(goalPos, transform.position) <= Speed) {
 			currentGoalInPath++;
 			// If you have reached the final goal, start looking around.
 			if (currentGoalInPath == currentPath.Count) {
+				// Land completely on the waypoint.
+				gameObject.GetComponent<TileItem> ().SnapToGrid ();
+
 				InitializeLook ();
+				return;
 			} else {
 				// Change directions if necessary.
 				currentDirection = GetDirectionFromTiles(goalTile, currentPath[currentGoalInPath]);
@@ -92,6 +118,19 @@ public class Guard : MonoBehaviour {
 		float oldX = TileItem.TileToGlobalPosition (oldTile.X);
 		float oldY = TileItem.TileToGlobalPosition (oldTile.Y);
 		Vector3 oldPos = new Vector3 (oldX, oldY);
+
+		// If the player is blocking the way, recalculate a route that goes around the player.
+		if (TileItem.GetObjectsAtPosition<PlayerController> (goalTile.X, goalTile.Y).Count > 0) {
+			moveInterruptedByPlayer = true;
+			InitializeLook ();
+			return;
+		}
+
+		if (ManhattanDistance (transform.position, goalPos) > 1.1 * ManhattanDistance (oldPos, goalPos)) {
+			// If you overshoot the goal, recalculate A* in an attempt to dig out of your own mess. :(
+			StartMove (false);
+			return;
+		}
 
 		Vector3 increment = (goalPos - oldPos);
 		increment.Normalize ();
@@ -166,6 +205,10 @@ public class Guard : MonoBehaviour {
 		}
 	}
 
+	float ManhattanDistance(Vector3 a, Vector3 b) {
+		return Math.Abs (a.x - b.x) + Math.Abs (a.y- b.y);
+	}
+
 	/* PATHFINDING CODE BELOW HERE. */
 
 	List<Tile> FindPath(bool includePlayer) {
@@ -216,8 +259,10 @@ public class Guard : MonoBehaviour {
 				break;
 			}
 
-			// TODO: Handle the case where there is no path.  Also handle case where player
-			// is directly in your way.
+			if (priorityQueue.Count == 0) {
+				// There is no path. :(
+				return null;
+			}
 		}
 
 		// Adds everything, including the start tile, to the path.
