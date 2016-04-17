@@ -54,6 +54,14 @@ public class TileItem : MonoBehaviour
 		return Mathf.RoundToInt (p / TILE_SIZE);
 	}
 
+	public static float TileToGlobalPosition(int p, bool centerOfTile) {
+		if (centerOfTile) {
+			return p * TILE_SIZE + TILE_SIZE / 2f;
+		} else {
+			return p * TILE_SIZE;
+		}
+	}
+
 	/**
 	 * Call anytime you want to change position in order to update tile positions.
 	 * Overwrites z.
