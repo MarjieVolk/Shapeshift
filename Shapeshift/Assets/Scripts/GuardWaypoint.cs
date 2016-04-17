@@ -4,8 +4,9 @@ using System.Collections;
 [RequireComponent (typeof (TileItem))]
 public class GuardWaypoint : MonoBehaviour {
 
-	// A lower ordering is first in a guard's route.
-	public int ordering;
+	// A lower ordering is earlier in a guard's route.
+	// Must be a positive integer.
+	public int Ordering;
 
 	// Use this for initialization
 	void Start () {
