@@ -74,6 +74,8 @@ public class WallMaker : MonoBehaviour {
         g.transform.Rotate (0, 0, angle);
 
         g.AddComponent<Wall>();
+        g.AddComponent<BlocksLineOfSight>();
+        g.layer = LayerMask.NameToLayer("VisibilityBlocking");
 
 		TileItem ti = g.AddComponent<TileItem> ();
 		ti.setTilePosition (x, y);
