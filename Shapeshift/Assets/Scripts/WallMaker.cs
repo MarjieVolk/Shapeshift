@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-[RequireComponent (typeof (TileItem))]
 public class WallMaker : MonoBehaviour {
 
 	public Sprite loneSprite;
@@ -182,7 +181,7 @@ public class WallMaker : MonoBehaviour {
         g.layer = LayerMask.NameToLayer("VisibilityBlocking");
 
 		TileItem ti = g.AddComponent<TileItem> ();
-		ti.setTilePosition (x, y);
+		ti.SetTilePosition (x, y);
 		g.transform.Translate (0, 0, Room.ROOM_TILE_Z_INDEX); // TODO(aklen): Hack.
 	}
 	
