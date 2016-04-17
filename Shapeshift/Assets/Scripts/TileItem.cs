@@ -26,8 +26,8 @@ public class TileItem : MonoBehaviour
 	}
 
     public void Awake () {
-		tileW = startingTileWidth;
-		tileH = startingTileHeight;
+		_tileW = startingTileWidth;
+		_tileH = startingTileHeight;
         SnapToGrid ();
 		AddToTileMap ();
     }
