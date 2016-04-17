@@ -11,15 +11,13 @@ public class WallMaker : MonoBehaviour {
 	public Sprite verticalSprite;
 	public Sprite tSprite;
 	public Sprite quadSprite;
-	public Sprite wallpaperSprite;
-	public Sprite wallpaperEndSprite;
-	public Sprite wallpaperLoneSprite;
 
 	private const int WALL_Z = 0;
 
 	private static Sprite[,,,] spriteConfig = new Sprite[2,2,2,2];
 	private static int[,,,] rotationConfig = new int[2,2,2,2];
 
+	// Save the sprite and rotation for a configuration of walls
 	void initConfig(int top, int bottom, int left, int right, Sprite s, int r) {
 		spriteConfig[top, bottom, left, right] = s;
 		rotationConfig [top, bottom, left, right] = r;
@@ -74,6 +72,8 @@ public class WallMaker : MonoBehaviour {
 		int floorheight = top - bottom;
 		bool [,] roomFlags = new bool[floorwidth, floorheight];
 		bool [,] wallpaperFlags = new bool[floorwidth, floorheight];
+		RoomTileSet[,] wallPaperSets = new RoomTileSet[floorwidth, floorheight];
+
 
 		foreach (Room room in rooms) {
 			ti = room.GetComponent<TileItem> ();
@@ -81,8 +81,8 @@ public class WallMaker : MonoBehaviour {
 				for (int y = ti.tileY; y < ti.tileY + ti.tileH; y++) {
 					roomFlags [x-left, y-bottom] = true;
 				}
-				// TODO avoid wallpaper above a vertical doorway
 				wallpaperFlags [x - left, ti.tileY + ti.tileH - bottom] = true;
+				wallPaperSets [x - left, ti.tileY + ti.tileH - bottom] = room.tileSet;
 			}
 		}
 
@@ -93,8 +93,26 @@ public class WallMaker : MonoBehaviour {
 				int yIndex = y - bottom;
 				if (!roomFlags [xIndex, yIndex]) {
 					if (wallpaperFlags [xIndex, yIndex]) {
-						instantiateWall (x, y, wallpaperSprite);
+
+						// Determine whether wallpaper continues left or right of you
+						int xLeft = xIndex - 1;
+						bool wallLeft = xLeft >= 0 && wallpaperFlags [xLeft, yIndex];
+						int xRight = xIndex + 1;
+						bool wallRight = xRight < floorwidth && wallpaperFlags [xRight, yIndex];
+
+						// Instantiate with the proper sprite (and manipulation)
+						if (wallLeft && wallRight) {
+							instantiateWall (x, y, wallPaperSets [xIndex, yIndex].wallOpen);
+						} else if (wallLeft) {
+							instantiateWall (x, y, wallPaperSets [xIndex, yIndex].wallLeftCorner, 0, true);
+						} else if (wallRight) {
+							instantiateWall (x, y, wallPaperSets [xIndex, yIndex].wallLeftCorner);
+						} else {
+							instantiateWall (x, y, wallPaperSets [xIndex, yIndex].wallTwoCorners);
+						}
 					} else {
+
+						// Determine whether the walls continue in each direction (ternary convert bool to int for table lookup)
 						int yAbove = yIndex + 1;
 						int wallAbove = yAbove < floorheight && !roomFlags [xIndex, yAbove] && !wallpaperFlags [xIndex, yAbove]
 							? 1 : 0;
@@ -107,6 +125,8 @@ public class WallMaker : MonoBehaviour {
 						int xRight = xIndex + 1;
 						int wallRight = xRight < floorwidth && !roomFlags [xRight, yIndex] && !wallpaperFlags [xRight, yIndex]
 							? 1 : 0;
+
+						// Instantiate the proper wall type and rotation based on table lookups
 						// Debug.Log ("At (" + x + ", " + y + "): (" + wallAbove + ", " + wallBelow + ", " + wallLeft + ", " + wallRight + ")");
 						instantiateWall (x, y, spriteConfig[wallAbove, wallBelow, wallLeft, wallRight],
 							rotationConfig[wallAbove, wallBelow, wallLeft, wallRight]);
@@ -117,19 +137,27 @@ public class WallMaker : MonoBehaviour {
 	}	
 
 	// Create a wall segment with x and y tile coordinates
-	// Uses the given sprite rotated angle degrees counter-clockwise
 	void instantiateWall(int x, int y, Sprite sprite) {
-		instantiateWall (x, y, sprite, 0);
+		instantiateWall (x, y, sprite, 0, false);
 	}
 
 	// Create a wall segment with x and y tile coordinates
 	// Uses the given sprite rotated angle degrees counter-clockwise
 	void instantiateWall(int x, int y, Sprite sprite, int angle) {
+		instantiateWall (x, y, sprite, angle, false);
+	}
+
+	// Create a wall segment with x and y tile coordinates
+	// Uses the given sprite rotated angle degrees counter-clockwise
+	// Optionally flip along the x axis
+	void instantiateWall(int x, int y, Sprite sprite, int angle, bool flipX) {
 		// Debug.Log ("Adding a " + sprite.name + " wall at (" + x + ", " + y + "), rotated " + angle);
 		GameObject g = new GameObject ();
 
 		SpriteRenderer sr = g.AddComponent<SpriteRenderer> ();
         sr.sprite = sprite;
+		sr.flipX = flipX;
+
         g.AddComponent<BoxCollider2D>();
 
         g.transform.Rotate (0, 0, angle);
