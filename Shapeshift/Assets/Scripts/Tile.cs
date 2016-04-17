@@ -34,4 +34,8 @@ public class Tile {
 	public override int GetHashCode() {
 		return xPos.GetHashCode () ^ yPos.GetHashCode ();
 	}
+
+  public override string ToString() {
+    return "Tile{X=" + xPos + ", Y=" + yPos + "}";
+  }
 }
