@@ -42,9 +42,13 @@ public class PlayerController : MonoBehaviour {
 
         translation.Normalize();
         translation *= Speed;
-        if (movementEnabled)
-        {
+
+        if (!movementEnabled && translation.magnitude > 0) {
+            GetComponent<PlayerTransformer>().TransformPlayer(null);
+        }
+
+        if (movementEnabled) {
             gameObject.GetComponent<TileItem>().SetGlobalPosition(transform.position + new Vector3(translation.x, translation.y));
         }
-	}
+    }
 }
