@@ -5,7 +5,7 @@ using System;
 
 public class TileItem : MonoBehaviour
 {
-    public static int TILE_SIZE = 40;
+    public static float TILE_SIZE = 0.32f;
 	private static Dictionary<long, List<MonoBehaviour>> _tileMap;
 
     public int tileX;
