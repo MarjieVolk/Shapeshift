@@ -35,6 +35,6 @@ public class PlayerController : MonoBehaviour {
 
         translation.Normalize();
         translation *= Speed;
-        transform.position = transform.position + new Vector3(translation.x, translation.y);
+		GetComponent<TileItem>().MovePosition(transform.position + new Vector3(translation.x, translation.y));
 	}
 }
