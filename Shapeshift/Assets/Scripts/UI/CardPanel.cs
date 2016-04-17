@@ -46,7 +46,7 @@ public class CardPanel : MonoBehaviour {
         button.transform.SetParent(this.transform);
 
         button.GetComponent<Button>().onClick.AddListener(() => {
-            Debug.Log("Clicked " + item.furnitureName);
+            FindObjectOfType<PlayerTransformer>().TransformPlayer(item.gameObject);
         });
 
         buttons.Add(item, button);
