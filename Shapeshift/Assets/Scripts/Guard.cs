@@ -7,6 +7,7 @@ using System.Collections.Generic;
 public class Guard : MonoBehaviour {
 
 	public float Speed;
+	public float ChaseSpeed;
 	public int LookTime;
 	public Direction FirstDirection = Direction.SOUTH;
 
@@ -18,7 +19,7 @@ public class Guard : MonoBehaviour {
 	enum GuardAction {
 		MOVE,
 		LOOK,
-		CATCH
+		CHASE
 	}
 
 	// Put data for MOVE here.
@@ -205,6 +206,10 @@ public class Guard : MonoBehaviour {
 		} else {
 			return Direction.SOUTH;
 		}
+	}
+
+	public Direction GetCurrentDirection() {
+		return currentDirection;
 	}
 
 	float ManhattanDistance(Vector3 a, Vector3 b) {

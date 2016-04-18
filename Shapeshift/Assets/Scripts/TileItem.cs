@@ -108,7 +108,7 @@ public class TileItem : MonoBehaviour
     }
 
     private void AddToTileMap() {
-      Debug.Log("AddToTileMap " + this + " at " + new Tile(tileX, tileY));
+      //Debug.Log("AddToTileMap " + this + " at " + new Tile(tileX, tileY));
       if (tileX == 0 && tileY == 0) {
         Debug.Log(Environment.StackTrace);
       }
@@ -134,17 +134,17 @@ public class TileItem : MonoBehaviour
     }
 
     public static bool DoesPlacementCollideWithThings(int tileX, int tileY, int tileW, int tileH) {
-      Debug.Log("DoesPlacementCollideWithThings " + tileX + ", " + tileY + ", " + tileW + ", " + tileH);
+      //Debug.Log("DoesPlacementCollideWithThings " + tileX + ", " + tileY + ", " + tileW + ", " + tileH);
       for (int ix = 0; ix < tileW; ix++) {
         for (int iy = 0; iy < tileH; iy++) {
           if (GetObjectsAtPosition<Wall>(tileX + ix, tileY + iy).Count > 0) {
-            Debug.Log("Placement collides with wall");
+            //Debug.Log("Placement collides with wall");
             return true;
           } else if (GetObjectsAtPosition<FurnitureItem>(tileX + ix, tileY + iy).Count > 0) {
-            Debug.Log("Placement collides with furniture");
+            //Debug.Log("Placement collides with furniture");
             return true;
           } else if (GetObjectsAtPosition<Guard>(tileX + ix, tileY + iy).Count > 0) {
-            Debug.Log("Placement collides with guard");
+            //Debug.Log("Placement collides with guard");
             return true;
           }
         }
