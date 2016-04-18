@@ -93,7 +93,7 @@ public class LevelOneTutorialController : MonoBehaviour {
         };
 
         popup.addCloseCondition(() => {
-
+            return false;
         });
     }
 

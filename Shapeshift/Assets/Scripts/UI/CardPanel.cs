@@ -9,7 +9,7 @@ public class CardPanel : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        GameObject.FindObjectOfType<UnlockState>().UnlockStateChanged += () => {
+        UnlockState.INSTANCE.UnlockStateChanged += () => {
             refresh();
         };
 

@@ -4,6 +4,8 @@ using System.Collections;
 [RequireComponent(typeof(CollisionEventCommunicator))]
 public class VictoryTotem : MonoBehaviour {
 
+    public static VictoryTotem INSTANCE;
+
     public delegate void VictoryHandler();
     public event VictoryHandler OnVictory;
     public bool WinOnAcquire = true;
@@ -13,13 +15,8 @@ public class VictoryTotem : MonoBehaviour {
     private Vector2 oldPosition;
 
 	// Use this for initialization
-	void Start () {
-
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
+	void Awake () {
+        INSTANCE = this;
 	}
 
     void OnTriggerEnter2D(Collider2D coll)

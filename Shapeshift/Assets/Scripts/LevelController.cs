@@ -18,20 +18,26 @@ public class LevelController : MonoBehaviour {
             DontDestroyOnLoad(this);
 
             // TODO: main menu first
-            currentLevel = 1;
-            SceneManager.LoadScene(currentLevel);
+            SceneManager.LoadScene(1);
 
         } else {
             Destroy(this);
         }
 	}
-	
+
+    void OnLevelWasLoaded(int level) {
+        currentLevel = level;
+
+        VictoryTotem.INSTANCE.OnVictory += () => {
+            advanceToNextLevel();
+        };
+    }
+
 	public void advanceToNextLevel() {
         // TODO: level/card select first
-        currentLevel++;
 
-        if (currentLevel <= nLevels) {
-            SceneManager.LoadScene(currentLevel);
+        if (currentLevel + 1 <= nLevels) {
+            SceneManager.LoadScene(currentLevel + 1);
         } else {
             // TODO: win screen
         }
