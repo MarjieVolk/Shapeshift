@@ -17,7 +17,7 @@ public class Pathfinding
         costs[startTile] = 0;
         priorityQueue.Add(new ScoredTile(startTile, 0), 0);
 
-        int numIter = 0; ;
+        int numIter = 0;
         while (true)
         {
             // Pop lowest-cost node from priority queue.
@@ -63,6 +63,11 @@ public class Pathfinding
             if (priorityQueue.Count == 0 || numIter > 1000)
             {
                 // There is no path. :(
+                if (priorityQueue.Count == 0) {
+                    Debug.Log("No path found -- priority queue");
+                } else {
+                    Debug.Log("No path found -- iterations");
+                }
                 return null;
             }
         }

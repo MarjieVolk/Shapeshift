@@ -29,6 +29,8 @@ class UnlockState : MonoBehaviour {
         if (UnlockStateChanged != null) {
             UnlockStateChanged();
         }
+
+        addEventHandlers();
     }
 
     void OnLevelWasLoaded(int level) {
@@ -43,6 +45,10 @@ class UnlockState : MonoBehaviour {
             UnlockStateChanged();
         }
 
+        addEventHandlers();
+    }
+
+    private void addEventHandlers() {
         PlayerCaughtHandler caughtHandler = FindObjectOfType<PlayerCaughtHandler>();
 
         if (caughtHandler != null) {
