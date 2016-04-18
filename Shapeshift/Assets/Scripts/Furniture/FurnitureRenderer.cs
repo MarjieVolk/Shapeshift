@@ -11,14 +11,18 @@ public class FurnitureRenderer : MonoBehaviour {
     private Dictionary<FurnitureKey, PlayableFurnitureItem> furniture;
 
     void Awake() {
-        INSTANCE = this;
+        if (INSTANCE == null) {
+            INSTANCE = this;
 
-        furniture = new Dictionary<FurnitureKey, PlayableFurnitureItem>();
-        foreach (PlayableFurnitureItem item in allPossibleFurniture) {
-            FurnitureKey key = new FurnitureKey();
-            key.type = item.furnitureType;
-            key.quality = item.quality;
-            furniture.Add(key, item);
+            furniture = new Dictionary<FurnitureKey, PlayableFurnitureItem>();
+            foreach (PlayableFurnitureItem item in allPossibleFurniture) {
+                FurnitureKey key = new FurnitureKey();
+                key.type = item.furnitureType;
+                key.quality = item.quality;
+                furniture.Add(key, item);
+            }
+        } else {
+            Destroy(this);
         }
     }
 	
