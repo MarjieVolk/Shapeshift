@@ -91,7 +91,7 @@ public class MoveState : State {
         Vector3 oldPos = new Vector3(oldX, oldY);
 
         // If the player is blocking the way, recalculate a route that goes around the player.
-        if (GetPlayerTile().Equals(goalTile))
+        if (Pathfinding.GetPlayerTile().Equals(goalTile))
         {
             // Corner case where player is blocking the waypoint.
             if (!(goalTile.Equals(currentPath[currentPath.Count - 1])))
@@ -116,7 +116,12 @@ public class MoveState : State {
 
 	// Gets the guard actually moving.
 	void StartMove(bool includePlayer) {
-		currentPath = FindPath (includePlayer);
+        TileItem tileItem = gameObject.GetComponent<TileItem>();
+
+        // Establish current and goal tile.
+        Tile startTile = new Tile(tileItem.tileX, tileItem.tileY);
+        Tile goalTile = currentWaypoint.getTile();
+        currentPath = Pathfinding.FindPath (startTile, goalTile, includePlayer);
 		currentGoalInPath = 0;
 
 		// Precautionary snap to grid.
@@ -163,122 +168,5 @@ public class MoveState : State {
 
 	float ManhattanDistance(Vector3 a, Vector3 b) {
 		return Math.Abs (a.x - b.x) + Math.Abs (a.y- b.y);
-	}
-
-	/* PATHFINDING CODE BELOW HERE. */
-
-	List<Tile> FindPath(bool includePlayer) {
-		TileItem tileItem = gameObject.GetComponent<TileItem> ();
-
-		// Establish current and goal tile.
-		Tile startTile = new Tile (tileItem.tileX, tileItem.tileY);
-		Tile goalTile = currentWaypoint.getTile();
-
-		Dictionary<Tile, Tile> predecessors = new Dictionary<Tile, Tile> ();
-		Dictionary<Tile, float> costs = new Dictionary<Tile, float> ();
-		SortedList<ScoredTile, float> priorityQueue = new SortedList<ScoredTile, float> ();
-
-		predecessors.Add (startTile, null);
-		costs[startTile] = 0;
-		priorityQueue.Add(new ScoredTile(startTile, 0), 0);
-
-		int numIter = 0;;
-		while (true) {
-			// Pop lowest-cost node from priority queue.
-			Tile currentTile = priorityQueue.Keys[0].EnclosedTile;
-			priorityQueue.RemoveAt (0);
-
-			// Add neighbors if a new lowest-cost path can be made through them.
-			foreach (Tile neighbor in GetNeighbors (currentTile, goalTile, includePlayer)) {
-				float newCost = costs [currentTile] + 1 + GetDistance (currentTile, neighbor);
-				if (!(costs.ContainsKey (neighbor) && costs [neighbor] <= newCost)) {
-					// Remove old cost in priorityQueue if necessary.
-					if (costs.ContainsKey(neighbor)) {
-						ScoredTile oldNeighbor = new ScoredTile (neighbor, costs [neighbor]);
-						if (priorityQueue.ContainsKey(oldNeighbor)) {
-							priorityQueue.Remove (oldNeighbor);
-						}
-					}
-					costs [neighbor] = newCost;
-					predecessors [neighbor] = currentTile;
-					priorityQueue.Add(new ScoredTile(neighbor, newCost), newCost);
-				}
-			}
-
-			// Ending condition.
-			if (costs.ContainsKey (goalTile)) {
-				float goalCost = costs [goalTile];
-				foreach (float cost in priorityQueue.Values) {
-					if (cost < goalCost) {
-						continue;
-					}
-				}
-				break;
-			}
-
-			numIter++;
-			if (priorityQueue.Count == 0 || numIter > 1000) {
-				// There is no path. :(
-				return null;
-			}
-		}
-		// Adds everything, including the start tile, to the path.
-		List<Tile> tracedPath = new List<Tile> ();
-		Tile traceTile = goalTile;
-		while (traceTile != null) {
-			tracedPath.Add (traceTile);
-			traceTile = predecessors [traceTile];
-		}
-		tracedPath.Reverse ();
-		return tracedPath;
-	}
-
-	List<Tile> GetNeighbors(Tile fromMe, Tile goalTile, bool includePlayer) {
-		List<Tile> neighbors = new List<Tile> (4);
-
-		Tile right = new Tile (fromMe.X + 1, fromMe.Y);
-		if (IsViable(right, goalTile, includePlayer)) { neighbors.Add(right); }
-
-		Tile up = new Tile (fromMe.X, fromMe.Y + 1);
-		if (IsViable(up, goalTile, includePlayer)) { neighbors.Add(up); }
-
-		Tile left = new Tile (fromMe.X - 1, fromMe.Y);
-		if (IsViable(left, goalTile, includePlayer)) { neighbors.Add(left); }
-
-		Tile down = new Tile (fromMe.X, fromMe.Y - 1);
-		if (IsViable(down, goalTile, includePlayer)) { neighbors.Add(down); }
-		return neighbors;
-	}
-
-	bool IsViable(Tile tile, Tile goalTile, bool includePlayer) {
-		if (tile.Equals (goalTile)) {
-			return true;
-		} else if (TileItem.GetObjectsAtPosition<FurnitureItem> (tile.X, tile.Y).Count > 0) {
-			return false;
-		} else if (TileItem.GetObjectsAtPosition<Wall> (tile.X, tile.Y).Count > 0) {
-			return false;
-		} else if (includePlayer && GetPlayerTile().Equals(tile)) {
-			return false;
-		}
-		return true;
-	}
-
-	Tile GetPlayerTile() {
-		GameObject player;
-		foreach (GameObject go in gameObject.scene.GetRootGameObjects()) {
-			if (go.GetComponents<PlayerController> ().Length > 0) {
-				player = go;
-				return new Tile(
-					TileItem.GlobalToTilePosition (player.transform.position.x), 
-					TileItem.GlobalToTilePosition(player.transform.position.y));
-			}
-		}
-		return null;
-	}
-
-	float GetDistance(Tile tile1, Tile tile2) {
-		float xDist = tile1.X - tile2.X;
-		float yDist = tile1.Y - tile2.Y;
-		return (float) Math.Sqrt((xDist * xDist) + (yDist * yDist));
 	}
 }
