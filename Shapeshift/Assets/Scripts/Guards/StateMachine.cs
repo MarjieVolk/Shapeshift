@@ -1,11 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Linq;
 
 /// <summary>
 /// A class for managing state-machine-based AIs
 /// </summary>
 public class StateMachine : MonoBehaviour {
 
+    /// <summary>
+    /// The state the guard should start in, and default to if all others are disabled.
+    /// </summary>
     public State initialState;
 
     private State _currentState;
@@ -35,6 +39,8 @@ public class StateMachine : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+        if (GetComponents<State>().All((state) => { return !state.enabled; })) {
+            initialState.enabled = true;
+        }
 	}
 }
