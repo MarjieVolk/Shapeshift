@@ -6,6 +6,8 @@ using System.Collections.Generic;
 public class PlayerScanner : MonoBehaviour {
 
     public float scanCompletionSeconds = 2;
+    public PlusOneText plusOneText;
+    public Vector3 plusOneTextOffset;
 
     private PlayableFurnitureItem currentlyScanning;
     private float scanStartTime;
@@ -29,6 +31,7 @@ public class PlayerScanner : MonoBehaviour {
                     if (!currentlyScanning.hasBeenScanned) {
                         currentlyScanning.hasBeenScanned = true;
                         UnlockState.INSTANCE.completeScanOn(currentlyScanning.furnitureType);
+                        spawnPlusOneText(currentlyScanning.furnitureType);
                     }
                     currentlyScanning = null;
                 }
@@ -38,6 +41,13 @@ public class PlayerScanner : MonoBehaviour {
                 scanStartTime = Time.time;
             }
         }
+    }
+
+    private void spawnPlusOneText(FurnitureType type) {
+        PlusOneText text = Instantiate(plusOneText);
+        text.transform.SetParent(GameObject.FindObjectOfType<Canvas>().transform);
+        text.setFurnitureType(type);
+        text.transform.position = Camera.main.WorldToScreenPoint(this.transform.position + plusOneTextOffset);
     }
 
     private PlayableFurnitureItem findItemToScan() {
