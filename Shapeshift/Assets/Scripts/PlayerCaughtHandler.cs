@@ -13,7 +13,11 @@ public class PlayerCaughtHandler : MonoBehaviour {
 
     public event UnityAction PlayerCaughtAsHuman;
 
+
+    public float caughtCooldown = 3;
+
     private Vector3 startPosition;
+    private float caughtTime = 0;
 
     // Use this for initialization
     void Start () {
@@ -21,6 +25,8 @@ public class PlayerCaughtHandler : MonoBehaviour {
     }
 
     public void catchPlayer() {
+        caughtTime = Time.time;
+
         GameObject currentTransformation = GetComponent<PlayerTransformer>().getTransformation();
         if (currentTransformation == null) {
             // Transport player to beginning
@@ -41,5 +47,9 @@ public class PlayerCaughtHandler : MonoBehaviour {
         if (PlayerCaught != null) {
             PlayerCaught();
         }
+    }
+
+    public bool isOnCatchCooldown() {
+        return Time.time - caughtTime < caughtCooldown;
     }
 }

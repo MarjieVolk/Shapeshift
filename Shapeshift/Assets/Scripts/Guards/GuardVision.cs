@@ -125,7 +125,7 @@ public class GuardVision : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D collider) {
         PlayerTransformer player = collider.GetComponent<PlayerTransformer>();
-        if (player != null) {
+        if (player != null && !player.GetComponent<PlayerCaughtHandler>().isOnCatchCooldown()) {
             // Guard sees the player
             if (player.getTransformation() == null) {
                 // Player is human, begin chasing
