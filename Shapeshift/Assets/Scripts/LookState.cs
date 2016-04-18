@@ -29,6 +29,7 @@ public class LookState : State {
             if (_directionHolder.Direction == FirstDirection)
             {
                 // transition to move state here
+				Debug.Log("Switching to Move State! :D\n");
                 GetComponent<StateMachine>().CurrentState = GetComponent<MoveState>();
             }
             else

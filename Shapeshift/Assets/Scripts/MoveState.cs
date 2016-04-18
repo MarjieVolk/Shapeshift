@@ -47,6 +47,7 @@ public class MoveState : State {
         }
         else
         {
+			Debug.Log ("There are no waypoints. :(\n");
             GetComponent<StateMachine>().CurrentState = GetComponent<LookState>();
             return;
         }
@@ -124,6 +125,7 @@ public class MoveState : State {
 
 		// Move on if no path can be found.
 		if (currentPath == null) {
+			Debug.Log ("No path can be found; switching to LookState.\n");
             GetComponent<StateMachine>().CurrentState = GetComponent<LookState>();
 		}
 	}
