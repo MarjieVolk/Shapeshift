@@ -9,7 +9,8 @@ public class LevelOneTutorialController : MonoBehaviour {
 
     public TutorialText tutorialTextPrefab;
     public float popupDelayTime = 1.5f;
-    
+
+    private float shiftPopupTriggeredTime;
     private bool shiftPopupDisplayed = false;
     private bool shiftPopupDone = false;
     private bool playerHasTransformed = false;
@@ -30,6 +31,8 @@ public class LevelOneTutorialController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         canvas = GameObject.FindObjectOfType<Canvas>();
+
+        shiftPopupTriggeredTime = Time.time;
 
         goalRoom.OnTriggerEnter += (GameObject obj) => {
             if (obj.GetComponent<PlayerController>() != null) {
@@ -54,7 +57,7 @@ public class LevelOneTutorialController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 	    if (!shiftPopupDisplayed
-            && Time.time >= popupDelayTime) {
+            && Time.time - shiftPopupTriggeredTime >= popupDelayTime) {
             createShiftPopup();
         }
 
@@ -130,7 +133,9 @@ public class LevelOneTutorialController : MonoBehaviour {
 
     private void playerTransformedListener(GameObject target) {
         playerHasTransformed = true;
-        if (playerInBathroom && target.gameObject.GetComponent<PlayableFurnitureItem>().furnitureType == FurnitureType.Sink) {
+        if (playerInBathroom 
+            && target != null 
+            && target.gameObject.GetComponent<PlayableFurnitureItem>().furnitureType == FurnitureType.Sink) {
             playerHasTransformedIntoSinkInBathroom = true;
         }
     }

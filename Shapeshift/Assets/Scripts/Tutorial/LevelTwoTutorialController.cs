@@ -6,6 +6,7 @@ public class LevelTwoTutorialController : MonoBehaviour {
     public float popupDelayTime = 1.5f;
     public TutorialText tutorialTextPrefab;
 
+    private float scanPopupTriggeredTime;
     private bool scanPopupDisplayed = false;
     private bool scanPopupDone = false;
     private bool playerHasScanned = false;
@@ -19,6 +20,7 @@ public class LevelTwoTutorialController : MonoBehaviour {
     // Use this for initialization
     void Start () {
         canvas = GameObject.FindObjectOfType<Canvas>();
+        scanPopupTriggeredTime = Time.time;
         UnlockState.INSTANCE.ScanCompleted += handleScanCompleted;
     }
 
@@ -28,7 +30,7 @@ public class LevelTwoTutorialController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	    if (!scanPopupDisplayed && Time.time < popupDelayTime) {
+	    if (!scanPopupDisplayed && Time.time - scanPopupTriggeredTime > popupDelayTime) {
             createScanPopup();
         }
 
