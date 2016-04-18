@@ -6,9 +6,10 @@ public class CollisionEventCommunicator : MonoBehaviour {
 
     public delegate void CollisionHandler(GameObject obj);
     public event CollisionHandler OnTriggerEnter;
+    public event CollisionHandler OnTriggerExit;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
 	
 	}
 	
@@ -21,6 +22,12 @@ public class CollisionEventCommunicator : MonoBehaviour {
         if (OnTriggerEnter != null)
         {
             OnTriggerEnter(coll.gameObject);
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D coll) {
+        if (OnTriggerExit != null) {
+            OnTriggerExit(coll.gameObject);
         }
     }
 }
