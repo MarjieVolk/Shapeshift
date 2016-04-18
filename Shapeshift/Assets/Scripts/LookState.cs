@@ -2,17 +2,22 @@
 using System.Collections;
 
 public class LookState : State {
+    private DirectionComponent _directionHolder;
 
-    private Direction currentDirection;
     public Direction FirstDirection = Direction.SOUTH;
 
     public int LookTime;
 
     private int lookTimer;
 
+    void Start()
+    {
+        _directionHolder = GetComponent<DirectionComponent>();
+    }
+
     // Use this for initialization
     void OnEnable () {
-        currentDirection = FirstDirection;
+        GetComponent<DirectionComponent>().Direction = FirstDirection;
         lookTimer = LookTime;
 	}
 	
@@ -20,8 +25,8 @@ public class LookState : State {
 	void Update () {
         if (lookTimer <= 0)
         {
-            currentDirection = Clockwise(currentDirection);
-            if (currentDirection == FirstDirection)
+            _directionHolder.Direction = Clockwise(_directionHolder.Direction);
+            if (_directionHolder.Direction == FirstDirection)
             {
                 // transition to move state here
                 GetComponent<StateMachine>().CurrentState = GetComponent<MoveState>();

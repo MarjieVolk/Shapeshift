@@ -108,6 +108,10 @@ public class TileItem : MonoBehaviour
     }
 
     private void AddToTileMap() {
+        //Debug.Log("AddToTileMap " + this + " at " + new Tile(tileX, tileY));
+        if (tileX == 0 && tileY == 0) {
+          Debug.Log(Environment.StackTrace);
+        }
         List<GameObject> ents;
         ForEachOfMyTiles ((int x, int y) => {
             long key = ToKey (x, y);
@@ -130,6 +134,7 @@ public class TileItem : MonoBehaviour
     }
 
     public static bool DoesPlacementCollideWithThings(int tileX, int tileY, int tileW, int tileH) {
+
       // Debug.Log("DoesPlacementCollideWithThings " + tileX + ", " + tileY + ", " + tileW + ", " + tileH);
       for (int ix = 0; ix < tileW; ix++) {
         for (int iy = 0; iy < tileH; iy++) {
