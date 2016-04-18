@@ -17,11 +17,11 @@ public class ChaseState : State {
 		StartChase();
 	}
 
-	// Update is called once per frame
 	void Update () {
 		// No-op.
 	}
 
+	// This is called whenever a player is spotted.
 	public void HandlePlayerSpotted(Vector3 playerPos) {
 		// TODO: If player is furniture, judge player instead of chasing.
 		currentTarget = new Tile(
@@ -29,7 +29,6 @@ public class ChaseState : State {
 		GetComponent<StateMachine>().CurrentState = GetComponent<ChaseState>();
 	}
 
-	// Gets the guard actually moving.
 	void StartChase() {
 		TileItem tileItem = gameObject.GetComponent<TileItem>();
 
