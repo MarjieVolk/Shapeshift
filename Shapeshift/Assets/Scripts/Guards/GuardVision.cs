@@ -124,10 +124,16 @@ public class GuardVision : MonoBehaviour {
 	}
 
     void OnTriggerEnter2D(Collider2D collider) {
-        // Check if touching player.
-        PlayerController player = collider.GetComponent<PlayerController>();
+        PlayerTransformer player = collider.GetComponent<PlayerTransformer>();
         if (player != null) {
-            GetComponentInParent<ChaseState>().HandlePlayerSpotted(player.transform.position);
+            // Guard sees the player
+            if (player.getTransformation() == null) {
+                // Player is human, begin chasing
+                GetComponentInParent<ChaseState>().HandlePlayerSpotted(player.transform.position);
+            } else {
+                // Player is furniture, begin suspicion analysis.
+                // TODO
+            }
         }
     }
 

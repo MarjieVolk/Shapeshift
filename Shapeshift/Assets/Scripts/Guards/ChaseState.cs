@@ -23,7 +23,6 @@ public class ChaseState : State {
 
 	// This is called whenever a player is spotted.
 	public void HandlePlayerSpotted(Vector3 playerPos) {
-		// TODO: If player is furniture, judge player instead of chasing.
 		currentTarget = new Tile(
 			TileItem.GlobalToTilePosition(playerPos.x), TileItem.GlobalToTilePosition(playerPos.y));
 		GetComponent<StateMachine>().CurrentState = GetComponent<ChaseState>();
