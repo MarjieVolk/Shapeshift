@@ -55,6 +55,7 @@ public class MoveState : State {
 
 	// Update is called once per frame
 	void Update () {
+        Debug.Log(currentPath.Count + " items in list; looking up index " + currentGoalInPath);
         Tile goalTile = currentPath[currentGoalInPath];
         float goalX = TileItem.TileToGlobalPosition(goalTile.X);
         float goalY = TileItem.TileToGlobalPosition(goalTile.Y);
@@ -116,7 +117,7 @@ public class MoveState : State {
 	// Gets the guard actually moving.
 	void StartMove(bool includePlayer) {
 		currentPath = FindPath (includePlayer);
-		currentGoalInPath = 1;
+		currentGoalInPath = 0;
 
 		// Precautionary snap to grid.
 		gameObject.GetComponent<TileItem> ().SnapToGrid ();
