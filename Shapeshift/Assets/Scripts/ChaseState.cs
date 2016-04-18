@@ -41,6 +41,7 @@ public class ChaseState : State {
 		if (path == null || path.Count < 2) {
 			Debug.Log ("No path can be found; switching to LookState.\n");
 			GetComponent<StateMachine>().CurrentState = GetComponent<LookState>();
+			return;
 		}
 
 		List<Tile> partialPath = new List<Tile> ();
