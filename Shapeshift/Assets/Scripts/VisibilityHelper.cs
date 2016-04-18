@@ -10,6 +10,8 @@ public class VisibilityHelper : MonoBehaviour
 
     public void Update()
     {
+        Vector2 sourcePosition = new Vector2(transform.position.x, transform.position.y);
+
         // collect LOS blocking item in the scene
         BlocksLineOfSight[] blockers = GameObject.FindObjectsOfType<BlocksLineOfSight>();
 
@@ -35,10 +37,10 @@ public class VisibilityHelper : MonoBehaviour
         List<Vector2> extremeVisiblePoints = new List<Vector2>();
         foreach (Vector2 point in points)
         {
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, point - (Vector2)transform.position, 9001, 1 << LayerMask.NameToLayer("VisibilityBlocking"));
+            RaycastHit2D hit = Physics2D.Raycast(sourcePosition, point - sourcePosition, 9001, 1 << LayerMask.NameToLayer("VisibilityBlocking"));
             if (hit.collider != null)
             {
-                extremeVisiblePoints.Add(hit.point - (Vector2)transform.position);
+                extremeVisiblePoints.Add(hit.point - sourcePosition);
             }
         }
 
@@ -67,10 +69,9 @@ public class VisibilityHelper : MonoBehaviour
             //Debug.Log(vertex.magnitude * 100);
         }
         visibleMesh.uv = uvs.ToArray();
-        
+
         MeshFilter filter = GetComponent<MeshFilter>();
         filter.mesh.Clear();
         filter.mesh = visibleMesh;
-        GetComponent<MeshRenderer>();
     }
 }
