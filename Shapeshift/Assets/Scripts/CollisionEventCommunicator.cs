@@ -3,8 +3,9 @@ using UnityEngine.Events;
 using System.Collections;
 
 public class CollisionEventCommunicator : MonoBehaviour {
-    
-    public event UnityAction OnCollisionEnter;
+
+    public delegate void CollisionHandler(GameObject obj);
+    public event CollisionHandler OnTriggerEnter;
 
 	// Use this for initialization
 	void Start () {
@@ -16,7 +17,7 @@ public class CollisionEventCommunicator : MonoBehaviour {
 	
 	}
 
-    void OnCollisionEnter2D() {
-        OnCollisionEnter();
+    void OnTriggerEnter2D(Collider2D coll) {
+        OnTriggerEnter(coll.gameObject);
     }
 }
