@@ -12,18 +12,19 @@ public class LevelController : MonoBehaviour {
     private int currentLevel;
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
         if (INSTANCE == null) {
             INSTANCE = this;
             DontDestroyOnLoad(this);
-
-            // TODO: main menu first
-            SceneManager.LoadScene(1);
-
         } else {
             Destroy(this);
         }
-	}
+
+        if (SceneManager.GetActiveScene().buildIndex == 0) {
+            // TODO: main menu first
+            SceneManager.LoadScene(1);
+        }
+    }
 
     void OnLevelWasLoaded(int level) {
         currentLevel = level;
