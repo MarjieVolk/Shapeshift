@@ -8,7 +8,6 @@ public class MoveState : State {
 
 	public float Speed;
 	public float ChaseSpeed;
-	public int LookTime;
 	public Direction FirstDirection = Direction.SOUTH;
     public GuardDuty PatrolRoute;
 
