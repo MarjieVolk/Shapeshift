@@ -8,10 +8,12 @@ public class CardPanel : MonoBehaviour {
     public GameObject cardPrefab;
 
 	// Use this for initialization
-	void Awake () {
+	void Start () {
         GameObject.FindObjectOfType<UnlockState>().UnlockStateChanged += () => {
             refresh();
         };
+
+        refresh();
 	}
 	
     public void refresh() {
