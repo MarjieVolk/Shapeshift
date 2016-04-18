@@ -70,7 +70,7 @@ public class ChaseState : State {
 	}
 
     public void OnTriggerEnter2D(Collider2D other) {
-        PlayerController player = other.GetComponent<PlayerController>();
+        PlayerCaughtHandler player = other.GetComponent<PlayerCaughtHandler>();
         if (player != null) {
             player.catchPlayer();
         }

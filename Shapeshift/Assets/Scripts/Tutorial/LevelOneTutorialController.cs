@@ -91,6 +91,10 @@ public class LevelOneTutorialController : MonoBehaviour {
         popup.OnClose += () => {
             matchRoomPopupDone = true;
         };
+
+        popup.addCloseCondition(() => {
+
+        });
     }
 
     private void createGoalPopup() {
