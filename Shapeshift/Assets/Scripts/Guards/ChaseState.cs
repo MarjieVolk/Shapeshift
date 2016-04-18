@@ -10,6 +10,15 @@ public class ChaseState : State {
 
 	private Tile currentTarget;
 
+    void Start() {
+        // Whenever the player is caught, stop chasing
+        FindObjectOfType<PlayerCaughtHandler>().PlayerCaught += () => {
+            if (this.enabled) {
+                GetComponent<StateMachine>().CurrentState = GetComponent<LookState>();
+            }
+        };
+    }
+
 	void OnEnable ()
 	{
 		// TODO: Guard chasing animation.

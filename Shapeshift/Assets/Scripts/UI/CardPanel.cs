@@ -41,6 +41,9 @@ public class CardPanel : MonoBehaviour {
 
         Button button = buttonObj.GetComponent<Button>();
         button.interactable = !UnlockState.INSTANCE.isTemporarilyLocked(type);
+        if (UnlockState.INSTANCE.isTemporarilyLocked(type)) {
+            Debug.Log("Locking " + type);
+        }
         button.onClick.AddListener(() => {
             FindObjectOfType<PlayerTransformer>().TransformPlayer(FurnitureRenderer.INSTANCE.getPrefab(type, currentQuality).gameObject);
         });
