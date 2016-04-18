@@ -4,79 +4,117 @@ using System.Collections;
 using System.Collections.Generic;
 
 [RequireComponent (typeof (TileItem))]
-public class Guard : MonoBehaviour {
+public class MoveState : State {
 
 	public float Speed;
-	public int LookTime;
-	public Direction FirstDirection = Direction.SOUTH;
+    public GuardDuty PatrolRoute;
 
 	private GuardWaypoint[] waypoints;
 	private GuardWaypoint currentWaypoint;
-	private GuardAction currentAction;
-	private Direction currentDirection;
 
-	enum GuardAction {
-		MOVE,
-		LOOK,
-		CATCH
-	}
-
-	// Put data for MOVE here.
+    private Direction currentDirection;
 	private bool moveInterruptedByPlayer = false;
 	private List<Tile> currentPath;
 	private int currentGoalInPath;  // Should always be greater than 1.
 
-	// Put data for LOOK here.
-	private int lookTimer;
-
 	// Use this for initialization
-	void Start () {
-		// Initialize the direction first thing.
-		currentDirection = FirstDirection;
-
+	void Awake () {
 		// A Guard must have GuardDuty as a parent.
-		waypoints = gameObject.GetComponentInParent<GuardDuty> ().GetWaypoints ();
-
-		// Guard looks around before anything else.
-		InitializeLook();
+		waypoints = PatrolRoute.GetWaypoints ();
 	}
+
+    void OnEnable ()
+    {
+        if (moveInterruptedByPlayer)
+        {
+            StartMove(true);
+            moveInterruptedByPlayer = false;
+            return;
+        }
+
+        // Look up the next waypoint.  Checks length to avoid an infinite loop.
+        if (waypoints.Length > 0)
+        {
+            if (currentWaypoint == null)
+            {
+                currentWaypoint = GetNextWaypoint(Int32.MinValue);
+            }
+            else
+            {
+                currentWaypoint = GetNextWaypoint(currentWaypoint.Ordering);
+            }
+        }
+        else
+        {
+            GetComponent<StateMachine>().CurrentState = GetComponent<LookState>();
+            return;
+        }
+
+        StartMove(false);
+    }
 
 	// Update is called once per frame
 	void Update () {
-		if (currentAction == GuardAction.LOOK) {
-			UpdateLook ();
-		} else if (currentAction == GuardAction.MOVE) {
-			UpdateMove ();
-		}
-	}
+        Tile goalTile = currentPath[currentGoalInPath];
+        float goalX = TileItem.TileToGlobalPosition(goalTile.X);
+        float goalY = TileItem.TileToGlobalPosition(goalTile.Y);
+        Vector3 goalPos = new Vector3(goalX, goalY);
 
-	// MOVE initialization.
-	void InitializeMove() {
-		if (moveInterruptedByPlayer) {
-			StartMove (true);
-			moveInterruptedByPlayer = false;
-			return;
-		}
+        // The current goal has been reached.  Move on to the next tile.
+        if (ManhattanDistance(goalPos, transform.position) <= 2 * Speed)
+        {
+            currentGoalInPath++;
 
-		// Look up the next waypoint.  Checks length to avoid an infinite loop.
-		if (waypoints.Length > 0) {
-			if (currentWaypoint == null) {
-				currentWaypoint = GetNextWaypoint (Int32.MinValue);
-			} else {
-				currentWaypoint = GetNextWaypoint (currentWaypoint.Ordering);
-			}
-		} else {
-			InitializeLook ();
-			return;
-		}
+            // Course correct.
+            gameObject.GetComponent<TileItem>().SnapToGrid();
 
-		StartMove (false);
-	}
+            // If you have reached the final goal, start looking around.
+            // TODO switch states here
+            if (currentGoalInPath == currentPath.Count)
+            {
+                GetComponent<StateMachine>().CurrentState = GetComponent<LookState>();
+            }
+            else
+            {
+                // Change directions if necessary.
+                //TODO trigger animation switch
+                currentDirection = GetDirectionFromTiles(goalTile, currentPath[currentGoalInPath]);
+            }
+            return;
+        }
+
+        // Proceed to goal.
+        Tile oldTile = currentPath[currentGoalInPath - 1];
+        float oldX = TileItem.TileToGlobalPosition(oldTile.X);
+        float oldY = TileItem.TileToGlobalPosition(oldTile.Y);
+        Vector3 oldPos = new Vector3(oldX, oldY);
+
+        // If the player is blocking the way, recalculate a route that goes around the player.
+        if (GetPlayerTile().Equals(goalTile))
+        {
+            // Corner case where player is blocking the waypoint.
+            if (!(goalTile.Equals(currentPath[currentPath.Count - 1])))
+            {
+                moveInterruptedByPlayer = true;
+            }
+            // transition to look state
+            GetComponent<StateMachine>().CurrentState = GetComponent<LookState>();
+            return;
+        }
+
+        if (ManhattanDistance(transform.position, goalPos) > 1.1 * ManhattanDistance(oldPos, goalPos))
+        {
+            StartMove(false);
+        }
+
+        Vector3 increment = (goalPos - oldPos);
+        increment.Normalize();
+        increment *= Speed;
+        GetComponent<TileItem>().SetGlobalPosition(transform.position + increment);
+    }
 
 	// Gets the guard actually moving.
 	void StartMove(bool includePlayer) {
-		currentAction = GuardAction.MOVE;
-
 		currentPath = FindPath (includePlayer);
 		currentGoalInPath = 1;
 
@@ -85,81 +123,8 @@ public class Guard : MonoBehaviour {
 
 		// Move on if no path can be found.
 		if (currentPath == null) {
-			InitializeLook ();
-			return;
+            GetComponent<StateMachine>().CurrentState = GetComponent<LookState>();
 		}
-	}
-
-	// Update in MOVE mode.
-	void UpdateMove() {
-		Tile goalTile = currentPath [currentGoalInPath];
-		float goalX = TileItem.TileToGlobalPosition (goalTile.X);
-		float goalY = TileItem.TileToGlobalPosition (goalTile.Y);
-		Vector3 goalPos = new Vector3 (goalX, goalY);
-
-		// The current goal has been reached.  Move on to the next tile.
-		if (ManhattanDistance(goalPos, transform.position) <= 2 * Speed) {
-			currentGoalInPath++;
-
-			// Course correct.
-			gameObject.GetComponent<TileItem> ().SnapToGrid ();
-
-			// If you have reached the final goal, start looking around.
-			if (currentGoalInPath == currentPath.Count) {
-				InitializeLook ();
-			} else {
-				// Change directions if necessary.
-				currentDirection = GetDirectionFromTiles(goalTile, currentPath[currentGoalInPath]);
-			}
-			return;
-		}
-
-		// Proceed to goal.
-		Tile oldTile = currentPath[currentGoalInPath - 1];
-		float oldX = TileItem.TileToGlobalPosition (oldTile.X);
-		float oldY = TileItem.TileToGlobalPosition (oldTile.Y);
-		Vector3 oldPos = new Vector3 (oldX, oldY);
-
-		// If the player is blocking the way, recalculate a route that goes around the player.
-		if (GetPlayerTile().Equals(goalTile)) {
-			// Corner case where player is blocking the waypoint.
-			if (!(goalTile.Equals(currentPath[currentPath.Count - 1]))) {
-				moveInterruptedByPlayer = true;
-			}
-			InitializeLook ();
-			return;
-		}
-
-		if (ManhattanDistance (transform.position, goalPos) > 1.1 * ManhattanDistance (oldPos, goalPos)) {
-			StartMove (false);
-		}
-
-		Vector3 increment = (goalPos - oldPos);
-		increment.Normalize ();
-		increment *= Speed;
-		GetComponent<TileItem>().SetGlobalPosition(transform.position + increment);
-	}
-
-	// LOOK initialization.
-	void InitializeLook() {
-		currentAction = GuardAction.LOOK;
-		lookTimer = LookTime;
-		currentDirection = FirstDirection;
-	}
-
-	// Update in LOOK mode.
-	void UpdateLook() {
-		if (lookTimer <= 0) {
-			currentDirection = Clockwise (currentDirection);
-			if (currentDirection == FirstDirection) {
-				InitializeMove ();
-			} else {
-				lookTimer = LookTime;
-			}
-		} else {
-			lookTimer -= 1;
-		}
-			
 	}
 
 	// Grabs the guard's next waypoint.
@@ -178,18 +143,6 @@ public class Guard : MonoBehaviour {
 			return nextWaypoint;
 		} else {
 			return GetNextWaypoint (Int32.MinValue);
-		}
-	}
-
-	Direction Clockwise(Direction fromMe) {
-		if (fromMe == Direction.NORTH) {
-			return Direction.EAST;
-		} else if (fromMe == Direction.EAST) {
-			return Direction.SOUTH;
-		} else if (fromMe == Direction.SOUTH) {
-			return Direction.WEST;
-		} else {
-			return Direction.NORTH;
 		}
 	}
 
