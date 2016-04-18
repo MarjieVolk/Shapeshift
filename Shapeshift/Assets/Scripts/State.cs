@@ -3,8 +3,6 @@ using System.Collections;
 
 public class State : MonoBehaviour {
 
-    private int lookTimer;
-
 	// Use this for initialization
 	void Start () {
 	
