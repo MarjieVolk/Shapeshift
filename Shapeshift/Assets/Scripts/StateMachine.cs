@@ -14,12 +14,13 @@ public class StateMachine : MonoBehaviour {
         get { return _currentState; }
         set
         {
-            if (_currentState != null)
-            {
-                _currentState.enabled = false;
-            }
-            _currentState = value;
-            _currentState.enabled = true;
+			if (_currentState != value) {
+				if (_currentState != null) {
+					_currentState.enabled = false;
+				}
+				_currentState = value;
+				_currentState.enabled = true;
+			}
         }
     }
 

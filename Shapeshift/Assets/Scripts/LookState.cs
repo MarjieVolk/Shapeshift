@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-[RequireComponent (typeof(DirectionComponent))]
 public class LookState : State {
     private DirectionComponent _directionHolder;
 
@@ -30,7 +29,6 @@ public class LookState : State {
             if (_directionHolder.Direction == FirstDirection)
             {
                 // transition to move state here
-				Debug.Log("Switching to Move State! :D\n");
                 GetComponent<StateMachine>().CurrentState = GetComponent<MoveState>();
             }
             else
