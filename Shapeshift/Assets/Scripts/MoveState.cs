@@ -132,7 +132,7 @@ public class MoveState : State {
 	// Gets the guard actually moving.
 	void StartMove(bool includePlayer) {
 		currentPath = FindPath (includePlayer);
-		currentGoalInPath = 1;
+		currentGoalInPath = 0;
 
 		// Precautionary snap to grid.
 		gameObject.GetComponent<TileItem> ().SnapToGrid ();
