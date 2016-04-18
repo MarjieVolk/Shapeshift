@@ -8,12 +8,12 @@ public class TutorialText : MonoBehaviour {
 
     public delegate bool CloseCondition();
 
-    private List<UnityAction> closeActions;
+    public event UnityAction OnClose;
+    
     private List<CloseCondition> closeConditions;
 
 	// Use this for initialization
 	void Awake () {
-        closeActions = new List<UnityAction>();
         closeConditions = new List<CloseCondition>();
 
         transform.FindChild("Close Button").GetComponent<Button>().onClick.AddListener(() => {
@@ -38,15 +38,8 @@ public class TutorialText : MonoBehaviour {
         closeConditions.Add(condition);
     }
 
-    public void addCloseHandler(UnityAction action) {
-        closeActions.Add(action);
-    }
-
     public void close() {
-        foreach (UnityAction action in closeActions) {
-            action();
-        }
-
+        OnClose();
         Destroy(gameObject);
     }
 }
