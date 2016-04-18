@@ -5,9 +5,12 @@ using System.Collections;
 [RequireComponent (typeof(PlayerController))]
 [RequireComponent(typeof(PlayerTransformer))]
 public class PlayerCaughtHandler : MonoBehaviour {
-
+    
     public event UnityAction PlayerCaught;
-    public event UnityAction PlayerCaughtAsFurniture;
+
+    public delegate void PlayerCaughtAsFurnitureHanlder(FurnitureType type);
+    public event PlayerCaughtAsFurnitureHanlder PlayerCaughtAsFurniture;
+
     public event UnityAction PlayerCaughtAsHuman;
 
     private Vector3 startPosition;
@@ -28,12 +31,11 @@ public class PlayerCaughtHandler : MonoBehaviour {
             }
         } else {
             // Lose access to item, gain catching cooldown
-            UnlockState.INSTANCE.reset(currentTransformation.GetComponent<PlayableFurnitureItem>().furnitureType);
-            GetComponent<PlayerTransformer>().TransformPlayer(null);
-
             if (PlayerCaughtAsFurniture != null) {
-                PlayerCaughtAsFurniture();
+                PlayerCaughtAsFurniture(currentTransformation.GetComponent<PlayableFurnitureItem>().furnitureType);
             }
+
+            GetComponent<PlayerTransformer>().TransformPlayer(null);
         }
 
         if (PlayerCaught != null) {

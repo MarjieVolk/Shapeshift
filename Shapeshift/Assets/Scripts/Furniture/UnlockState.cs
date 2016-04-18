@@ -23,23 +23,53 @@ class UnlockState : MonoBehaviour {
         }
 
         foreach (FurnitureType type in startingTypes) {
-            getData(type).nScansCompleted += nScansPerUnlock;
+            getData(type).lockedInScansCompleted += nScansPerUnlock;
         }
 
         if (UnlockStateChanged != null) {
             UnlockStateChanged();
+        }
+    }
+
+    void OnLevelWasLoaded(int level) {
+        foreach(FurnitureType type in state.Keys) {
+            UnlockStateData data = getData(type);
+            data.lockedInScansCompleted += data.thisLevelScansCompleted;
+            data.thisLevelScansCompleted = 0;
+            data.temporarilyLocked = false;
+        }
+
+        if (UnlockStateChanged != null) {
+            UnlockStateChanged();
+        }
+
+        PlayerCaughtHandler caughtHandler = FindObjectOfType<PlayerCaughtHandler>();
+
+        if (caughtHandler != null) {
+            caughtHandler.PlayerCaughtAsFurniture += (FurnitureType type) => {
+                getData(type).temporarilyLocked = true;
+
+                if (UnlockStateChanged != null) {
+                    UnlockStateChanged();
+                }
+            };
+
+            caughtHandler.PlayerCaughtAsHuman += () => {
+                foreach (FurnitureType type in state.Keys) {
+                    UnlockStateData data = getData(type);
+                    data.temporarilyLocked = false;
+                    data.thisLevelScansCompleted = 0;
+                }
+
+                if (UnlockStateChanged != null) {
+                    UnlockStateChanged();
+                }
+            };
         }
     }
 
     public void completeScanOn(FurnitureType type) {
-        getData(type).nScansCompleted++;
-        if (UnlockStateChanged != null) {
-            UnlockStateChanged();
-        }
-    }
-
-    public void reset(FurnitureType type) {
-        getData(type).nScansCompleted = 0;
+        getData(type).thisLevelScansCompleted++;
         if (UnlockStateChanged != null) {
             UnlockStateChanged();
         }
@@ -48,7 +78,11 @@ class UnlockState : MonoBehaviour {
     // Returns the quality level unlocked by the player for this FurnitureType.  
     // 0 is the base quality level.  If not unlocked at all, returns -1;
     public int getQualityLevel(FurnitureType type) {
-        return (getData(type).nScansCompleted / nScansPerUnlock) - 1;
+        return ((getData(type).thisLevelScansCompleted + getData(type).lockedInScansCompleted) / nScansPerUnlock) - 1;
+    }
+
+    public bool isTemporarilyLocked(FurnitureType type) {
+        return getData(type).temporarilyLocked;
     }
 
     public bool isUnlocked(FurnitureType type) {
@@ -77,6 +111,8 @@ class UnlockState : MonoBehaviour {
     }
 
     private class UnlockStateData {
-        public int nScansCompleted = 0;
+        public int lockedInScansCompleted = 0;
+        public int thisLevelScansCompleted = 0;
+        public bool temporarilyLocked = false;
     }
 }

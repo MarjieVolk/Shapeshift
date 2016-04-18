@@ -9,12 +9,13 @@ public class CardPanel : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        UnlockState.INSTANCE.UnlockStateChanged += () => {
-            refresh();
-        };
-
+        UnlockState.INSTANCE.UnlockStateChanged += refresh;
         refresh();
 	}
+
+    void OnDestroy() {
+        UnlockState.INSTANCE.UnlockStateChanged -= refresh;
+    }
 	
     public void refresh() {
         clear();
@@ -33,12 +34,14 @@ public class CardPanel : MonoBehaviour {
     private void add(FurnitureType type) {
         int currentQuality = UnlockState.INSTANCE.getQualityLevel(type);
 
-        GameObject button = Instantiate(cardPrefab);
-        button.transform.FindChild("Image").GetComponent<Image>().sprite = FurnitureRenderer.INSTANCE.getSprite(type, currentQuality);
-        button.transform.FindChild("Name").GetComponent<Text>().text = FurnitureRenderer.INSTANCE.getDisplayString(type, currentQuality);
-        button.transform.SetParent(this.transform);
+        GameObject buttonObj = Instantiate(cardPrefab);
+        buttonObj.transform.FindChild("Image").GetComponent<Image>().sprite = FurnitureRenderer.INSTANCE.getSprite(type, currentQuality);
+        buttonObj.transform.FindChild("Name").GetComponent<Text>().text = FurnitureRenderer.INSTANCE.getDisplayString(type, currentQuality);
+        buttonObj.transform.SetParent(this.transform);
 
-        button.GetComponent<Button>().onClick.AddListener(() => {
+        Button button = buttonObj.GetComponent<Button>();
+        button.interactable = !UnlockState.INSTANCE.isTemporarilyLocked(type);
+        button.onClick.AddListener(() => {
             FindObjectOfType<PlayerTransformer>().TransformPlayer(FurnitureRenderer.INSTANCE.getPrefab(type, currentQuality).gameObject);
         });
     }
