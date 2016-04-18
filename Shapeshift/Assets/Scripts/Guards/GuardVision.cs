@@ -8,9 +8,13 @@ public class GuardVision : MonoBehaviour {
 
 	public float MaxVisibilityDistance;
 
+    private List<FurnitureItem> furnitureInSight;
+    private System.Random random;
+
 	// Use this for initialization
 	void Start () {
-
+        furnitureInSight = new List<FurnitureItem>();
+        random = new System.Random();
 	}
 	
 	// Update is called once per frame
@@ -124,6 +128,10 @@ public class GuardVision : MonoBehaviour {
 	}
 
     void OnTriggerEnter2D(Collider2D collider) {
+        if (collider.GetComponent<FurnitureItem>() != null) {
+            furnitureInSight.Add(collider.GetComponent<FurnitureItem>());
+        }
+
         PlayerTransformer player = collider.GetComponent<PlayerTransformer>();
         if (player != null && !player.GetComponent<PlayerCaughtHandler>().isOnCatchCooldown()) {
             // Guard sees the player
@@ -132,8 +140,31 @@ public class GuardVision : MonoBehaviour {
                 GetComponentInParent<ChaseState>().HandlePlayerSpotted(player.transform.position);
             } else {
                 // Player is furniture, begin suspicion analysis.
-                // TODO
+                int maxSuspicion = 0;
+                List<FurnitureItem> mostSuspicious = new List<FurnitureItem>();
+                foreach (FurnitureItem item in furnitureInSight) {
+                    int suspicion = Suspicionomatic.getSuspicionLevel(item);
+
+                    if (suspicion > maxSuspicion) {
+                        maxSuspicion = suspicion;
+                        mostSuspicious.Clear();
+                        mostSuspicious.Add(item);
+                    } else if (suspicion == maxSuspicion) {
+                        mostSuspicious.Add(item);
+                    }
+                }
+                
+                if (maxSuspicion > 0) {
+                    FurnitureItem toMove = mostSuspicious[random.Next(mostSuspicious.Count)];
+                    // TODO: Approach and remove toMove
+                }
             }
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D collider) {
+        if (collider.GetComponent<FurnitureItem>() != null) {
+            furnitureInSight.Remove(collider.GetComponent<FurnitureItem>());
         }
     }
 
