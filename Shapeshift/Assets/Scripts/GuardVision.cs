@@ -39,7 +39,7 @@ public class GuardVision : MonoBehaviour {
 
 		// Filter out points not facing the same direction as the guard.
 		HashSet<Vector2> filteredPoints = new HashSet<Vector2>();
-		Direction currentDirection = gameObject.GetComponentInParent<Guard> ().GetCurrentDirection ();
+		Direction currentDirection = gameObject.GetComponentInParent<MoveState> ().GetCurrentDirection ();
 		Vector2 currentPosition = new Vector2 (transform.position.x, transform.position.y);
 		foreach (Vector2 point in points) {
 			if (MatchesVectorDirection(currentDirection, currentPosition, point)) {

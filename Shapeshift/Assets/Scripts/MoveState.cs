@@ -7,28 +7,16 @@ using System.Collections.Generic;
 public class MoveState : State {
 
 	public float Speed;
-<<<<<<< HEAD:Shapeshift/Assets/Scripts/Guard.cs
 	public float ChaseSpeed;
 	public int LookTime;
 	public Direction FirstDirection = Direction.SOUTH;
-=======
     public GuardDuty PatrolRoute;
->>>>>>> c4a5b112a46a3180d7f0c853ebcda55cdbf5c525:Shapeshift/Assets/Scripts/MoveState.cs
 
 	private GuardWaypoint[] waypoints;
 	private GuardWaypoint currentWaypoint;
 
-<<<<<<< HEAD:Shapeshift/Assets/Scripts/Guard.cs
-	enum GuardAction {
-		MOVE,
-		LOOK,
-		CHASE
-	}
-
 	// Put data for MOVE here.
-=======
     private Direction currentDirection;
->>>>>>> c4a5b112a46a3180d7f0c853ebcda55cdbf5c525:Shapeshift/Assets/Scripts/MoveState.cs
 	private bool moveInterruptedByPlayer = false;
 	private List<Tile> currentPath;
 	private int currentGoalInPath;  // Should always be greater than 1.
