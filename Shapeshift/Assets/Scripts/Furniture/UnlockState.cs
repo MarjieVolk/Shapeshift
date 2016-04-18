@@ -8,6 +8,7 @@ class UnlockState : MonoBehaviour {
 
     public delegate void UnlockStateChangeHandler();
     public event UnlockStateChangeHandler UnlockStateChanged;
+    public event UnlockStateChangeHandler ScanCompleted;
 
     public int nScansPerUnlock = 3;
     public FurnitureType[] startingTypes;
@@ -79,6 +80,9 @@ class UnlockState : MonoBehaviour {
         getData(type).thisLevelScansCompleted++;
         if (UnlockStateChanged != null) {
             UnlockStateChanged();
+        }
+        if (ScanCompleted != null) {
+            ScanCompleted();
         }
     }
 
