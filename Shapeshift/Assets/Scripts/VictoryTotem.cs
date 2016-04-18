@@ -8,6 +8,9 @@ public class VictoryTotem : MonoBehaviour {
 
     public delegate void VictoryHandler();
     public event VictoryHandler OnVictory;
+
+    public event VictoryHandler OnVictoryTotemAcquired;
+
     public bool WinOnAcquire = true;
     public Collider2D EscapeZone;
     public Vector2 CarryOffset;
@@ -29,6 +32,10 @@ public class VictoryTotem : MonoBehaviour {
 
     private void totemReached(GameObject player)
     {
+        if (OnVictoryTotemAcquired != null) {
+            OnVictoryTotemAcquired();
+        }
+
         if (WinOnAcquire)
         {
             ActivateVictory();

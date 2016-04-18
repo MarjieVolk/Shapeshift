@@ -8,7 +8,7 @@ public class LevelOneTutorialController : MonoBehaviour {
     public CollisionEventCommunicator goalRoom;
 
     public TutorialText tutorialTextPrefab;
-    public float popupDelayTime = 3;
+    public float popupDelayTime = 1.5f;
     
     private bool shiftPopupDisplayed = false;
     private bool shiftPopupDone = false;
@@ -17,6 +17,8 @@ public class LevelOneTutorialController : MonoBehaviour {
     private float matchRoomPopupTriggeredTime = -1;
     private bool matchRoomPopupDisplayed = false;
     private bool matchRoomPopupDone = false;
+    private bool playerInBathroom = false;
+    private bool playerHasTransformedIntoSinkInBathroom = false;
 
     private bool goalPopupTriggered = false;
     private bool goalPopupDisplayed = false;
@@ -38,6 +40,13 @@ public class LevelOneTutorialController : MonoBehaviour {
         bathroom.OnTriggerEnter += (GameObject obj) => {
             if (obj.GetComponent<PlayerController>() != null) {
                 matchRoomPopupTriggeredTime = Time.time;
+                playerInBathroom = true;
+            }
+        };
+
+        bathroom.OnTriggerExit += (GameObject obj) => {
+            if (obj.GetComponent<PlayerController>() != null) {
+                playerInBathroom = false;
             }
         };
     }
@@ -76,9 +85,7 @@ public class LevelOneTutorialController : MonoBehaviour {
             shiftPopupDone = true;
         };
 
-        GameObject.FindObjectOfType<PlayerTransformer>().PlayerTransformed += (GameObject target) => {
-            playerHasTransformed = true;
-        };
+        GameObject.FindObjectOfType<PlayerTransformer>().PlayerTransformed += playerTransformedListener;
     }
 
     private void createMatchRoomPopup() {
@@ -93,7 +100,7 @@ public class LevelOneTutorialController : MonoBehaviour {
         };
 
         popup.addCloseCondition(() => {
-            return false;
+            return playerHasTransformedIntoSinkInBathroom;
         });
     }
 
@@ -102,6 +109,8 @@ public class LevelOneTutorialController : MonoBehaviour {
 
         TutorialText popup = init();
         popup.setText("Pick up the briefcase and escape!");
+
+        FindObjectOfType<VictoryTotem>().OnVictoryTotemAcquired += victoryTotemAquiredListener;
 
         popup.addCloseCondition(() => {
             return playerHasPickedUpBriefcase;
@@ -119,4 +128,14 @@ public class LevelOneTutorialController : MonoBehaviour {
         return popup;
     }
 
+    private void playerTransformedListener(GameObject target) {
+        playerHasTransformed = true;
+        if (playerInBathroom && target.gameObject.GetComponent<PlayableFurnitureItem>().furnitureType == FurnitureType.Sink) {
+            playerHasTransformedIntoSinkInBathroom = true;
+        }
+    }
+
+    private void victoryTotemAquiredListener() {
+        playerHasPickedUpBriefcase = true;
+    }
 }
