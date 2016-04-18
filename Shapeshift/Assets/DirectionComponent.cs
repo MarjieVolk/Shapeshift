@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class State : MonoBehaviour {
+public class DirectionComponent : MonoBehaviour {
 
-	// Use this for initialization
+    public Direction Direction { get; set; }
+	
+    // Use this for initialization
 	void Start () {
 	
 	}

@@ -7,12 +7,13 @@ using System.Collections.Generic;
 public class MoveState : State {
 
 	public float Speed;
+	public float ChaseSpeed;
     public GuardDuty PatrolRoute;
 
 	private GuardWaypoint[] waypoints;
 	private GuardWaypoint currentWaypoint;
 
-    private Direction currentDirection;
+	// Put data for MOVE here.
 	private bool moveInterruptedByPlayer = false;
 	private List<Tile> currentPath;
 	private int currentGoalInPath;  // Should always be greater than 1.
@@ -78,7 +79,7 @@ public class MoveState : State {
             {
                 // Change directions if necessary.
                 //TODO trigger animation switch
-                currentDirection = GetDirectionFromTiles(goalTile, currentPath[currentGoalInPath]);
+                GetComponent<DirectionComponent>().Direction = GetDirectionFromTiles(goalTile, currentPath[currentGoalInPath]);
             }
             return;
         }
@@ -116,7 +117,7 @@ public class MoveState : State {
 	// Gets the guard actually moving.
 	void StartMove(bool includePlayer) {
 		currentPath = FindPath (includePlayer);
-		currentGoalInPath = 1;
+		currentGoalInPath = 0;
 
 		// Precautionary snap to grid.
 		gameObject.GetComponent<TileItem> ().SnapToGrid ();
