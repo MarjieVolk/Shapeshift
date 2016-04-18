@@ -40,6 +40,9 @@ public class PlayerTransformer : MonoBehaviour {
         PlayerTransformed += (target) =>
         {
 
+            if (currentTransformation != null) {
+                currentTransformation.GetComponent<TileItem>().RemoveFromTileMap();
+            }
             Destroy(currentTransformation);
             if (target != null)
             {
