@@ -10,7 +10,7 @@ public class GuardVision : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-	
+
 	}
 	
 	// Update is called once per frame
@@ -115,25 +115,21 @@ public class GuardVision : MonoBehaviour {
 		filter.mesh = visibleMesh;
 		GetComponent<MeshRenderer>();
 
-		// Create polygon collider
-		PolygonCollider2D collider = gameObject.GetComponent<PolygonCollider2D>();
+		// Update polygon collider
 		Vector2[] colliderVertices = new Vector2[visibleMesh.vertices.Count()];
 		for (int i = 0; i < visibleMesh.vertices.Count(); i++) {
 			colliderVertices [i] = new Vector2 (visibleMesh.vertices [i].x, visibleMesh.vertices [i].y);
 		}
-		collider.SetPath(0, colliderVertices);
-
-		// Check if touching player.
-		foreach (GameObject player in gameObject.scene.GetRootGameObjects()) {
-			if (player.GetComponents<PlayerController> ().Length > 0) {
-				Vector2 playerPos = new Vector2 (player.transform.position.x, player.transform.position.y);
-				if (collider.OverlapPoint (playerPos)) {
-					GetComponentInParent<ChaseState> ().HandlePlayerSpotted (new Vector3(playerPos.x, playerPos.y));
-				}
-			}
-		}
-			
+        GetComponent<PolygonCollider2D>().SetPath(0, colliderVertices);			
 	}
+
+    void OnTriggerEnter2D(Collider2D collider) {
+        // Check if touching player.
+        PlayerController player = collider.GetComponent<PlayerController>();
+        if (player != null) {
+            GetComponentInParent<ChaseState>().HandlePlayerSpotted(player.transform.position);
+        }
+    }
 
 	bool MatchesVectorDirection(Direction currentDirection, Vector2 rootOfVector, Vector2 endOfVector) {
 		Vector2 difference = endOfVector - rootOfVector;

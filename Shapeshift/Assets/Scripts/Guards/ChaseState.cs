@@ -29,7 +29,7 @@ public class ChaseState : State {
 		GetComponent<StateMachine>().CurrentState = GetComponent<ChaseState>();
 	}
 
-	void StartChase() {
+	private void StartChase() {
 		TileItem tileItem = gameObject.GetComponent<TileItem>();
 
 		// Establish current and goal tile.
