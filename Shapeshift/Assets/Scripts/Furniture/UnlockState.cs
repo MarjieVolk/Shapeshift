@@ -15,25 +15,36 @@ class UnlockState : MonoBehaviour {
     private Dictionary<FurnitureType, UnlockStateData> state = new Dictionary<FurnitureType, UnlockStateData>();
 
     void Awake() {
-        INSTANCE = this;
-    }
+        if (INSTANCE != null) {
+            Debug.Log("Unlock state already present, destroying self");
+            Destroy(this);
+        } else {
+            Debug.Log("Becoming the MASTER UNLOCK STATE");
+            INSTANCE = this;
+        }
 
-    void Start() {
         foreach (FurnitureType type in startingTypes) {
+            Debug.Log("Adding " + type);
             getData(type).nScansCompleted += nScansPerUnlock;
         }
 
-        UnlockStateChanged();
+        if (UnlockStateChanged != null) {
+            UnlockStateChanged();
+        }
     }
 
     public void completeScanOn(FurnitureType type) {
         getData(type).nScansCompleted++;
-        UnlockStateChanged();
+        if (UnlockStateChanged != null) {
+            UnlockStateChanged();
+        }
     }
 
     public void reset(FurnitureType type) {
         getData(type).nScansCompleted = 0;
-        UnlockStateChanged();
+        if (UnlockStateChanged != null) {
+            UnlockStateChanged();
+        }
     }
 
     // Returns the quality level unlocked by the player for this FurnitureType.  
