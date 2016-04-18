@@ -26,7 +26,11 @@ public class PlayerScanner : MonoBehaviour {
                 // Continue scanning
                 if (Time.time - scanStartTime >= scanCompletionSeconds) {
                     // Finish scanning
-                    UnlockState.INSTANCE.completeScanOn(currentlyScanning.furnitureType);
+                    if (!currentlyScanning.hasBeenScanned) {
+                        currentlyScanning.hasBeenScanned = true;
+                        UnlockState.INSTANCE.completeScanOn(currentlyScanning.furnitureType);
+                    }
+                    currentlyScanning = null;
                 }
             } else {
                 // Start new scan

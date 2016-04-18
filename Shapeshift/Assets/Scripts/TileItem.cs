@@ -130,17 +130,16 @@ public class TileItem : MonoBehaviour
     }
 
     public static bool DoesPlacementCollideWithThings(int tileX, int tileY, int tileW, int tileH) {
-      Debug.Log("DoesPlacementCollideWithThings " + tileX + ", " + tileY + ", " + tileW + ", " + tileH);
+      // Debug.Log("DoesPlacementCollideWithThings " + tileX + ", " + tileY + ", " + tileW + ", " + tileH);
       for (int ix = 0; ix < tileW; ix++) {
         for (int iy = 0; iy < tileH; iy++) {
-          if (GetObjectsAtPosition<Wall>(tileX + ix, tileY + iy).Count > 0) {
-            Debug.Log("Placement collides with wall");
+          int x = tileX + ix;
+          int y = tileY + iy;
+          if (GetObjectsAtPosition<Wall>(x, y).Count > 0) {
             return true;
-          } else if (GetObjectsAtPosition<FurnitureItem>(tileX + ix, tileY + iy).Count > 0) {
-            Debug.Log("Placement collides with furniture");
+          } else if (GetObjectsAtPosition<FurnitureItem>(x, y).Count > 0) {
             return true;
-          } else if (GetObjectsAtPosition<Guard>(tileX + ix, tileY + iy).Count > 0) {
-            Debug.Log("Placement collides with guard");
+          } else if (GetObjectsAtPosition<Guard>(x, y).Count > 0) {
             return true;
           }
         }
