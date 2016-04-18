@@ -50,6 +50,11 @@ public class TileItem : MonoBehaviour
         return (((long)x) << 32) + y;
     }
 
+    public static Tile CreateTileAt(Vector3 position) {
+        Tile t = new Tile(GlobalToTilePosition(position.x), GlobalToTilePosition(position.y));
+        return t;
+    }
+
     public static int GlobalToTilePosition(float p) {
         return Mathf.RoundToInt (p / TILE_SIZE);
     }

@@ -166,6 +166,6 @@ public class GuardVision : MonoBehaviour {
 				return i;
 			}
 		}
-		return -2;
+		return 0;
 	}
 }
