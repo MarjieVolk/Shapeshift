@@ -6,49 +6,38 @@ using System.Collections.Generic;
 public class CardPanel : MonoBehaviour {
 
     public GameObject cardPrefab;
-    public PlayableFurnitureItem[] startingFurnitureTypes;
-
-    private Dictionary<string, GameObject> buttons;
 
 	// Use this for initialization
-	void Start () {
-        buttons = new Dictionary<string, GameObject>();
+	void Awake () {
+        GameObject.FindObjectOfType<UnlockState>().UnlockStateChanged += () => {
+            refresh();
+        };
+	}
+	
+    public void refresh() {
+        clear();
 
-	    foreach (PlayableFurnitureItem type in startingFurnitureTypes) {
+        foreach (FurnitureType type in UnlockState.INSTANCE.getUnlocked()) {
             add(type);
         }
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
-
-    public void remove(PlayableFurnitureItem item) {
-        if (!buttons.ContainsKey(item.furnitureName)) {
-            return;
-        }
-
-        GameObject toRemove = buttons[item.furnitureName];
-        buttons.Remove(item.furnitureName);
-        toRemove.transform.SetParent(null);
-        Destroy(toRemove);
     }
 
-    public void add(PlayableFurnitureItem item) {
-        if (buttons.ContainsKey(item.furnitureName)) {
-            return;
+    private void clear() {
+        for (int i = 0; i < transform.childCount; i++) {
+            Destroy(transform.GetChild(i).gameObject);
         }
+    }
+
+    private void add(FurnitureType type) {
+        int currentQuality = UnlockState.INSTANCE.getQualityLevel(type);
 
         GameObject button = Instantiate(cardPrefab);
-        button.transform.FindChild("Image").GetComponent<Image>().sprite = item.gameObject.GetComponent<SpriteRenderer>().sprite;
-        button.transform.FindChild("Name").GetComponent<Text>().text = item.furnitureName;
+        button.transform.FindChild("Image").GetComponent<Image>().sprite = FurnitureRenderer.INSTANCE.getSprite(type, currentQuality);
+        button.transform.FindChild("Name").GetComponent<Text>().text = FurnitureRenderer.INSTANCE.getDisplayString(type, currentQuality);
         button.transform.SetParent(this.transform);
 
         button.GetComponent<Button>().onClick.AddListener(() => {
-            FindObjectOfType<PlayerTransformer>().TransformPlayer(item.gameObject);
+            FindObjectOfType<PlayerTransformer>().TransformPlayer(FurnitureRenderer.INSTANCE.getPrefab(type, currentQuality).gameObject);
         });
-
-        buttons.Add(item.furnitureName, button);
     }
 }

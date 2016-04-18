@@ -108,10 +108,13 @@ public class TileItem : MonoBehaviour
     }
 
     private void AddToTileMap() {
+<<<<<<< HEAD
       //Debug.Log("AddToTileMap " + this + " at " + new Tile(tileX, tileY));
       if (tileX == 0 && tileY == 0) {
         Debug.Log(Environment.StackTrace);
       }
+=======
+>>>>>>> c4a5b112a46a3180d7f0c853ebcda55cdbf5c525
         List<GameObject> ents;
         ForEachOfMyTiles ((int x, int y) => {
             long key = ToKey (x, y);
@@ -134,6 +137,7 @@ public class TileItem : MonoBehaviour
     }
 
     public static bool DoesPlacementCollideWithThings(int tileX, int tileY, int tileW, int tileH) {
+<<<<<<< HEAD
       //Debug.Log("DoesPlacementCollideWithThings " + tileX + ", " + tileY + ", " + tileW + ", " + tileH);
       for (int ix = 0; ix < tileW; ix++) {
         for (int iy = 0; iy < tileH; iy++) {
@@ -145,6 +149,18 @@ public class TileItem : MonoBehaviour
             return true;
           } else if (GetObjectsAtPosition<Guard>(tileX + ix, tileY + iy).Count > 0) {
             //Debug.Log("Placement collides with guard");
+=======
+      // Debug.Log("DoesPlacementCollideWithThings " + tileX + ", " + tileY + ", " + tileW + ", " + tileH);
+      for (int ix = 0; ix < tileW; ix++) {
+        for (int iy = 0; iy < tileH; iy++) {
+          int x = tileX + ix;
+          int y = tileY + iy;
+          if (GetObjectsAtPosition<Wall>(x, y).Count > 0) {
+            return true;
+          } else if (GetObjectsAtPosition<FurnitureItem>(x, y).Count > 0) {
+            return true;
+          } else if (GetObjectsAtPosition<Guard>(x, y).Count > 0) {
+>>>>>>> c4a5b112a46a3180d7f0c853ebcda55cdbf5c525
             return true;
           }
         }
