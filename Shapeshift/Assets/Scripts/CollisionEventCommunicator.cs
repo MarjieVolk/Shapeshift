@@ -18,6 +18,9 @@ public class CollisionEventCommunicator : MonoBehaviour {
 	}
 
     void OnTriggerEnter2D(Collider2D coll) {
-        OnTriggerEnter(coll.gameObject);
+        if (OnTriggerEnter != null)
+        {
+            OnTriggerEnter(coll.gameObject);
+        }
     }
 }
