@@ -7,7 +7,6 @@ using System.Collections.Generic;
 public class MoveState : State {
 
 	public float Speed;
-	public float ChaseSpeed;
     public GuardDuty PatrolRoute;
 
 	private GuardWaypoint[] waypoints;

@@ -124,14 +124,11 @@ public class GuardVision : MonoBehaviour {
 		collider.SetPath(0, colliderVertices);
 
 		// Check if touching player.
-		GameObject player;
-		foreach (GameObject go in gameObject.scene.GetRootGameObjects()) {
-			if (go.GetComponents<PlayerController> ().Length > 0) {
-				player = go;
-				if (collider.OverlapPoint (new Vector2 (player.transform.position.x, player.transform.position.y))) {
-					Debug.Log ("Found player!\n");
-				} else {
-					Debug.Log ("Did not find player. :(\n");
+		foreach (GameObject player in gameObject.scene.GetRootGameObjects()) {
+			if (player.GetComponents<PlayerController> ().Length > 0) {
+				Vector2 playerPos = new Vector2 (player.transform.position.x, player.transform.position.y);
+				if (collider.OverlapPoint (playerPos)) {
+					GetComponentInParent<ChaseState> ().HandlePlayerSpotted (new Vector3(playerPos.x, playerPos.y));
 				}
 			}
 		}
