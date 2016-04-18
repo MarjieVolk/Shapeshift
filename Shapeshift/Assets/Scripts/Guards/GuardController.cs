@@ -69,14 +69,14 @@ public class GuardController : MonoBehaviour {
 		// Handle case where a player is blocking the way.
 		if (Pathfinding.GetPlayerTile().Equals(goalTile))
 		{
-			currentInterruptedHandler ();
+			currentInterruptedHandler();
 		}
 
 		// Emergency course correction.
 		if (ManhattanDistance(transform.position, goalPos) > 1.1 * ManhattanDistance(oldPos, goalPos))
 		{
-			currentInterruptedHandler ();
-		}
+            currentInterruptedHandler();
+        }
 	}
 
 	public void Move(List<Tile> pathToFollow, float speed, Handler finishHandler, Handler interruptedHandler) {
