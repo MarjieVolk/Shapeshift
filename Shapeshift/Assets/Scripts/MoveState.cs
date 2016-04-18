@@ -55,7 +55,6 @@ public class MoveState : State {
 
 	// Update is called once per frame
 	void Update () {
-        Debug.Log(currentPath.Count + " items in list; looking up index " + currentGoalInPath);
         Tile goalTile = currentPath[currentGoalInPath];
         float goalX = TileItem.TileToGlobalPosition(goalTile.X);
         float goalY = TileItem.TileToGlobalPosition(goalTile.Y);
