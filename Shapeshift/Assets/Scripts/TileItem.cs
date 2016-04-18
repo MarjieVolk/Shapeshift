@@ -98,7 +98,8 @@ public class TileItem : MonoBehaviour
         }
     }
 
-    private void RemoveFromTileMap() {
+    /** Don't call this unless destroying the item. */
+    public void RemoveFromTileMap() {
         List<GameObject> ents;
         ForEachOfMyTiles ((int x, int y) => {
             if (_tileMap.TryGetValue (ToKey (x, y), out ents)) {

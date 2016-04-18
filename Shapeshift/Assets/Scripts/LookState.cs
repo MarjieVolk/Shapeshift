@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[RequireComponent (typeof(DirectionComponent))]
 public class LookState : State {
     private DirectionComponent _directionHolder;
 
