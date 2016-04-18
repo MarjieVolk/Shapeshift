@@ -3,6 +3,7 @@ using System.Collections;
 
 public class WallMaker : MonoBehaviour {
 
+    public Wall wallPrefab;
 	public Sprite loneSprite;
 	public Sprite upLeftSprite;
 	public Sprite endSprite;
@@ -166,22 +167,17 @@ public class WallMaker : MonoBehaviour {
 	// Optionally flip along the x axis
 	void instantiateWall(int x, int y, Sprite sprite, int angle, bool flipX) {
 		// Debug.Log ("Adding a " + sprite.name + " wall at (" + x + ", " + y + "), rotated " + angle);
-		GameObject g = new GameObject ();
+        GameObject g = Instantiate(wallPrefab).gameObject;
 
-		SpriteRenderer sr = g.AddComponent<SpriteRenderer> ();
+		SpriteRenderer sr = g.GetComponent<SpriteRenderer> ();
         sr.sprite = sprite;
 		sr.flipX = flipX;
 
-        g.AddComponent<BoxCollider2D>();
-
         g.transform.Rotate (0, 0, angle);
 
-        g.AddComponent<Wall>();
-        g.AddComponent<BlocksLineOfSight>();
         g.layer = LayerMask.NameToLayer("VisibilityBlocking");
 
-		TileItem ti = g.AddComponent<TileItem> ();
-		ti.SetTilePosition (x, y);
+		g.GetComponent<TileItem> ().SetTilePosition (x, y);
 		g.transform.Translate (0, 0, Room.ROOM_TILE_Z_INDEX); // TODO(aklen): Hack.
 	}
 	
