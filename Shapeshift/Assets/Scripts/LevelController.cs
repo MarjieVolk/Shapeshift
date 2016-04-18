@@ -13,13 +13,17 @@ public class LevelController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        INSTANCE = this; 
-        DontDestroyOnLoad(this);
-        DontDestroyOnLoad(UnlockState.INSTANCE);
+        if (INSTANCE == null) {
+            INSTANCE = this;
+            DontDestroyOnLoad(this);
 
-        // TODO: main menu first
-        currentLevel = 1;
-        SceneManager.LoadScene(currentLevel);
+            // TODO: main menu first
+            currentLevel = 1;
+            SceneManager.LoadScene(currentLevel);
+
+        } else {
+            Destroy(this);
+        }
 	}
 	
 	public void advanceToNextLevel() {

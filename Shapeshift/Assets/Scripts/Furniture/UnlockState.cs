@@ -16,15 +16,13 @@ class UnlockState : MonoBehaviour {
 
     void Awake() {
         if (INSTANCE != null) {
-            Debug.Log("Unlock state already present, destroying self");
             Destroy(this);
         } else {
-            Debug.Log("Becoming the MASTER UNLOCK STATE");
             INSTANCE = this;
+            DontDestroyOnLoad(this);
         }
 
         foreach (FurnitureType type in startingTypes) {
-            Debug.Log("Adding " + type);
             getData(type).nScansCompleted += nScansPerUnlock;
         }
 
