@@ -38,17 +38,22 @@ public class VictoryTotem : MonoBehaviour {
             // disable collision on this
             GetComponent<Collider2D>().enabled = false;
             // attach something to the player
+            oldPosition = transform.position;
             transform.SetParent(player.transform);
             transform.localPosition = CarryOffset;
             // once the player returns to the escape zone, win!
-            EscapeZone.GetComponent<CollisionEventCommunicator>().OnTriggerEnter += (go) =>
-            {
-                if (go == player)
-                {
-                    ActivateVictory();
-                }
-            };
+            EscapeZone.GetComponent<CollisionEventCommunicator>().OnTriggerEnter += PlayerEscapeHandler;
+
             // TODO if the player dies, return to other place
+            player.GetComponent<PlayerCaughtHandler>().PlayerCaughtAsHuman += resetTotem;
+        }
+    }
+
+    private void PlayerEscapeHandler(GameObject go)
+    {
+        if (go.GetComponent<PlayerController>() != null)
+        {
+            ActivateVictory();
         }
     }
 
@@ -59,5 +64,18 @@ public class VictoryTotem : MonoBehaviour {
         {
             OnVictory();
         }
+    }
+
+    private void resetTotem()
+    {
+        // undo the work of totemReached
+        GetComponent<Collider2D>().enabled = true;
+
+        transform.SetParent(null);
+        transform.position = oldPosition;
+
+        EscapeZone.GetComponent<CollisionEventCommunicator>().OnTriggerEnter -= PlayerEscapeHandler;
+
+        FindObjectOfType<PlayerCaughtHandler>().PlayerCaughtAsHuman -= resetTotem;
     }
 }
