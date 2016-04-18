@@ -69,6 +69,7 @@ public class MoveState : State {
 		if (path == null) {
 			Debug.Log ("No path can be found; switching to LookState.\n");
             GetComponent<StateMachine>().CurrentState = GetComponent<LookState>();
+            return;
 		}
 
 		GuardController.Handler handleInterrupted = HandleInterrupted;
