@@ -6,6 +6,12 @@ using System.Collections.Generic;
 [RequireComponent(typeof(TileItem))]
 public class PlayerScanner : MonoBehaviour {
 
+    public AudioClip startScanSound;
+    public AudioClip finishScanSound;
+    public AudioClip cantScanSound;
+
+    private AudioSource player;
+
     public float scanCompletionSeconds = 2;
     public PlusOneText plusOneText;
     public Vector3 plusOneTextOffset;
@@ -15,8 +21,8 @@ public class PlayerScanner : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-	
-	}
+        player = gameObject.GetComponent<AudioSource>();
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -24,7 +30,9 @@ public class PlayerScanner : MonoBehaviour {
             PlayableFurnitureItem toScan = findItemToScan();
 
             if (toScan == null) {
-                // TODO -- play bad sound effect?
+                if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift)) {
+                    player.PlayOneShot(cantScanSound);
+                }
             } else if (currentlyScanning == toScan) {
                 // Continue scanning
                 if (Time.time - scanStartTime >= scanCompletionSeconds) {
@@ -33,6 +41,8 @@ public class PlayerScanner : MonoBehaviour {
                         currentlyScanning.hasBeenScanned = true;
                         UnlockState.INSTANCE.completeScanOn(currentlyScanning.furnitureType);
                         spawnPlusOneText(currentlyScanning.furnitureType);
+
+                        player.PlayOneShot(finishScanSound);
                     }
                     currentlyScanning = null;
                 }
@@ -40,6 +50,8 @@ public class PlayerScanner : MonoBehaviour {
                 // Start new scan
                 currentlyScanning = toScan;
                 scanStartTime = Time.time;
+
+                player.PlayOneShot(startScanSound);
             }
         }
     }
