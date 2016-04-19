@@ -70,7 +70,7 @@ public class PlayerScanner : MonoBehaviour {
         for (int x = ti.tileX - 1; x <= ti.tileX + 1; x++) {
             for (int y = ti.tileY - 1; y <= ti.tileY + 1; y++) {
                 foreach (PlayableFurnitureItem item in TileItem.GetObjectsAtPosition<PlayableFurnitureItem>(x, y)) {
-                    if (!item.hasBeenScanned) {
+                    if (!item.hasBeenScanned && item.gameObject != GetComponent<PlayerTransformer>().getTransformation()) {
                         potentialScans.Add(item);
                     }
                 }
