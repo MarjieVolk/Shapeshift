@@ -23,7 +23,6 @@ public class LevelOneTutorialController : MonoBehaviour {
 
     private bool goalPopupTriggered = false;
     private bool goalPopupDisplayed = false;
-    private bool goalPopupDone = false;
     private bool playerHasPickedUpBriefcase = false;
     
     private Canvas canvas;
@@ -118,10 +117,6 @@ public class LevelOneTutorialController : MonoBehaviour {
         popup.addCloseCondition(() => {
             return playerHasPickedUpBriefcase;
         });
-
-        popup.OnClose += () => {
-            goalPopupDone = true;
-        };
     }
 
     private TutorialText init() {

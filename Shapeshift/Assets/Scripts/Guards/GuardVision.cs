@@ -130,6 +130,9 @@ public class GuardVision : MonoBehaviour {
     void OnTriggerEnter2D(Collider2D collider) {
         if (collider.GetComponent<FurnitureItem>() != null) {
             furnitureInSight.Add(collider.GetComponent<FurnitureItem>());
+            collider.GetComponent<CollisionEventCommunicator>().OnDestroyed += () => {
+                furnitureInSight.Remove(collider.GetComponent<FurnitureItem>());
+            };
         }
 
         PlayerTransformer player = collider.GetComponent<PlayerTransformer>();

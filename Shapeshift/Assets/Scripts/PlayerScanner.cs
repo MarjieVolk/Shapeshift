@@ -6,8 +6,6 @@ using System.Collections.Generic;
 [RequireComponent(typeof(TileItem))]
 public class PlayerScanner : MonoBehaviour {
 
-    public event UnityAction ScanCompleted;
-
     public float scanCompletionSeconds = 2;
     public PlusOneText plusOneText;
     public Vector3 plusOneTextOffset;

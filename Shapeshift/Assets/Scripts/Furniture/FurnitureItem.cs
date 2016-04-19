@@ -3,6 +3,7 @@ using System.Collections;
 
 [RequireComponent (typeof (TileItem))]
 [RequireComponent(typeof(SpriteRenderer))]
+[RequireComponent(typeof(CollisionEventCommunicator))]
 public class FurnitureItem : MonoBehaviour {
 
     public RoomType[] roomTypes;

@@ -7,6 +7,7 @@ public class CollisionEventCommunicator : MonoBehaviour {
     public delegate void CollisionHandler(GameObject obj);
     public event CollisionHandler OnTriggerEnter;
     public event CollisionHandler OnTriggerExit;
+    public event UnityAction OnDestroyed;
 
     // Use this for initialization
     void Start () {
@@ -17,6 +18,12 @@ public class CollisionEventCommunicator : MonoBehaviour {
 	void Update () {
 	
 	}
+
+    void OnDestroy() {
+        if (OnDestroyed != null) {
+            OnDestroyed();
+        }
+    }
 
     void OnTriggerEnter2D(Collider2D coll) {
         if (OnTriggerEnter != null)

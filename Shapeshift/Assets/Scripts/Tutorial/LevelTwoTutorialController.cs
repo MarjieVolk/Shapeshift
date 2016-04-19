@@ -8,12 +8,10 @@ public class LevelTwoTutorialController : MonoBehaviour {
 
     private float scanPopupTriggeredTime;
     private bool scanPopupDisplayed = false;
-    private bool scanPopupDone = false;
     private bool playerHasScanned = false;
 
     private float unlockPopupTriggeredTime = -1;
     private bool unlockPopupDisplayed = false;
-    private bool unlockPopupDone = false;
 
     private Canvas canvas;
 
@@ -46,7 +44,6 @@ public class LevelTwoTutorialController : MonoBehaviour {
         popup.setText("Hold shift while next to an item of furniture to scan it.  It will take a few seconds.");
 
         popup.OnClose += () => {
-            scanPopupDone = true;
             unlockPopupTriggeredTime = Time.time;
         };
 
@@ -61,10 +58,6 @@ public class LevelTwoTutorialController : MonoBehaviour {
         TutorialText popup = init();
         popup.setText("Scan three of the same type of furniture to gain the ability to shift into it!  " 
             + "But be careful, if you are caught you will loose all your scans from this level.");
-
-        popup.OnClose += () => {
-            unlockPopupDone = true;
-        };
 
         popup.addCloseCondition(() => {
             return Time.time - unlockPopupTriggeredTime > 5;

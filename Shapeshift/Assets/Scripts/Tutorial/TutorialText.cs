@@ -39,7 +39,9 @@ public class TutorialText : MonoBehaviour {
     }
 
     public void close() {
-        OnClose();
+        if (OnClose != null) {
+            OnClose();
+        }
         Destroy(gameObject);
     }
 }
