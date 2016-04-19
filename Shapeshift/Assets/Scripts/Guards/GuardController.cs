@@ -33,7 +33,7 @@ public class GuardController : MonoBehaviour {
 		Vector3 goalPos = new Vector3(goalX, goalY);
 
 		// The current goal has been reached.  Move on to the next tile.
-		if (ManhattanDistance(goalPos, transform.position) <= 2 * currentSpeed)
+		if (ManhattanDistance(goalPos, transform.position) <= 2 * speedForFrame())
 		{
 			currentGoalInPath++;
 
@@ -63,7 +63,7 @@ public class GuardController : MonoBehaviour {
 
 		Vector3 increment = (goalPos - oldPos);
 		increment.Normalize();
-		increment *= currentSpeed;
+		increment *= speedForFrame();
 		GetComponent<TileItem>().SetGlobalPosition(transform.position + increment);
 
 		// Handle case where a player is blocking the way.
@@ -103,6 +103,11 @@ public class GuardController : MonoBehaviour {
 	public bool GetIsMoving() {
 		return isMoving;
 	}
+
+    float speedForFrame()
+    {
+        return Time.deltaTime * currentSpeed * TileItem.TILE_SIZE;
+    }
 
 	Direction GetDirectionFromTiles(Tile fromMe, Tile toMe) {
 		int xDiff = toMe.X - fromMe.X;

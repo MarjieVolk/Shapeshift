@@ -6,9 +6,9 @@ public class LookState : State {
 
     public Direction FirstDirection = Direction.SOUTH;
 
-    public int LookTime;
+    public float LookTime;
 
-    private int lookTimer;
+    private float lookTimer;
 
     void Start()
     {
@@ -18,12 +18,13 @@ public class LookState : State {
     // Use this for initialization
     void OnEnable () {
         GetComponent<DirectionComponent>().Direction = FirstDirection;
-        lookTimer = LookTime;
+        lookTimer = Time.time + LookTime;
 	}
 	
 	// Update is called once per frame
-	void Update () {
-        if (lookTimer <= 0)
+    void Update()
+    {
+        if (lookTimer <= Time.time)
         {
             _directionHolder.Direction = Clockwise(_directionHolder.Direction);
             if (_directionHolder.Direction == FirstDirection)
@@ -33,12 +34,8 @@ public class LookState : State {
             }
             else
             {
-                lookTimer = LookTime;
+                lookTimer = Time.time + LookTime;
             }
-        }
-        else
-        {
-            lookTimer -= 1;
         }
     }
 
