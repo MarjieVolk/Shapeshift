@@ -14,6 +14,11 @@ public class Tile {
 		get { return yPos; }
 	}
 
+    public Tile(TileItem item) : this(item.tileX, item.tileY)
+    {
+
+    }
+
 	public Tile(int xPos, int yPos) {
 		this.xPos = xPos;
 		this.yPos = yPos;
