@@ -89,7 +89,7 @@ public class GuardVision : MonoBehaviour {
 		} else {
 			meshVertices.Insert (0, Vector2.zero);
 		}
-        Debug.Log("Guard vertices: " + meshVertices.Count);
+
         MeshFilter filter = GetComponent<MeshFilter>();
         Mesh visibleMesh = filter.mesh;
         visibleMesh.Clear();
@@ -123,7 +123,6 @@ public class GuardVision : MonoBehaviour {
         foreach (Vector3 vertex in meshVertices)
         {
             uvs.Add(new Vector2(vertex.magnitude / MaxVisibilityDistance, 0));
-            //Debug.Log(vertex.magnitude * 100);
         }
         return uvs;
     }
