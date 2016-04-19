@@ -63,11 +63,17 @@ public class GuardVision : MonoBehaviour {
 		List<Vector2> extremeVisiblePoints = new List<Vector2>();
 		foreach (Vector2 point in filteredPoints)
 		{
-			RaycastHit2D hit = Physics2D.Raycast(transform.position, point - (Vector2)transform.position, 9001, 1 << LayerMask.NameToLayer("VisibilityBlocking"));
-			if (hit.collider != null)
-			{
-				extremeVisiblePoints.Add(hit.point - (Vector2)transform.position);
-			}
+			RaycastHit2D hit = Physics2D.Raycast(transform.position, point - (Vector2)transform.position, MaxVisibilityDistance, 1 << LayerMask.NameToLayer("VisibilityBlocking"));
+            if (hit.collider != null)
+            {
+                extremeVisiblePoints.Add(hit.point - (Vector2)transform.position);
+            }
+            else
+            {
+                Vector2 extremePoint = (point - (Vector2)transform.position).normalized;
+                extremePoint.Scale(new Vector2(MaxVisibilityDistance, MaxVisibilityDistance));
+                extremeVisiblePoints.Add(extremePoint);
+            }
 		}
 
 		// sort the points by angle (maybe hopefully?)
