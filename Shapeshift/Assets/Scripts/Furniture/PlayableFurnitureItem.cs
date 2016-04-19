@@ -12,7 +12,9 @@ public class PlayableFurnitureItem : MonoBehaviour {
 
     // Use this for initialization
     void Start() {
-        
+        FindObjectOfType<PlayerCaughtHandler>().PlayerCaught += () => {
+            hasBeenScanned = false;
+        };
     }
 
     // Update is called once per frame
