@@ -4,6 +4,9 @@ using System.Collections.Generic;
 
 [RequireComponent (typeof (TileItem))]
 public class PlayerController : MonoBehaviour {
+    /// <summary>
+    /// Speed of the player, in tiles per second.
+    /// </summary>
     public float Speed;
 
     private bool movementEnabled = true;
@@ -55,7 +58,7 @@ public class PlayerController : MonoBehaviour {
         }
 
         translation.Normalize();
-        translation *= Speed;
+        translation *= Speed * Time.deltaTime * TileItem.TILE_SIZE;
 
         if (!movementEnabled && translation.magnitude > 0) {
             GetComponent<PlayerTransformer>().TransformPlayer(null);
