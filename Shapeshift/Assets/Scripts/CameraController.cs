@@ -8,38 +8,41 @@ public class CameraController : MonoBehaviour {
     private const float CAMERA_SPEED = 0.4f;
 
     private TileItem playerTileItem;
+    private PlayerController player;
     private Room previousRoom;
 
 	// Use this for initialization
 	void Start () {
-        playerTileItem = FindObjectOfType<PlayerController>().gameObject.GetComponent<TileItem>();
+        player = FindObjectOfType<PlayerController>();
+        playerTileItem = player.gameObject.GetComponent<TileItem>();
 
         Camera.main.orthographicSize = Screen.height / (100.0f * 2.0f * SCALE);
 
-        transform.position = getCurrentRoom().transform.position;
+        //transform.position = getCurrentRoom().transform.position;
     }
 
     void Update() {
-        Room room = getCurrentRoom();
+        transform.position = player.transform.position;
+        //Room room = getCurrentRoom();
 
-        if (room == null) {
-            room = previousRoom;
-        }
+        //if (room == null) {
+        //    room = previousRoom;
+        //}
 
-        // Ignore hallways (aka tiny rooms less than 3 tall and less than 2 wide)
-        if (room.GetComponent<TileItem> ().tileH < 3 && room.GetComponent<TileItem> ().tileW < 2) {
-            return;
-        }
+        //// Ignore hallways (aka tiny rooms less than 3 tall and less than 2 wide)
+        //if (room.GetComponent<TileItem> ().tileH < 3 && room.GetComponent<TileItem> ().tileW < 2) {
+        //    return;
+        //}
 
-        Vector3 diff = room.transform.position - transform.position;
+        //Vector3 diff = room.transform.position - transform.position;
 
-        if (diff.magnitude < CAMERA_SPEED) {
-            transform.position = room.transform.position;
-        } else {
-            transform.position += diff.normalized * CAMERA_SPEED;
-        }
+        //if (diff.magnitude < CAMERA_SPEED) {
+        //    transform.position = room.transform.position;
+        //} else {
+        //    transform.position += diff.normalized * CAMERA_SPEED;
+        //}
 
-        previousRoom = room;
+        //previousRoom = room;
     }
 
     private Room getCurrentRoom() {
