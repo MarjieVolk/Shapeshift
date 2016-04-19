@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class LevelController : MonoBehaviour {
 
+    public AudioClip levelAdvanceSound;
+
     public static LevelController INSTANCE;
 
     public int nLevels;
@@ -24,6 +26,8 @@ public class LevelController : MonoBehaviour {
             // TODO: main menu first
             SceneManager.LoadScene(1);
         }
+
+        gameObject.AddComponent<AudioSource>();
     }
 
     void OnLevelWasLoaded(int level) {
@@ -36,6 +40,8 @@ public class LevelController : MonoBehaviour {
 
 	public void advanceToNextLevel() {
         // TODO: level/card select first
+
+        GetComponent<AudioSource>().PlayOneShot(levelAdvanceSound);
 
         if (currentLevel + 1 <= nLevels) {
             SceneManager.LoadScene(currentLevel + 1);
