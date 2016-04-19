@@ -15,6 +15,7 @@ public class PlayerCaughtHandler : MonoBehaviour {
 
 
     public float caughtCooldown = 3;
+    public float caughtBlinkPeriod = 0.5f;
 
     private Vector3 startPosition;
     private float caughtTime = 0;
@@ -22,6 +23,19 @@ public class PlayerCaughtHandler : MonoBehaviour {
     // Use this for initialization
     void Start () {
         startPosition = transform.position;
+    }
+
+    void Update()
+    {
+        if (isOnCatchCooldown())
+        {
+            float elapsedTime = Time.time - caughtTime;
+            GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, (elapsedTime / caughtBlinkPeriod) % 1);
+        }
+        else
+        {
+            GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
+        }
     }
 
     public void catchPlayer() {
