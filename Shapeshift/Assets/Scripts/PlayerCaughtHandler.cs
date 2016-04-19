@@ -5,7 +5,9 @@ using System.Collections;
 [RequireComponent (typeof(PlayerController))]
 [RequireComponent(typeof(PlayerTransformer))]
 public class PlayerCaughtHandler : MonoBehaviour {
-    
+
+    public AudioClip[] caughtSounds;
+
     public event UnityAction PlayerCaught;
 
     public delegate void PlayerCaughtAsFurnitureHanlder(FurnitureType type);
@@ -20,9 +22,12 @@ public class PlayerCaughtHandler : MonoBehaviour {
     private Vector3 startPosition;
     private float caughtTime = 0;
 
+    private System.Random random;
+
     // Use this for initialization
     void Start () {
         startPosition = transform.position;
+        random = new System.Random();
     }
 
     void Update()
@@ -40,6 +45,7 @@ public class PlayerCaughtHandler : MonoBehaviour {
 
     public void catchPlayer() {
         caughtTime = Time.time;
+        GetComponent<AudioSource>().PlayOneShot(caughtSounds[random.Next(caughtSounds.Length)]);
 
         GameObject currentTransformation = GetComponent<PlayerTransformer>().getTransformation();
         if (currentTransformation == null) {
