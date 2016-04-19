@@ -146,7 +146,7 @@ public class GuardVision : MonoBehaviour {
             // Guard sees the player
             if (player.getTransformation() == null) {
                 // Player is human, begin chasing
-                GetComponentInParent<ChaseState>().HandlePlayerSpotted(player.transform.position);
+                GetComponentInParent<NoticingState>().HandlePlayerDetected();
             } else {
                 // Player is furniture, begin suspicion analysis.
                 int maxSuspicion = 0;
@@ -167,6 +167,20 @@ public class GuardVision : MonoBehaviour {
                     FurnitureItem toMove = mostSuspicious[random.Next(mostSuspicious.Count)];
                     // TODO: Approach and remove toMove
                 }
+            }
+        }
+    }
+
+    void OnTriggerStay2D(Collider2D collider)
+    {
+        PlayerTransformer player = collider.GetComponent<PlayerTransformer>();
+        if (player != null && !player.GetComponent<PlayerCaughtHandler>().isOnCatchCooldown())
+        {
+            // Guard sees the player
+            if (player.getTransformation() == null)
+            {
+                // Player is human, begin chasing
+                GetComponentInParent<NoticingState>().HandlePlayerDetected();
             }
         }
     }
