@@ -42,14 +42,9 @@ public class GuardVision : MonoBehaviour {
 		}
 
 		// Filter out points not facing the same direction as the guard.
-		HashSet<Vector2> filteredPoints = new HashSet<Vector2>();
 		Direction currentDirection = gameObject.GetComponentInParent<DirectionComponent> ().Direction;
 		Vector2 currentPosition = new Vector2 (transform.position.x, transform.position.y);
-		foreach (Vector2 point in points) {
-			if (MatchesVectorDirection(currentDirection, currentPosition, point)) {
-				filteredPoints.Add(point);
-			}
-		}
+        HashSet<Vector2> filteredPoints = filterByDirection(currentDirection, currentPosition, points);
 		if (currentDirection == Direction.NORTH) {
 			filteredPoints.Add (new Vector2 (currentPosition.x + 1, currentPosition.y + 1));
 			filteredPoints.Add (new Vector2 (currentPosition.x + -1, currentPosition.y + 1));
@@ -94,38 +89,44 @@ public class GuardVision : MonoBehaviour {
 		} else {
 			meshVertices.Insert (0, Vector2.zero);
 		}
-
-		Mesh visibleMesh = new Mesh();
-		visibleMesh.SetVertices(meshVertices);
-		List<int> triangleIndices = new List<int>();
-		for(int i = 0; i < meshVertices.Count - 2; i++)
-		{
-			triangleIndices.Add(0);
-			triangleIndices.Add(i + 1);
-			triangleIndices.Add(i + 2);
-		}
-		visibleMesh.triangles = triangleIndices.ToArray();
-
-		List<Vector2> uvs = new List<Vector2>();
-		foreach (Vector3 vertex in meshVertices)
-		{
-			uvs.Add(new Vector2(vertex.magnitude / MaxVisibilityDistance, 0));
-			//Debug.Log(vertex.magnitude * 100);
-		}
-		visibleMesh.uv = uvs.ToArray();
-
-		MeshFilter filter = GetComponent<MeshFilter>();
-		filter.mesh.Clear();
-		filter.mesh = visibleMesh;
-		GetComponent<MeshRenderer>();
+        Debug.Log("Guard vertices: " + meshVertices.Count);
+        MeshFilter filter = GetComponent<MeshFilter>();
+        Mesh visibleMesh = filter.mesh;
+        visibleMesh.Clear();
+        visibleMesh.SetVertices(meshVertices);
+		visibleMesh.triangles = Triangulate(meshVertices).ToArray();
+		visibleMesh.uv = makeUVs(meshVertices).ToArray();
 
 		// Update polygon collider
 		Vector2[] colliderVertices = new Vector2[visibleMesh.vertices.Count()];
 		for (int i = 0; i < visibleMesh.vertices.Count(); i++) {
 			colliderVertices [i] = new Vector2 (visibleMesh.vertices [i].x, visibleMesh.vertices [i].y);
 		}
-        GetComponent<PolygonCollider2D>().SetPath(0, colliderVertices);			
+        GetComponent<PolygonCollider2D>().SetPath(0, colliderVertices);	
 	}
+
+    List<int> Triangulate(List<Vector3> meshVertices)
+    {
+        List<int> triangleIndices = new List<int>();
+        for (int i = 0; i < meshVertices.Count - 2; i++)
+        {
+            triangleIndices.Add(0);
+            triangleIndices.Add(i + 1);
+            triangleIndices.Add(i + 2);
+        }
+        return triangleIndices;
+    }
+
+    List<Vector2> makeUVs(List<Vector3> meshVertices)
+    {
+        List<Vector2> uvs = new List<Vector2>();
+        foreach (Vector3 vertex in meshVertices)
+        {
+            uvs.Add(new Vector2(vertex.magnitude / MaxVisibilityDistance, 0));
+            //Debug.Log(vertex.magnitude * 100);
+        }
+        return uvs;
+    }
 
     void OnTriggerEnter2D(Collider2D collider) {
         if (collider.GetComponent<FurnitureItem>() != null) {
@@ -161,41 +162,44 @@ public class GuardVision : MonoBehaviour {
             }
         }
     }
-
-    void OnTriggerExit2D(Collider2D collider) {
-        if (collider.GetComponent<FurnitureItem>() != null) {
-            furnitureInSight.Remove(collider.GetComponent<FurnitureItem>());
+    
+    HashSet<Vector2> filterByDirection(Direction currentDirection, Vector2 position, HashSet<Vector2> points)
+    {
+        Vector2 directionVector = new Vector2(-1, 0);
+        switch (currentDirection)
+        {
+            case Direction.EAST:
+                directionVector = new Vector2(1, 0);
+                break;
+            case Direction.NORTH:
+                directionVector = new Vector2(0, 1);
+                break;
+            case Direction.SOUTH:
+                directionVector = new Vector2(0, -1);
+                break;
         }
+
+        HashSet<Vector2> ret = new HashSet<Vector2>();
+        foreach (Vector2 point in points)
+        {
+            Vector2 difference = point - position;
+            float directionness = Vector2.Dot(directionVector, difference.normalized);
+            if (directionness > .707162)
+            {
+                ret.Add(point);
+            }
+        }
+
+        return ret;
     }
 
-	bool MatchesVectorDirection(Direction currentDirection, Vector2 rootOfVector, Vector2 endOfVector) {
-		Vector2 difference = endOfVector - rootOfVector;
-		if (Math.Abs (difference.x) == Math.Abs (difference.y)) {
-			return false;
-		} else if (Math.Abs (difference.x) > Math.Abs(difference.y)) {
-			if (difference.x > 0) {
-				return currentDirection == Direction.EAST;
-			} else {
-				return currentDirection == Direction.WEST;
-			}
-		} else {
-			if (difference.y > 0) {
-				return currentDirection == Direction.NORTH;
-			} else {
-				return currentDirection == Direction.SOUTH;
-			}
-		}
-	}
-
 	int FindIndex(List<Vector3> inMe, Vector3 ofMe) {
+        Vector3 norm2 = ofMe.normalized;
 		for (int i = 0; i < inMe.Count; i++) {
-			Vector2 norm1 = inMe [i];
-			Vector2 norm2 = ofMe;
-			norm1.Normalize ();
-			norm2.Normalize ();
-			if (Math.Abs (norm1.x - norm2.x) < .00001 && Math.Abs (norm1.y - norm2.y) < .00001) {
-				return i;
-			}
+            if ((norm2 - inMe[i].normalized).sqrMagnitude < .00001)
+            {
+                return i;
+            }
 		}
 		return 0;
 	}
