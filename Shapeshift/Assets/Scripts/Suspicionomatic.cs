@@ -28,6 +28,7 @@ class Suspicionomatic {
                 }
 
                 if (!hasRoomTypeMatch) {
+                    Debug.Log("" + item + " has no room type match with " + other);
                     suspicionLevel++;
                 }
             }
