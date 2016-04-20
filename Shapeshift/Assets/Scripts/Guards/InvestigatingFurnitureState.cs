@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class InvestigatingFurnitureState : State {
 
@@ -20,8 +21,9 @@ public class InvestigatingFurnitureState : State {
 
         Tile myTile = new Tile(GetComponent<TileItem>());
         Tile destinationTile = new Tile(investigationTarget.GetComponent<TileItem>());
+        List<Tile> path = Pathfinding.FindPath(myTile, destinationTile, false);
         controller.Move(
-            Pathfinding.FindPath(myTile, destinationTile, false),
+            path.GetRange(0, path.Count - 1),
             ApproachSpeed,
             OnApproachFinish,
             OnApproachInterrupted);
@@ -37,6 +39,9 @@ public class InvestigatingFurnitureState : State {
             Debug.Log("Move finished AFTER it was interrupted.");
             return;
         }
+
+        // TODO: check whether player is nearby before catching them
+
         // do different things if it's a player
         if (investigationTarget.gameObject.transform.parent != null
             && investigationTarget.gameObject.transform.parent.GetComponent<PlayerTransformer>() != null)
