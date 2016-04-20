@@ -80,8 +80,13 @@ public class GuardController : MonoBehaviour {
 	}
 
 	public void Move(List<Tile> pathToFollow, float speed, Handler finishHandler, Handler interruptedHandler) {
+        if (pathToFollow.Count < 2)
+        {
+            finishHandler();
+            return;
+        }
 		currentPath = pathToFollow;
-		currentGoalInPath = 0;
+		currentGoalInPath = 1;
 
 		currentSpeed = speed;
 		currentFinishHandler = finishHandler;
