@@ -26,7 +26,7 @@ public class InvestigatingFurnitureState : State {
             OnApproachFinish,
             OnApproachInterrupted);
 
-        GetComponent<StateMachine>().CurrentState = GetComponent<LookState>();
+        GetComponent<StateMachine>().CurrentState = GetComponent<InvestigatingFurnitureState>();
     }
 
     private void OnApproachFinish()
