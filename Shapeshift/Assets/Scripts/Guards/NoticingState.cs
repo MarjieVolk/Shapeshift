@@ -47,12 +47,6 @@ public class NoticingState : State {
 	
 	// Update is called once per frame
 	void Update () {
-        Debug.Log(noticeTime);
-        if (noticeTime > 0)
-        {
-            Debug.Log(noticeTime);
-        }
-
         // Start chasing after some time elapses
         if (Time.time >= lastNoticeTime + NoticeResetDelay)
         {
