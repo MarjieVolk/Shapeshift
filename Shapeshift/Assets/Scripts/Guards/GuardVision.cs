@@ -165,7 +165,7 @@ public class GuardVision : MonoBehaviour {
                 
                 if (maxSuspicion > 0) {
                     FurnitureItem toMove = mostSuspicious[random.Next(mostSuspicious.Count)];
-                    // TODO: Approach and remove toMove
+                    transform.parent.GetComponent<InvestigatingFurnitureState>().HandleFurnitureInvestigation(toMove);
                 }
             }
         }
