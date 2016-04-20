@@ -180,7 +180,10 @@ public class GuardVision : MonoBehaviour {
             if (player.getTransformation() == null)
             {
                 // Player is human, begin chasing
-                GetComponentInParent<NoticingState>().HandlePlayerDetected();
+                if (GetComponentInParent<NoticingState>().HandlePlayerDetected())
+                {
+                    GetComponentInParent<ChaseState>().HandlePlayerSpotted(player.transform.position);
+                }
             }
         }
     }

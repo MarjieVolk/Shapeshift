@@ -20,12 +20,12 @@ public class NoticingState : State {
     private float noticeTime = 0;
     private float lastNoticeTime;
 
-    public void HandlePlayerDetected()
+    public bool HandlePlayerDetected()
     {
         if (GetComponent<ChaseState>().enabled)
         {
             noticeTime = 0;
-            return;
+            return true;
         }
 
         Debug.Log("Player detected!");
@@ -38,6 +38,8 @@ public class NoticingState : State {
         {
             GetComponent<StateMachine>().CurrentState = this;
         }
+
+        return false;
     }
 
     void OnEnable()
@@ -60,6 +62,7 @@ public class NoticingState : State {
 
         if (noticeTime >= TotalNoticedTime)
         {
+            noticeTime = TotalNoticedTime;
             GetComponent<ChaseState>().HandlePlayerSpotted(FindObjectOfType<PlayerTransformer>().transform.position);
             GetComponent<StateMachine>().CurrentState = GetComponent<ChaseState>();
         }
