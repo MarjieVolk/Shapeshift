@@ -40,10 +40,6 @@ public class CardPanel : MonoBehaviour {
     private void add(FurnitureType type) {
         Button button = createButton(type, UnlockState.INSTANCE.getQualityLevel(type), "");
         button.interactable = !UnlockState.INSTANCE.isTemporarilyLocked(type);
-
-        if (UnlockState.INSTANCE.isTemporarilyLocked(type)) {
-            Debug.Log("Locking " + type);
-        }
     }
 
     private void addPartial(FurnitureType type) {

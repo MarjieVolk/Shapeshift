@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class Pathfinding
 {
-    public static List<Tile> FindPath(Tile startTile, Tile goalTile, bool includePlayer)
+    public static List<Tile> FindPath(Tile startTile, Tile goalTile, bool isPlayerObstacle)
     {
 
         Dictionary<Tile, Tile> predecessors = new Dictionary<Tile, Tile>();
@@ -25,7 +25,7 @@ public class Pathfinding
             priorityQueue.RemoveAt(0);
 
             // Add neighbors if a new lowest-cost path can be made through them.
-            foreach (Tile neighbor in GetNeighbors(currentTile, goalTile, includePlayer))
+            foreach (Tile neighbor in GetNeighbors(currentTile, goalTile, isPlayerObstacle))
             {
                 float newCost = costs[currentTile] + 1 + GetDistance(currentTile, neighbor);
                 if (!(costs.ContainsKey(neighbor) && costs[neighbor] <= newCost))
@@ -83,25 +83,25 @@ public class Pathfinding
         return tracedPath;
     }
 
-    public static List<Tile> GetNeighbors(Tile fromMe, Tile goalTile, bool includePlayer)
+    public static List<Tile> GetNeighbors(Tile fromMe, Tile goalTile, bool isPlayerObstacle)
     {
         List<Tile> neighbors = new List<Tile>(4);
 
         Tile right = new Tile(fromMe.X + 1, fromMe.Y);
-        if (IsViable(right, goalTile, includePlayer)) { neighbors.Add(right); }
+        if (IsViable(right, goalTile, isPlayerObstacle)) { neighbors.Add(right); }
 
         Tile up = new Tile(fromMe.X, fromMe.Y + 1);
-        if (IsViable(up, goalTile, includePlayer)) { neighbors.Add(up); }
+        if (IsViable(up, goalTile, isPlayerObstacle)) { neighbors.Add(up); }
 
         Tile left = new Tile(fromMe.X - 1, fromMe.Y);
-        if (IsViable(left, goalTile, includePlayer)) { neighbors.Add(left); }
+        if (IsViable(left, goalTile, isPlayerObstacle)) { neighbors.Add(left); }
 
         Tile down = new Tile(fromMe.X, fromMe.Y - 1);
-        if (IsViable(down, goalTile, includePlayer)) { neighbors.Add(down); }
+        if (IsViable(down, goalTile, isPlayerObstacle)) { neighbors.Add(down); }
         return neighbors;
     }
 
-    public static bool IsViable(Tile tile, Tile goalTile, bool includePlayer)
+    public static bool IsViable(Tile tile, Tile goalTile, bool isPlayerObstacle)
     {
         if (tile.Equals(goalTile))
         {
@@ -115,7 +115,7 @@ public class Pathfinding
         {
             return false;
         }
-        else if (includePlayer && GetPlayerTile().Equals(tile))
+        else if (isPlayerObstacle && GetPlayerTile().Equals(tile))
         {
             return false;
         }

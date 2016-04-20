@@ -161,7 +161,6 @@ public class GuardVision : MonoBehaviour {
                     int suspicion = Suspicionomatic.getSuspicionLevel(item);
 
                     if (suspicion > maxSuspicion) {
-                        Debug.Log("" + item + " is more suspicious at " + suspicion);
                         maxSuspicion = suspicion;
                         mostSuspicious.Clear();
                         mostSuspicious.Add(item);

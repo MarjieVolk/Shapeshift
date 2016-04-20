@@ -21,7 +21,7 @@ public class InvestigatingFurnitureState : State {
         Tile myTile = new Tile(GetComponent<TileItem>());
         Tile destinationTile = new Tile(investigationTarget.GetComponent<TileItem>());
         controller.Move(
-            Pathfinding.FindPath(myTile, destinationTile, true),
+            Pathfinding.FindPath(myTile, destinationTile, false),
             ApproachSpeed,
             OnApproachFinish,
             OnApproachInterrupted);

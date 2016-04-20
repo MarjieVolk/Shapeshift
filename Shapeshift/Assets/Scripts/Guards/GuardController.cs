@@ -76,6 +76,7 @@ public class GuardController : MonoBehaviour {
 		// Emergency course correction.
 		if (ManhattanDistance(transform.position, goalPos) > 1.1 * ManhattanDistance(oldPos, goalPos))
 		{
+            Debug.LogError("This should never be called.  Guard movement is messed up.");
             currentInterruptedHandler();
         }
 	}

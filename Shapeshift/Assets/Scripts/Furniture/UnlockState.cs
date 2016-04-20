@@ -54,7 +54,6 @@ class UnlockState : MonoBehaviour {
 
         if (caughtHandler != null) {
             caughtHandler.PlayerCaughtAsFurniture += (FurnitureType type) => {
-                Debug.Log("Locking " + type);
                 getData(type).temporarilyLocked = true;
 
                 if (UnlockStateChanged != null) {
