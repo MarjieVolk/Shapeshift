@@ -100,6 +100,10 @@ class UnlockState : MonoBehaviour {
         return getQualityLevel(type) != -1;
     }
 
+    public int getScansAboveQualityLevel(FurnitureType type) {
+        return (getData(type).thisLevelScansCompleted + getData(type).lockedInScansCompleted) % nScansPerUnlock;
+    }
+
     public List<FurnitureType> getUnlocked() {
         List<FurnitureType> unlockedTypes = new List<FurnitureType>();
         foreach (FurnitureType type in state.Keys) {
