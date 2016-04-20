@@ -35,7 +35,7 @@ public class PlayerScanner : MonoBehaviour {
                 }
             } else if (currentlyScanning == toScan) {
                 // Continue scanning
-                if (Time.time - scanStartTime >= scanCompletionSeconds) {
+                if (scanStartTime != -1 && Time.time - scanStartTime >= scanCompletionSeconds) {
                     // Finish scanning
                     if (!currentlyScanning.hasBeenScanned) {
                         currentlyScanning.hasBeenScanned = true;
@@ -53,6 +53,8 @@ public class PlayerScanner : MonoBehaviour {
 
                 player.PlayOneShot(startScanSound);
             }
+        } else {
+            scanStartTime = -1;
         }
     }
 
