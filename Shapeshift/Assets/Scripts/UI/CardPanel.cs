@@ -4,8 +4,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
+[RequireComponent (typeof(AudioSource))]
 public class CardPanel : MonoBehaviour {
 
+    public AudioClip transformSound;
     public GameObject cardPrefab;
 
 	// Use this for initialization
@@ -59,6 +61,7 @@ public class CardPanel : MonoBehaviour {
         Button button = buttonObj.GetComponent<Button>();
         button.onClick.AddListener(() => {
             FindObjectOfType<PlayerTransformer>().TransformPlayer(FurnitureRenderer.INSTANCE.getPrefab(type, currentQuality).gameObject);
+            GetComponent<AudioSource>().PlayOneShot(transformSound);
         });
 
         return button;
