@@ -79,7 +79,7 @@ public class ChaseState : State {
 
     public void OnTriggerEnter2D(Collider2D other) {
         PlayerCaughtHandler player = other.GetComponent<PlayerCaughtHandler>();
-        if (player != null) {
+        if (this.enabled && player != null) {
             player.catchPlayer();
         }
     }

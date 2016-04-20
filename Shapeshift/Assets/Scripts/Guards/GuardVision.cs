@@ -76,25 +76,22 @@ public class GuardVision : MonoBehaviour {
             }
 		}
 
-		// sort the points by angle (maybe hopefully?)
+        //offset the angle sort if necessary so the circle isn't split in the guard's flashlight
+        Func<Vector2, float> orderingFunction = (p) => -Mathf.Atan2(p.y, p.x);
+        if (currentDirection == Direction.WEST)
+        {
+            // basically flip west and east :-P
+            orderingFunction = (p) => -Mathf.Atan2(p.y, -p.x);
+        }
+
+		// sort the points by angle (actually definitely)
 		List<Vector3> meshVertices = new List<Vector3>();
 		meshVertices.AddRange(extremeVisiblePoints
-			.OrderBy((p) => -Mathf.Atan2(p.y, p.x))
+			.OrderBy(orderingFunction)
 			.Select((v2) => new Vector3(v2.x, v2.y)));
 
 		// Make sure Vector2.zero is inserted in the right place.
-		if (currentDirection == Direction.WEST) {
-			int index1 = FindIndex (meshVertices, new Vector3 (-1, -1));
-			int index2 = FindIndex (meshVertices, new Vector3 (-1, 1));
-
-			if (index1 > index2) {
-				meshVertices.Insert (index1, Vector2.zero);
-			} else {
-				meshVertices.Insert (index2, Vector2.zero);
-			}
-		} else {
-			meshVertices.Insert (0, Vector2.zero);
-		}
+        meshVertices.Insert (0, Vector2.zero);
 
         MeshFilter filter = GetComponent<MeshFilter>();
         Mesh visibleMesh = filter.mesh;
@@ -165,7 +162,7 @@ public class GuardVision : MonoBehaviour {
                 
                 if (maxSuspicion > 0) {
                     FurnitureItem toMove = mostSuspicious[random.Next(mostSuspicious.Count)];
-                    // TODO: Approach and remove toMove
+                    transform.parent.GetComponent<InvestigatingFurnitureState>().HandleFurnitureInvestigation(toMove);
                 }
             }
         }
@@ -180,7 +177,10 @@ public class GuardVision : MonoBehaviour {
             if (player.getTransformation() == null)
             {
                 // Player is human, begin chasing
-                GetComponentInParent<NoticingState>().HandlePlayerDetected();
+                if (GetComponentInParent<NoticingState>().HandlePlayerDetected())
+                {
+                    GetComponentInParent<ChaseState>().HandlePlayerSpotted(player.transform.position);
+                }
             }
         }
     }
