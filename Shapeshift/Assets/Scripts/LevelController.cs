@@ -15,19 +15,19 @@ public class LevelController : MonoBehaviour {
 
 	// Use this for initialization
 	void Awake () {
-        if (INSTANCE == null) {
+        //if (INSTANCE == null) {
             INSTANCE = this;
             DontDestroyOnLoad(this);
-        } else {
-            Destroy(this);
-        }
 
-        if (SceneManager.GetActiveScene().buildIndex == 0) {
-            // TODO: main menu first
-            SceneManager.LoadScene(1);
-        }
+            if (SceneManager.GetActiveScene().buildIndex == 0) {
+                // TODO: main menu first
+                SceneManager.LoadScene(1);
+            }
 
-        gameObject.AddComponent<AudioSource>();
+            gameObject.AddComponent<AudioSource>();
+        //} else {
+        //    Destroy(this);
+        //}
     }
 
     void OnLevelWasLoaded(int level) {
