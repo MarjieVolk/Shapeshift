@@ -137,15 +137,24 @@ public class GuardVision : MonoBehaviour {
                 furnitureInSight.Remove(collider.GetComponent<FurnitureItem>());
             };
         }
+    }
 
+    void OnTriggerExit2D(Collider2D collider) {
+        if (collider.GetComponent<FurnitureItem>() != null) {
+            furnitureInSight.Remove(collider.GetComponent<FurnitureItem>());
+        }
+    }
+
+    void OnTriggerStay2D(Collider2D collider)
+    {
         PlayerTransformer player = collider.GetComponent<PlayerTransformer>();
         if (player != null && !player.GetComponent<PlayerCaughtHandler>().isOnCatchCooldown()) {
             // Guard sees the player
             if (player.getTransformation() == null) {
                 // Player is human, begin chasing
                 GetComponentInParent<NoticingState>().HandlePlayerDetected();
-            } else {
-                // Player is furniture, begin suspicion analysis.
+            } else if (transform.parent.GetComponent<StateMachine>().CurrentState != transform.parent.GetComponent<InvestigatingFurnitureState>()) {
+                // Player is furniture and guard is not already in investiate state, begin suspicion analysis.
                 int maxSuspicion = 0;
                 List<FurnitureItem> mostSuspicious = new List<FurnitureItem>();
                 foreach (FurnitureItem item in furnitureInSight) {
@@ -159,27 +168,10 @@ public class GuardVision : MonoBehaviour {
                         mostSuspicious.Add(item);
                     }
                 }
-                
+
                 if (maxSuspicion > 0) {
                     FurnitureItem toMove = mostSuspicious[random.Next(mostSuspicious.Count)];
                     transform.parent.GetComponent<InvestigatingFurnitureState>().HandleFurnitureInvestigation(toMove);
-                }
-            }
-        }
-    }
-
-    void OnTriggerStay2D(Collider2D collider)
-    {
-        PlayerTransformer player = collider.GetComponent<PlayerTransformer>();
-        if (player != null && !player.GetComponent<PlayerCaughtHandler>().isOnCatchCooldown())
-        {
-            // Guard sees the player
-            if (player.getTransformation() == null)
-            {
-                // Player is human, begin chasing
-                if (GetComponentInParent<NoticingState>().HandlePlayerDetected())
-                {
-                    GetComponentInParent<ChaseState>().HandlePlayerSpotted(player.transform.position);
                 }
             }
         }

@@ -44,6 +44,7 @@ public class GuardController : MonoBehaviour {
 			// TODO switch states here
 			if (currentGoalInPath == currentPath.Count)
 			{
+                Stop();
 				currentFinishHandler ();
 			}
 			else
