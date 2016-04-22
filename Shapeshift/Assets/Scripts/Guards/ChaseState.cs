@@ -32,10 +32,18 @@ public class ChaseState : State {
 
 	// This is called whenever a player is spotted.
 	public void HandlePlayerSpotted(Vector3 playerPos) {
-		currentTarget = new Tile(
-			TileItem.GlobalToTilePosition(playerPos.x), TileItem.GlobalToTilePosition(playerPos.y));
+        UpdateLastSeenPlayerLocation(playerPos);
 		GetComponent<StateMachine>().CurrentState = GetComponent<ChaseState>();
 	}
+
+    // This is called when a player is still visible after a frame
+    public void UpdateLastSeenPlayerLocation(Vector3 playerPos)
+    {
+        currentTarget = new Tile(
+            TileItem.GlobalToTilePosition(playerPos.x), TileItem.GlobalToTilePosition(playerPos.y));
+        Vector2 lookVector = (playerPos - transform.position).normalized;
+        GetComponent<DirectionComponent>().Angle = Mathf.Atan2(lookVector.y, lookVector.x);
+    }
 
 	private void StartChase() {
 		TileItem tileItem = gameObject.GetComponent<TileItem>();

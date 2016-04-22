@@ -25,6 +25,8 @@ public class NoticingState : State {
         if (GetComponent<ChaseState>().enabled)
         {
             noticeTime = 0;
+            //TODO don't look up in the scene every frame
+            GetComponent<ChaseState>().UpdateLastSeenPlayerLocation(FindObjectOfType<PlayerTransformer>().transform.position);
             return true;
         }
 
