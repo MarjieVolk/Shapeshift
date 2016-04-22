@@ -42,22 +42,11 @@ public class GuardVision : MonoBehaviour {
 		}
 
 		// Filter out points not facing the same direction as the guard.
-		Direction currentDirection = gameObject.GetComponentInParent<DirectionComponent> ().Direction;
+        float currentAngle = gameObject.GetComponentInParent<DirectionComponent>().Angle;
 		Vector2 currentPosition = new Vector2 (transform.position.x, transform.position.y);
-        HashSet<Vector2> filteredPoints = filterByDirection(currentDirection, currentPosition, points);
-		if (currentDirection == Direction.NORTH) {
-			filteredPoints.Add (new Vector2 (currentPosition.x + 1, currentPosition.y + 1));
-			filteredPoints.Add (new Vector2 (currentPosition.x + -1, currentPosition.y + 1));
-		} else if (currentDirection == Direction.EAST) {
-			filteredPoints.Add (new Vector2 (currentPosition.x + 1, currentPosition.y + 1));
-			filteredPoints.Add (new Vector2 (currentPosition.x + 1, currentPosition.y + -1));
-		} else if (currentDirection == Direction.SOUTH) {
-			filteredPoints.Add (new Vector2 (currentPosition.x + 1, currentPosition.y + -1));
-			filteredPoints.Add (new Vector2 (currentPosition.x + -1, currentPosition.y + -1));
-		} else if (currentDirection == Direction.WEST) {
-			filteredPoints.Add (new Vector2 (currentPosition.x + -1, currentPosition.y + -1));
-			filteredPoints.Add (new Vector2 (currentPosition.x + -1, currentPosition.y + 1));
-		}
+        HashSet<Vector2> filteredPoints = filterByDirection(new Vector2(Mathf.Cos(currentAngle), Mathf.Sin(currentAngle)), currentPosition, points);
+        filteredPoints.Add(currentPosition + new Vector2(Mathf.Cos(currentAngle - Mathf.PI / 4), Mathf.Sin(currentAngle - Mathf.PI / 4)));
+        filteredPoints.Add(currentPosition + new Vector2(Mathf.Cos(currentAngle + Mathf.PI / 4), Mathf.Sin(currentAngle + Mathf.PI / 4)));
 
 		// cast a ray for each corners to find the enclosing polygon
 		List<Vector2> extremeVisiblePoints = new List<Vector2>();
@@ -78,6 +67,7 @@ public class GuardVision : MonoBehaviour {
 
         //offset the angle sort if necessary so the circle isn't split in the guard's flashlight
         Func<Vector2, float> orderingFunction = (p) => -Mathf.Atan2(p.y, p.x);
+        Direction currentDirection = gameObject.GetComponentInParent<DirectionComponent>().Direction;
         if (currentDirection == Direction.WEST)
         {
             // basically flip west and east :-P
@@ -177,27 +167,16 @@ public class GuardVision : MonoBehaviour {
         }
     }
     
-    HashSet<Vector2> filterByDirection(Direction currentDirection, Vector2 position, HashSet<Vector2> points)
+    HashSet<Vector2> filterByDirection(Vector2 directionVector, Vector2 position, HashSet<Vector2> points)
     {
-        Vector2 directionVector = new Vector2(-1, 0);
-        switch (currentDirection)
-        {
-            case Direction.EAST:
-                directionVector = new Vector2(1, 0);
-                break;
-            case Direction.NORTH:
-                directionVector = new Vector2(0, 1);
-                break;
-            case Direction.SOUTH:
-                directionVector = new Vector2(0, -1);
-                break;
-        }
-
         HashSet<Vector2> ret = new HashSet<Vector2>();
         foreach (Vector2 point in points)
         {
             Vector2 difference = point - position;
+            //directionness here really means 'projection of difference onto directionVector'
+            //but it's, you know, funnier
             float directionness = Vector2.Dot(directionVector, difference.normalized);
+            //this being sqrt(2), this is true iff this vector is less than 45 degrees off of directionVector
             if (directionness > .707162)
             {
                 ret.Add(point);

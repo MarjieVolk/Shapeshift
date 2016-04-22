@@ -24,38 +24,11 @@ public class LookState : State {
 	// Update is called once per frame
     void Update()
     {
-        if (lookTimer <= Time.time)
+        //turn 2pi radians in LookTime seconds
+        _directionHolder.Angle += Time.deltaTime / LookTime * Mathf.PI * 2;
+        if (Time.time > lookTimer)
         {
-            _directionHolder.Direction = Clockwise(_directionHolder.Direction);
-            if (_directionHolder.Direction == FirstDirection)
-            {
-                // transition to move state here
-                GetComponent<StateMachine>().CurrentState = GetComponent<MoveState>();
-            }
-            else
-            {
-                lookTimer = Time.time + LookTime;
-            }
-        }
-    }
-
-    private Direction Clockwise(Direction fromMe)
-    {
-        if (fromMe == Direction.NORTH)
-        {
-            return Direction.EAST;
-        }
-        else if (fromMe == Direction.EAST)
-        {
-            return Direction.SOUTH;
-        }
-        else if (fromMe == Direction.SOUTH)
-        {
-            return Direction.WEST;
-        }
-        else
-        {
-            return Direction.NORTH;
+            GetComponent<StateMachine>().CurrentState = GetComponent<MoveState>();
         }
     }
 }
