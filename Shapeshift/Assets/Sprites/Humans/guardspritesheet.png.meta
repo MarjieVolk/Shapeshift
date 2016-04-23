@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 29515087ce8262948857e65d1b495f77
-timeCreated: 1460853100
+timeCreated: 1461393199
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -65,18 +65,18 @@ TextureImporter:
         y: 0
         width: 32
         height: 32
-      alignment: 0
+      alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 9, y: 16}
-        - {x: -9, y: 16}
-        - {x: -11, y: 13}
-        - {x: -11, y: -9}
-        - {x: -9, y: -16}
-        - {x: 8, y: -16}
-        - {x: 12, y: -12}
-        - {x: 12, y: 15}
+      - - {x: 25, y: 32}
+        - {x: 7, y: 32}
+        - {x: 5, y: 29}
+        - {x: 5, y: 7}
+        - {x: 7, y: 0}
+        - {x: 24, y: 0}
+        - {x: 28, y: 4}
+        - {x: 28, y: 31}
     - name: guardspritesheet_1
       rect:
         serializedVersion: 2
@@ -84,18 +84,18 @@ TextureImporter:
         y: 0
         width: 32
         height: 32
-      alignment: 0
+      alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -7, y: 16}
-        - {x: -11, y: 6}
-        - {x: -11, y: -9}
-        - {x: -9, y: -16}
-        - {x: 9, y: -16}
-        - {x: 13, y: -14}
-        - {x: 13, y: 8}
-        - {x: 11, y: 16}
+      - - {x: 21, y: 32}
+        - {x: 12, y: 32}
+        - {x: 5, y: 31}
+        - {x: 5, y: 0}
+        - {x: 25, y: 0}
+        - {x: 30, y: 9}
+        - {x: 30, y: 20}
+        - {x: 25, y: 28}
     - name: guardspritesheet_2
       rect:
         serializedVersion: 2
@@ -103,18 +103,18 @@ TextureImporter:
         y: 0
         width: 32
         height: 32
-      alignment: 0
+      alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 9, y: 16}
-        - {x: -9, y: 16}
-        - {x: -11, y: 13}
-        - {x: -11, y: -9}
-        - {x: -9, y: -16}
-        - {x: 8, y: -16}
-        - {x: 12, y: -12}
-        - {x: 12, y: 15}
+      - - {x: 25, y: 32}
+        - {x: 7, y: 32}
+        - {x: 5, y: 29}
+        - {x: 5, y: 7}
+        - {x: 7, y: 0}
+        - {x: 24, y: 0}
+        - {x: 28, y: 4}
+        - {x: 28, y: 31}
     - name: guardspritesheet_3
       rect:
         serializedVersion: 2
@@ -122,20 +122,18 @@ TextureImporter:
         y: 0
         width: 32
         height: 32
-      alignment: 0
+      alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -6, y: 16}
-        - {x: -8, y: 12}
-        - {x: -12, y: -1}
-        - {x: -12, y: -9}
-        - {x: -8, y: -15}
-        - {x: -7, y: -16}
-        - {x: 10, y: -16}
-        - {x: 12, y: -15}
-        - {x: 12, y: 15}
-        - {x: 5, y: 16}
+      - - {x: 10, y: 32}
+        - {x: 3, y: 19}
+        - {x: 3, y: 5}
+        - {x: 4, y: 0}
+        - {x: 27, y: 0}
+        - {x: 28, y: 3}
+        - {x: 28, y: 31}
+        - {x: 22, y: 32}
     - name: guardspritesheet_4
       rect:
         serializedVersion: 2
@@ -143,18 +141,18 @@ TextureImporter:
         y: 0
         width: 32
         height: 32
-      alignment: 0
+      alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 9, y: 16}
-        - {x: -9, y: 16}
-        - {x: -11, y: 13}
-        - {x: -11, y: -9}
-        - {x: -9, y: -16}
-        - {x: 8, y: -16}
-        - {x: 12, y: -12}
-        - {x: 12, y: 15}
+      - - {x: 25, y: 32}
+        - {x: 7, y: 32}
+        - {x: 5, y: 29}
+        - {x: 5, y: 7}
+        - {x: 7, y: 0}
+        - {x: 24, y: 0}
+        - {x: 28, y: 4}
+        - {x: 28, y: 31}
     - name: guardspritesheet_5
       rect:
         serializedVersion: 2
@@ -162,18 +160,19 @@ TextureImporter:
         y: 0
         width: 32
         height: 32
-      alignment: 0
+      alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -7, y: 16}
-        - {x: -11, y: 6}
-        - {x: -11, y: -9}
-        - {x: -9, y: -16}
-        - {x: 9, y: -16}
-        - {x: 13, y: -14}
-        - {x: 13, y: 8}
-        - {x: 11, y: 16}
+      - - {x: 12, y: 32}
+        - {x: 6, y: 30}
+        - {x: 5, y: 25}
+        - {x: 5, y: 10}
+        - {x: 7, y: 0}
+        - {x: 24, y: 0}
+        - {x: 29, y: 9}
+        - {x: 29, y: 23}
+        - {x: 25, y: 32}
     - name: guardspritesheet_6
       rect:
         serializedVersion: 2
@@ -181,18 +180,18 @@ TextureImporter:
         y: 0
         width: 32
         height: 32
-      alignment: 0
+      alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 9, y: 16}
-        - {x: -9, y: 16}
-        - {x: -11, y: 13}
-        - {x: -11, y: -9}
-        - {x: -9, y: -16}
-        - {x: 8, y: -16}
-        - {x: 12, y: -12}
-        - {x: 12, y: 15}
+      - - {x: 25, y: 32}
+        - {x: 7, y: 32}
+        - {x: 5, y: 29}
+        - {x: 5, y: 7}
+        - {x: 7, y: 0}
+        - {x: 24, y: 0}
+        - {x: 28, y: 4}
+        - {x: 28, y: 31}
     - name: guardspritesheet_7
       rect:
         serializedVersion: 2
@@ -200,20 +199,18 @@ TextureImporter:
         y: 0
         width: 32
         height: 32
-      alignment: 0
+      alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -6, y: 16}
-        - {x: -8, y: 12}
-        - {x: -12, y: -1}
-        - {x: -12, y: -9}
-        - {x: -8, y: -15}
-        - {x: -7, y: -16}
-        - {x: 10, y: -16}
-        - {x: 12, y: -15}
-        - {x: 12, y: 15}
-        - {x: 5, y: 16}
+      - - {x: 10, y: 32}
+        - {x: 3, y: 19}
+        - {x: 3, y: 5}
+        - {x: 4, y: 0}
+        - {x: 27, y: 0}
+        - {x: 28, y: 3}
+        - {x: 28, y: 31}
+        - {x: 22, y: 32}
     outline: []
   spritePackingTag: 
   userData: 

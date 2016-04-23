@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 3afb13f26c94c49a19d92fc1d8874604
-timeCreated: 1460918587
+timeCreated: 1461385866
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -45,7 +45,7 @@ TextureImporter:
   spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
-  alignment: 0
+  alignment: 6
   spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 100
@@ -61,17 +61,17 @@ TextureImporter:
         y: 0
         width: 64
         height: 64
-      alignment: 0
+      alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 11, y: 32}
-        - {x: -28, y: 32}
-        - {x: -32, y: 28}
-        - {x: -32, y: -32}
-        - {x: 32, y: -32}
-        - {x: 32, y: 10}
-        - {x: 20, y: 26}
+      - - {x: 43, y: 64}
+        - {x: 4, y: 64}
+        - {x: 0, y: 60}
+        - {x: 0, y: 0}
+        - {x: 64, y: 0}
+        - {x: 64, y: 42}
+        - {x: 52, y: 58}
     - name: pianospritesheet_1
       rect:
         serializedVersion: 2
@@ -79,17 +79,17 @@ TextureImporter:
         y: 0
         width: 64
         height: 64
-      alignment: 0
+      alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 11, y: 32}
-        - {x: -28, y: 32}
-        - {x: -32, y: 28}
-        - {x: -32, y: -32}
-        - {x: 32, y: -32}
-        - {x: 32, y: 10}
-        - {x: 20, y: 26}
+      - - {x: 43, y: 64}
+        - {x: 4, y: 64}
+        - {x: 0, y: 60}
+        - {x: 0, y: 0}
+        - {x: 64, y: 0}
+        - {x: 64, y: 42}
+        - {x: 52, y: 58}
     - name: pianospritesheet_2
       rect:
         serializedVersion: 2
@@ -97,17 +97,17 @@ TextureImporter:
         y: 0
         width: 64
         height: 64
-      alignment: 0
+      alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 11, y: 32}
-        - {x: -28, y: 32}
-        - {x: -32, y: 28}
-        - {x: -32, y: -32}
-        - {x: 32, y: -32}
-        - {x: 32, y: 10}
-        - {x: 20, y: 26}
+      - - {x: 43, y: 64}
+        - {x: 4, y: 64}
+        - {x: 0, y: 60}
+        - {x: 0, y: 0}
+        - {x: 64, y: 0}
+        - {x: 64, y: 42}
+        - {x: 52, y: 58}
     - name: pianospritesheet_3
       rect:
         serializedVersion: 2
@@ -115,17 +115,17 @@ TextureImporter:
         y: 0
         width: 64
         height: 64
-      alignment: 0
+      alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 11, y: 32}
-        - {x: -28, y: 32}
-        - {x: -32, y: 28}
-        - {x: -32, y: -32}
-        - {x: 32, y: -32}
-        - {x: 32, y: 10}
-        - {x: 20, y: 26}
+      - - {x: 43, y: 64}
+        - {x: 4, y: 64}
+        - {x: 0, y: 60}
+        - {x: 0, y: 0}
+        - {x: 64, y: 0}
+        - {x: 64, y: 42}
+        - {x: 52, y: 58}
     outline: []
   spritePackingTag: 
   userData: 

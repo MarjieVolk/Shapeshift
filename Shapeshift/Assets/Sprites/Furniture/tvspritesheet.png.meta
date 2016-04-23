@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 942d3b2c65e5fd7498fff6bb54fccc35
-timeCreated: 1460868137
+timeCreated: 1461385849
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -43,7 +43,7 @@ TextureImporter:
   spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
-  alignment: 0
+  alignment: 6
   spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 100
@@ -59,16 +59,16 @@ TextureImporter:
         y: 0
         width: 64
         height: 32
-      alignment: 0
+      alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -26, y: 16}
-        - {x: -26, y: -14}
-        - {x: -24, y: -16}
-        - {x: 23, y: -16}
-        - {x: 26, y: -15}
-        - {x: 26, y: 16}
+      - - {x: 6, y: 32}
+        - {x: 6, y: 2}
+        - {x: 8, y: 0}
+        - {x: 55, y: 0}
+        - {x: 58, y: 1}
+        - {x: 58, y: 32}
     - name: tvspritesheet_1
       rect:
         serializedVersion: 2
@@ -76,16 +76,16 @@ TextureImporter:
         y: 0
         width: 64
         height: 32
-      alignment: 0
+      alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -26, y: 16}
-        - {x: -26, y: -14}
-        - {x: -24, y: -16}
-        - {x: 23, y: -16}
-        - {x: 26, y: -15}
-        - {x: 26, y: 16}
+      - - {x: 6, y: 32}
+        - {x: 6, y: 2}
+        - {x: 8, y: 0}
+        - {x: 55, y: 0}
+        - {x: 58, y: 1}
+        - {x: 58, y: 32}
     outline: []
   spritePackingTag: 
   userData: 

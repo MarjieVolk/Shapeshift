@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 7c2d8bfe051d26c42a7f3ca1f3c9bad3
-timeCreated: 1460937674
+timeCreated: 1461393246
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -65,17 +65,17 @@ TextureImporter:
         y: 0
         width: 32
         height: 32
-      alignment: 0
+      alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 1, y: 14}
-        - {x: -9, y: 14}
-        - {x: -14, y: 5}
-        - {x: -14, y: -16}
-        - {x: 12, y: -16}
-        - {x: 12, y: 1}
-        - {x: 7, y: 11}
+      - - {x: 17, y: 30}
+        - {x: 7, y: 30}
+        - {x: 2, y: 21}
+        - {x: 2, y: 0}
+        - {x: 28, y: 0}
+        - {x: 28, y: 17}
+        - {x: 23, y: 27}
     - name: spyleftprofilespritesheet_1
       rect:
         serializedVersion: 2
@@ -83,17 +83,17 @@ TextureImporter:
         y: 0
         width: 32
         height: 32
-      alignment: 0
+      alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -6, y: 15}
-        - {x: -8, y: 12}
-        - {x: -8, y: -14}
-        - {x: -6, y: -16}
-        - {x: 7, y: -16}
-        - {x: 7, y: 13}
-        - {x: 2, y: 15}
+      - - {x: 10, y: 31}
+        - {x: 8, y: 28}
+        - {x: 8, y: 2}
+        - {x: 10, y: 0}
+        - {x: 23, y: 0}
+        - {x: 23, y: 29}
+        - {x: 18, y: 31}
     - name: spyleftprofilespritesheet_2
       rect:
         serializedVersion: 2
@@ -101,18 +101,18 @@ TextureImporter:
         y: 0
         width: 32
         height: 32
-      alignment: 0
+      alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -4, y: 14}
-        - {x: -9, y: 12}
-        - {x: -12, y: -6}
-        - {x: -13, y: -11}
-        - {x: -13, y: -16}
-        - {x: 11, y: -16}
-        - {x: 11, y: 3}
-        - {x: 5, y: 14}
+      - - {x: 12, y: 30}
+        - {x: 7, y: 28}
+        - {x: 4, y: 10}
+        - {x: 3, y: 5}
+        - {x: 3, y: 0}
+        - {x: 27, y: 0}
+        - {x: 27, y: 19}
+        - {x: 21, y: 30}
     - name: spyleftprofilespritesheet_3
       rect:
         serializedVersion: 2
@@ -120,17 +120,17 @@ TextureImporter:
         y: 0
         width: 32
         height: 32
-      alignment: 0
+      alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -6, y: 15}
-        - {x: -8, y: 12}
-        - {x: -8, y: -14}
-        - {x: -6, y: -16}
-        - {x: 7, y: -16}
-        - {x: 7, y: 13}
-        - {x: 2, y: 15}
+      - - {x: 10, y: 31}
+        - {x: 8, y: 28}
+        - {x: 8, y: 2}
+        - {x: 10, y: 0}
+        - {x: 23, y: 0}
+        - {x: 23, y: 29}
+        - {x: 18, y: 31}
     - name: spyleftprofilespritesheet_4
       rect:
         serializedVersion: 2
@@ -138,17 +138,17 @@ TextureImporter:
         y: 0
         width: 32
         height: 32
-      alignment: 0
+      alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 1, y: 14}
-        - {x: -9, y: 14}
-        - {x: -14, y: 5}
-        - {x: -14, y: -16}
-        - {x: 12, y: -16}
-        - {x: 12, y: 1}
-        - {x: 7, y: 11}
+      - - {x: 17, y: 30}
+        - {x: 7, y: 30}
+        - {x: 2, y: 21}
+        - {x: 2, y: 0}
+        - {x: 28, y: 0}
+        - {x: 28, y: 17}
+        - {x: 23, y: 27}
     - name: spyleftprofilespritesheet_5
       rect:
         serializedVersion: 2
@@ -156,17 +156,17 @@ TextureImporter:
         y: 0
         width: 32
         height: 32
-      alignment: 0
+      alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -6, y: 15}
-        - {x: -8, y: 12}
-        - {x: -8, y: -14}
-        - {x: -6, y: -16}
-        - {x: 7, y: -16}
-        - {x: 7, y: 13}
-        - {x: 2, y: 15}
+      - - {x: 10, y: 31}
+        - {x: 8, y: 28}
+        - {x: 8, y: 2}
+        - {x: 10, y: 0}
+        - {x: 23, y: 0}
+        - {x: 23, y: 29}
+        - {x: 18, y: 31}
     - name: spyleftprofilespritesheet_6
       rect:
         serializedVersion: 2
@@ -174,18 +174,18 @@ TextureImporter:
         y: 0
         width: 32
         height: 32
-      alignment: 0
+      alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -4, y: 14}
-        - {x: -9, y: 12}
-        - {x: -12, y: -6}
-        - {x: -13, y: -11}
-        - {x: -13, y: -16}
-        - {x: 11, y: -16}
-        - {x: 11, y: 3}
-        - {x: 5, y: 14}
+      - - {x: 12, y: 30}
+        - {x: 7, y: 28}
+        - {x: 4, y: 10}
+        - {x: 3, y: 5}
+        - {x: 3, y: 0}
+        - {x: 27, y: 0}
+        - {x: 27, y: 19}
+        - {x: 21, y: 30}
     - name: spyleftprofilespritesheet_7
       rect:
         serializedVersion: 2
@@ -193,17 +193,17 @@ TextureImporter:
         y: 0
         width: 32
         height: 32
-      alignment: 0
+      alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -6, y: 15}
-        - {x: -8, y: 12}
-        - {x: -8, y: -14}
-        - {x: -6, y: -16}
-        - {x: 7, y: -16}
-        - {x: 7, y: 13}
-        - {x: 2, y: 15}
+      - - {x: 10, y: 31}
+        - {x: 8, y: 28}
+        - {x: 8, y: 2}
+        - {x: 10, y: 0}
+        - {x: 23, y: 0}
+        - {x: 23, y: 29}
+        - {x: 18, y: 31}
     outline: []
   spritePackingTag: 
   userData: 

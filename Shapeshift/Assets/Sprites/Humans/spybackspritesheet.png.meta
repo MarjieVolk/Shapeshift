@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 955753035d92b40a58dc9b0e5d4f344b
-timeCreated: 1460935046
+timeCreated: 1461393219
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -61,18 +61,18 @@ TextureImporter:
         y: 0
         width: 32
         height: 32
-      alignment: 0
+      alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 8, y: 15}
-        - {x: -11, y: 15}
-        - {x: -11, y: -11}
-        - {x: -7, y: -16}
-        - {x: 8, y: -16}
-        - {x: 12, y: -12}
-        - {x: 12, y: 4}
-        - {x: 10, y: 13}
+      - - {x: 24, y: 31}
+        - {x: 5, y: 31}
+        - {x: 5, y: 5}
+        - {x: 9, y: 0}
+        - {x: 24, y: 0}
+        - {x: 28, y: 4}
+        - {x: 28, y: 20}
+        - {x: 26, y: 29}
     - name: spybackspritesheet_1
       rect:
         serializedVersion: 2
@@ -80,17 +80,17 @@ TextureImporter:
         y: 0
         width: 32
         height: 32
-      alignment: 0
+      alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 7, y: 14}
-        - {x: -7, y: 14}
-        - {x: -11, y: 13}
-        - {x: -11, y: -16}
-        - {x: 12, y: -16}
-        - {x: 12, y: 0}
-        - {x: 9, y: 11}
+      - - {x: 23, y: 30}
+        - {x: 9, y: 30}
+        - {x: 5, y: 29}
+        - {x: 5, y: 0}
+        - {x: 28, y: 0}
+        - {x: 28, y: 16}
+        - {x: 25, y: 27}
     - name: spybackspritesheet_2
       rect:
         serializedVersion: 2
@@ -98,18 +98,18 @@ TextureImporter:
         y: 0
         width: 32
         height: 32
-      alignment: 0
+      alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 8, y: 15}
-        - {x: -11, y: 15}
-        - {x: -11, y: -11}
-        - {x: -7, y: -16}
-        - {x: 8, y: -16}
-        - {x: 12, y: -12}
-        - {x: 12, y: 4}
-        - {x: 10, y: 13}
+      - - {x: 24, y: 31}
+        - {x: 5, y: 31}
+        - {x: 5, y: 5}
+        - {x: 9, y: 0}
+        - {x: 24, y: 0}
+        - {x: 28, y: 4}
+        - {x: 28, y: 20}
+        - {x: 26, y: 29}
     - name: spybackspritesheet_3
       rect:
         serializedVersion: 2
@@ -117,20 +117,20 @@ TextureImporter:
         y: 0
         width: 32
         height: 32
-      alignment: 0
+      alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 4, y: 14}
-        - {x: -7, y: 14}
-        - {x: -10, y: 12}
-        - {x: -11, y: 7}
-        - {x: -11, y: -14}
-        - {x: -8, y: -16}
-        - {x: 8, y: -16}
-        - {x: 12, y: -9}
-        - {x: 12, y: 6}
-        - {x: 11, y: 13}
+      - - {x: 20, y: 30}
+        - {x: 9, y: 30}
+        - {x: 6, y: 28}
+        - {x: 5, y: 23}
+        - {x: 5, y: 2}
+        - {x: 8, y: 0}
+        - {x: 24, y: 0}
+        - {x: 28, y: 7}
+        - {x: 28, y: 22}
+        - {x: 27, y: 29}
     outline: []
   spritePackingTag: 
   userData: 

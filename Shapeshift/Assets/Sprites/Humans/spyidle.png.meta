@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: c0190790092ebf4469a23f6218e4f41c
-timeCreated: 1461311510
+timeCreated: 1461393238
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -81,18 +81,18 @@ TextureImporter:
         y: 0
         width: 32
         height: 32
-      alignment: 0
+      alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 7, y: 16}
-        - {x: -12, y: 16}
-        - {x: -12, y: -10}
-        - {x: -7, y: -16}
-        - {x: 6, y: -16}
-        - {x: 11, y: -11}
-        - {x: 11, y: 5}
-        - {x: 9, y: 14}
+      - - {x: 23, y: 32}
+        - {x: 4, y: 32}
+        - {x: 4, y: 6}
+        - {x: 9, y: 0}
+        - {x: 22, y: 0}
+        - {x: 27, y: 5}
+        - {x: 27, y: 21}
+        - {x: 25, y: 30}
     - name: spyidle_1
       rect:
         serializedVersion: 2
@@ -100,18 +100,18 @@ TextureImporter:
         y: 0
         width: 32
         height: 32
-      alignment: 0
+      alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 7, y: 16}
-        - {x: -12, y: 16}
-        - {x: -12, y: -10}
-        - {x: -7, y: -16}
-        - {x: 6, y: -16}
-        - {x: 11, y: -11}
-        - {x: 11, y: 5}
-        - {x: 9, y: 14}
+      - - {x: 23, y: 32}
+        - {x: 4, y: 32}
+        - {x: 4, y: 6}
+        - {x: 9, y: 0}
+        - {x: 22, y: 0}
+        - {x: 27, y: 5}
+        - {x: 27, y: 21}
+        - {x: 25, y: 30}
     - name: spyidle_2
       rect:
         serializedVersion: 2
@@ -119,18 +119,18 @@ TextureImporter:
         y: 0
         width: 32
         height: 32
-      alignment: 0
+      alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 7, y: 16}
-        - {x: -12, y: 16}
-        - {x: -12, y: -10}
-        - {x: -7, y: -16}
-        - {x: 6, y: -16}
-        - {x: 11, y: -11}
-        - {x: 11, y: 5}
-        - {x: 9, y: 14}
+      - - {x: 23, y: 32}
+        - {x: 4, y: 32}
+        - {x: 4, y: 6}
+        - {x: 9, y: 0}
+        - {x: 22, y: 0}
+        - {x: 27, y: 5}
+        - {x: 27, y: 21}
+        - {x: 25, y: 30}
     - name: spyidle_3
       rect:
         serializedVersion: 2
@@ -138,18 +138,18 @@ TextureImporter:
         y: 0
         width: 32
         height: 32
-      alignment: 0
+      alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 7, y: 16}
-        - {x: -12, y: 16}
-        - {x: -12, y: -10}
-        - {x: -7, y: -16}
-        - {x: 6, y: -16}
-        - {x: 11, y: -11}
-        - {x: 11, y: 5}
-        - {x: 9, y: 14}
+      - - {x: 23, y: 32}
+        - {x: 4, y: 32}
+        - {x: 4, y: 6}
+        - {x: 9, y: 0}
+        - {x: 22, y: 0}
+        - {x: 27, y: 5}
+        - {x: 27, y: 21}
+        - {x: 25, y: 30}
     - name: spyidle_4
       rect:
         serializedVersion: 2
@@ -157,18 +157,18 @@ TextureImporter:
         y: 0
         width: 32
         height: 32
-      alignment: 0
+      alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 7, y: 16}
-        - {x: -12, y: 16}
-        - {x: -12, y: -10}
-        - {x: -7, y: -16}
-        - {x: 6, y: -16}
-        - {x: 11, y: -11}
-        - {x: 11, y: 5}
-        - {x: 9, y: 14}
+      - - {x: 23, y: 32}
+        - {x: 4, y: 32}
+        - {x: 4, y: 6}
+        - {x: 9, y: 0}
+        - {x: 22, y: 0}
+        - {x: 27, y: 5}
+        - {x: 27, y: 21}
+        - {x: 25, y: 30}
     - name: spyidle_5
       rect:
         serializedVersion: 2
@@ -176,18 +176,18 @@ TextureImporter:
         y: 0
         width: 32
         height: 32
-      alignment: 0
+      alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 7, y: 16}
-        - {x: -12, y: 16}
-        - {x: -12, y: -10}
-        - {x: -7, y: -16}
-        - {x: 6, y: -16}
-        - {x: 11, y: -11}
-        - {x: 11, y: 5}
-        - {x: 9, y: 14}
+      - - {x: 23, y: 32}
+        - {x: 4, y: 32}
+        - {x: 4, y: 6}
+        - {x: 9, y: 0}
+        - {x: 22, y: 0}
+        - {x: 27, y: 5}
+        - {x: 27, y: 21}
+        - {x: 25, y: 30}
     - name: spyidle_6
       rect:
         serializedVersion: 2
@@ -195,18 +195,18 @@ TextureImporter:
         y: 0
         width: 32
         height: 32
-      alignment: 0
+      alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 7, y: 16}
-        - {x: -12, y: 16}
-        - {x: -12, y: -10}
-        - {x: -7, y: -16}
-        - {x: 6, y: -16}
-        - {x: 11, y: -11}
-        - {x: 11, y: 5}
-        - {x: 9, y: 14}
+      - - {x: 23, y: 32}
+        - {x: 4, y: 32}
+        - {x: 4, y: 6}
+        - {x: 9, y: 0}
+        - {x: 22, y: 0}
+        - {x: 27, y: 5}
+        - {x: 27, y: 21}
+        - {x: 25, y: 30}
     - name: spyidle_7
       rect:
         serializedVersion: 2
@@ -214,19 +214,19 @@ TextureImporter:
         y: 0
         width: 32
         height: 32
-      alignment: 0
+      alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 6, y: 16}
-        - {x: -7, y: 16}
-        - {x: -14, y: 4}
-        - {x: -14, y: -5}
-        - {x: -8, y: -16}
-        - {x: 6, y: -16}
-        - {x: 11, y: -11}
-        - {x: 11, y: 10}
-        - {x: 10, y: 15}
+      - - {x: 22, y: 32}
+        - {x: 9, y: 32}
+        - {x: 2, y: 20}
+        - {x: 2, y: 11}
+        - {x: 8, y: 0}
+        - {x: 22, y: 0}
+        - {x: 27, y: 5}
+        - {x: 27, y: 26}
+        - {x: 26, y: 31}
     - name: spyidle_8
       rect:
         serializedVersion: 2
@@ -234,19 +234,19 @@ TextureImporter:
         y: 0
         width: 32
         height: 32
-      alignment: 0
+      alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 6, y: 16}
-        - {x: -7, y: 16}
-        - {x: -14, y: 4}
-        - {x: -14, y: -5}
-        - {x: -8, y: -16}
-        - {x: 6, y: -16}
-        - {x: 11, y: -11}
-        - {x: 11, y: 10}
-        - {x: 10, y: 15}
+      - - {x: 22, y: 32}
+        - {x: 9, y: 32}
+        - {x: 2, y: 20}
+        - {x: 2, y: 11}
+        - {x: 8, y: 0}
+        - {x: 22, y: 0}
+        - {x: 27, y: 5}
+        - {x: 27, y: 26}
+        - {x: 26, y: 31}
     - name: spyidle_9
       rect:
         serializedVersion: 2
@@ -254,19 +254,19 @@ TextureImporter:
         y: 0
         width: 32
         height: 32
-      alignment: 0
+      alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 8, y: 16}
-        - {x: -5, y: 16}
-        - {x: -9, y: 11}
-        - {x: -9, y: -10}
-        - {x: -6, y: -16}
-        - {x: 8, y: -16}
-        - {x: 13, y: -11}
-        - {x: 13, y: 10}
-        - {x: 12, y: 15}
+      - - {x: 24, y: 32}
+        - {x: 11, y: 32}
+        - {x: 7, y: 27}
+        - {x: 7, y: 6}
+        - {x: 10, y: 0}
+        - {x: 24, y: 0}
+        - {x: 29, y: 5}
+        - {x: 29, y: 26}
+        - {x: 28, y: 31}
     - name: spyidle_10
       rect:
         serializedVersion: 2
@@ -274,21 +274,21 @@ TextureImporter:
         y: 0
         width: 32
         height: 32
-      alignment: 0
+      alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 3, y: 16}
-        - {x: -6, y: 16}
-        - {x: -9, y: 13}
-        - {x: -11, y: 8}
-        - {x: -11, y: -8}
-        - {x: -9, y: -15}
-        - {x: -8, y: -16}
-        - {x: 6, y: -16}
-        - {x: 11, y: -11}
-        - {x: 11, y: 10}
-        - {x: 10, y: 15}
+      - - {x: 19, y: 32}
+        - {x: 10, y: 32}
+        - {x: 7, y: 29}
+        - {x: 5, y: 24}
+        - {x: 5, y: 8}
+        - {x: 7, y: 1}
+        - {x: 8, y: 0}
+        - {x: 22, y: 0}
+        - {x: 27, y: 5}
+        - {x: 27, y: 26}
+        - {x: 26, y: 31}
     - name: spyidle_11
       rect:
         serializedVersion: 2
@@ -296,21 +296,21 @@ TextureImporter:
         y: 0
         width: 32
         height: 32
-      alignment: 0
+      alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 3, y: 16}
-        - {x: -6, y: 16}
-        - {x: -9, y: 13}
-        - {x: -11, y: 8}
-        - {x: -11, y: -8}
-        - {x: -9, y: -15}
-        - {x: -8, y: -16}
-        - {x: 6, y: -16}
-        - {x: 11, y: -11}
-        - {x: 11, y: 10}
-        - {x: 10, y: 15}
+      - - {x: 19, y: 32}
+        - {x: 10, y: 32}
+        - {x: 7, y: 29}
+        - {x: 5, y: 24}
+        - {x: 5, y: 8}
+        - {x: 7, y: 1}
+        - {x: 8, y: 0}
+        - {x: 22, y: 0}
+        - {x: 27, y: 5}
+        - {x: 27, y: 26}
+        - {x: 26, y: 31}
     - name: spyidle_12
       rect:
         serializedVersion: 2
@@ -318,21 +318,21 @@ TextureImporter:
         y: 0
         width: 32
         height: 32
-      alignment: 0
+      alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 3, y: 16}
-        - {x: -6, y: 16}
-        - {x: -9, y: 13}
-        - {x: -11, y: 8}
-        - {x: -11, y: -8}
-        - {x: -9, y: -15}
-        - {x: -8, y: -16}
-        - {x: 6, y: -16}
-        - {x: 11, y: -11}
-        - {x: 11, y: 10}
-        - {x: 10, y: 15}
+      - - {x: 19, y: 32}
+        - {x: 10, y: 32}
+        - {x: 7, y: 29}
+        - {x: 5, y: 24}
+        - {x: 5, y: 8}
+        - {x: 7, y: 1}
+        - {x: 8, y: 0}
+        - {x: 22, y: 0}
+        - {x: 27, y: 5}
+        - {x: 27, y: 26}
+        - {x: 26, y: 31}
     - name: spyidle_13
       rect:
         serializedVersion: 2
@@ -340,21 +340,21 @@ TextureImporter:
         y: 0
         width: 32
         height: 32
-      alignment: 0
+      alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 3, y: 16}
-        - {x: -6, y: 16}
-        - {x: -9, y: 13}
-        - {x: -11, y: 8}
-        - {x: -11, y: -8}
-        - {x: -9, y: -15}
-        - {x: -8, y: -16}
-        - {x: 6, y: -16}
-        - {x: 11, y: -11}
-        - {x: 11, y: 10}
-        - {x: 10, y: 15}
+      - - {x: 19, y: 32}
+        - {x: 10, y: 32}
+        - {x: 7, y: 29}
+        - {x: 5, y: 24}
+        - {x: 5, y: 8}
+        - {x: 7, y: 1}
+        - {x: 8, y: 0}
+        - {x: 22, y: 0}
+        - {x: 27, y: 5}
+        - {x: 27, y: 26}
+        - {x: 26, y: 31}
     - name: spyidle_14
       rect:
         serializedVersion: 2
@@ -362,21 +362,21 @@ TextureImporter:
         y: 0
         width: 32
         height: 32
-      alignment: 0
+      alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 3, y: 16}
-        - {x: -6, y: 16}
-        - {x: -9, y: 13}
-        - {x: -11, y: 8}
-        - {x: -11, y: -8}
-        - {x: -9, y: -15}
-        - {x: -8, y: -16}
-        - {x: 6, y: -16}
-        - {x: 11, y: -11}
-        - {x: 11, y: 10}
-        - {x: 10, y: 15}
+      - - {x: 19, y: 32}
+        - {x: 10, y: 32}
+        - {x: 7, y: 29}
+        - {x: 5, y: 24}
+        - {x: 5, y: 8}
+        - {x: 7, y: 1}
+        - {x: 8, y: 0}
+        - {x: 22, y: 0}
+        - {x: 27, y: 5}
+        - {x: 27, y: 26}
+        - {x: 26, y: 31}
     - name: spyidle_15
       rect:
         serializedVersion: 2
@@ -384,21 +384,21 @@ TextureImporter:
         y: 0
         width: 32
         height: 32
-      alignment: 0
+      alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 3, y: 16}
-        - {x: -6, y: 16}
-        - {x: -9, y: 13}
-        - {x: -11, y: 8}
-        - {x: -11, y: -8}
-        - {x: -9, y: -15}
-        - {x: -8, y: -16}
-        - {x: 6, y: -16}
-        - {x: 11, y: -11}
-        - {x: 11, y: 10}
-        - {x: 10, y: 15}
+      - - {x: 19, y: 32}
+        - {x: 10, y: 32}
+        - {x: 7, y: 29}
+        - {x: 5, y: 24}
+        - {x: 5, y: 8}
+        - {x: 7, y: 1}
+        - {x: 8, y: 0}
+        - {x: 22, y: 0}
+        - {x: 27, y: 5}
+        - {x: 27, y: 26}
+        - {x: 26, y: 31}
     - name: spyidle_16
       rect:
         serializedVersion: 2
@@ -406,21 +406,21 @@ TextureImporter:
         y: 0
         width: 32
         height: 32
-      alignment: 0
+      alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 3, y: 16}
-        - {x: -6, y: 16}
-        - {x: -9, y: 13}
-        - {x: -11, y: 8}
-        - {x: -11, y: -8}
-        - {x: -9, y: -15}
-        - {x: -8, y: -16}
-        - {x: 6, y: -16}
-        - {x: 11, y: -11}
-        - {x: 11, y: 10}
-        - {x: 10, y: 15}
+      - - {x: 19, y: 32}
+        - {x: 10, y: 32}
+        - {x: 7, y: 29}
+        - {x: 5, y: 24}
+        - {x: 5, y: 8}
+        - {x: 7, y: 1}
+        - {x: 8, y: 0}
+        - {x: 22, y: 0}
+        - {x: 27, y: 5}
+        - {x: 27, y: 26}
+        - {x: 26, y: 31}
     - name: spyidle_17
       rect:
         serializedVersion: 2
@@ -428,21 +428,21 @@ TextureImporter:
         y: 0
         width: 32
         height: 32
-      alignment: 0
+      alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 3, y: 16}
-        - {x: -6, y: 16}
-        - {x: -9, y: 13}
-        - {x: -11, y: 8}
-        - {x: -11, y: -8}
-        - {x: -9, y: -15}
-        - {x: -8, y: -16}
-        - {x: 6, y: -16}
-        - {x: 11, y: -11}
-        - {x: 11, y: 10}
-        - {x: 10, y: 15}
+      - - {x: 19, y: 32}
+        - {x: 10, y: 32}
+        - {x: 7, y: 29}
+        - {x: 5, y: 24}
+        - {x: 5, y: 8}
+        - {x: 7, y: 1}
+        - {x: 8, y: 0}
+        - {x: 22, y: 0}
+        - {x: 27, y: 5}
+        - {x: 27, y: 26}
+        - {x: 26, y: 31}
     - name: spyidle_18
       rect:
         serializedVersion: 2
@@ -450,19 +450,19 @@ TextureImporter:
         y: 0
         width: 32
         height: 32
-      alignment: 0
+      alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 3, y: 16}
-        - {x: -7, y: 16}
-        - {x: -11, y: 14}
-        - {x: -11, y: -9}
-        - {x: -7, y: -16}
-        - {x: 6, y: -16}
-        - {x: 11, y: -11}
-        - {x: 11, y: 10}
-        - {x: 10, y: 15}
+      - - {x: 19, y: 32}
+        - {x: 9, y: 32}
+        - {x: 5, y: 30}
+        - {x: 5, y: 7}
+        - {x: 9, y: 0}
+        - {x: 22, y: 0}
+        - {x: 27, y: 5}
+        - {x: 27, y: 26}
+        - {x: 26, y: 31}
     - name: spyidle_19
       rect:
         serializedVersion: 2
@@ -470,19 +470,19 @@ TextureImporter:
         y: 0
         width: 32
         height: 32
-      alignment: 0
+      alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 6, y: 16}
-        - {x: -7, y: 16}
-        - {x: -14, y: 4}
-        - {x: -14, y: -5}
-        - {x: -8, y: -16}
-        - {x: 6, y: -16}
-        - {x: 11, y: -11}
-        - {x: 11, y: 10}
-        - {x: 10, y: 15}
+      - - {x: 22, y: 32}
+        - {x: 9, y: 32}
+        - {x: 2, y: 20}
+        - {x: 2, y: 11}
+        - {x: 8, y: 0}
+        - {x: 22, y: 0}
+        - {x: 27, y: 5}
+        - {x: 27, y: 26}
+        - {x: 26, y: 31}
     - name: spyidle_20
       rect:
         serializedVersion: 2
@@ -490,18 +490,18 @@ TextureImporter:
         y: 0
         width: 32
         height: 32
-      alignment: 0
+      alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 7, y: 16}
-        - {x: -12, y: 16}
-        - {x: -12, y: -10}
-        - {x: -7, y: -16}
-        - {x: 6, y: -16}
-        - {x: 11, y: -11}
-        - {x: 11, y: 5}
-        - {x: 9, y: 14}
+      - - {x: 23, y: 32}
+        - {x: 4, y: 32}
+        - {x: 4, y: 6}
+        - {x: 9, y: 0}
+        - {x: 22, y: 0}
+        - {x: 27, y: 5}
+        - {x: 27, y: 21}
+        - {x: 25, y: 30}
     - name: spyidle_21
       rect:
         serializedVersion: 2
@@ -509,18 +509,18 @@ TextureImporter:
         y: 0
         width: 32
         height: 32
-      alignment: 0
+      alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 7, y: 16}
-        - {x: -12, y: 16}
-        - {x: -12, y: -10}
-        - {x: -7, y: -16}
-        - {x: 6, y: -16}
-        - {x: 11, y: -11}
-        - {x: 11, y: 5}
-        - {x: 9, y: 14}
+      - - {x: 23, y: 32}
+        - {x: 4, y: 32}
+        - {x: 4, y: 6}
+        - {x: 9, y: 0}
+        - {x: 22, y: 0}
+        - {x: 27, y: 5}
+        - {x: 27, y: 21}
+        - {x: 25, y: 30}
     - name: spyidle_22
       rect:
         serializedVersion: 2
@@ -528,18 +528,18 @@ TextureImporter:
         y: 0
         width: 32
         height: 32
-      alignment: 0
+      alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 7, y: 16}
-        - {x: -12, y: 16}
-        - {x: -12, y: -10}
-        - {x: -7, y: -16}
-        - {x: 6, y: -16}
-        - {x: 11, y: -11}
-        - {x: 11, y: 5}
-        - {x: 9, y: 14}
+      - - {x: 23, y: 32}
+        - {x: 4, y: 32}
+        - {x: 4, y: 6}
+        - {x: 9, y: 0}
+        - {x: 22, y: 0}
+        - {x: 27, y: 5}
+        - {x: 27, y: 21}
+        - {x: 25, y: 30}
     - name: spyidle_23
       rect:
         serializedVersion: 2
@@ -547,19 +547,19 @@ TextureImporter:
         y: 0
         width: 32
         height: 32
-      alignment: 0
+      alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 7, y: 16}
-        - {x: -9, y: 16}
-        - {x: -12, y: 15}
-        - {x: -12, y: -9}
-        - {x: -7, y: -16}
-        - {x: 6, y: -16}
-        - {x: 11, y: -10}
-        - {x: 11, y: 6}
-        - {x: 9, y: 14}
+      - - {x: 23, y: 32}
+        - {x: 7, y: 32}
+        - {x: 4, y: 31}
+        - {x: 4, y: 7}
+        - {x: 9, y: 0}
+        - {x: 22, y: 0}
+        - {x: 27, y: 6}
+        - {x: 27, y: 22}
+        - {x: 25, y: 30}
     outline: []
   spritePackingTag: 
   userData: 

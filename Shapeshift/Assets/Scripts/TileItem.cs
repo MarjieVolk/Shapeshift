@@ -5,7 +5,8 @@ using System;
 
 public class TileItem : MonoBehaviour
 {
-    public static float TILE_SIZE = 0.32f;
+    public const float TILE_SIZE = 0.32f;
+
     private static Dictionary<long, List<GameObject>> _tileMap = new Dictionary<long, List<GameObject>>();
 
     public int tileX { get; private set; }
@@ -13,6 +14,8 @@ public class TileItem : MonoBehaviour
 
     public int startingTileWidth = 1;
     public int startingTileHeight = 1;
+
+    public Vector3 gridOffset;
 
     private int _tileW;
     public int tileW {
@@ -28,22 +31,12 @@ public class TileItem : MonoBehaviour
     public void Awake () {
         _tileW = startingTileWidth;
         _tileH = startingTileHeight;
-        transform.position = new Vector3 (transform.position.x, transform.position.y, transform.position.y);
         SnapToGrid ();
         AddToTileMap ();
     }
 
     void OnDestroy() {
         RemoveFromTileMap();
-    }
-
-    public void SnapToGrid () {
-        // Set tile position based off of starting transform.
-        tileX = GlobalToTilePosition (transform.position.x);
-        tileY = GlobalToTilePosition (transform.position.y);
-
-        // Snap transform to grid.
-        transform.position = new Vector3(tileX * TILE_SIZE, tileY * TILE_SIZE, transform.position.z);
     }
 
     private static long ToKey(int x, int y) {
@@ -63,19 +56,33 @@ public class TileItem : MonoBehaviour
         return p * TILE_SIZE;
     }
 
-    /**
-     * Call anytime you want to change position in order to update tile positions.
-     * Overwrites z.
-     */
+    /// <summary>
+    /// Set tile position based on transform position, and snap to tile location
+    /// </summary>
+    public void SnapToGrid() {
+        // Set tile position based off of starting transform.
+        tileX = GlobalToTilePosition(transform.position.x - gridOffset.x);
+        tileY = GlobalToTilePosition(transform.position.y - gridOffset.y);
+
+        // Snap transform to grid.
+        _SetPosition(tileX, tileY, new Vector3(tileX * TILE_SIZE, tileY * TILE_SIZE) + gridOffset);
+    }
+
+    /// <summary>
+    /// Set transform position to newPos, and update tile location to the closest tile.
+    /// </summary>
+    /// <param name="newPos"></param>
     public void SetGlobalPosition(Vector3 newPos) {
         _SetPosition (GlobalToTilePosition (newPos.x), GlobalToTilePosition (newPos.y), newPos);
     }
 
-    /**
-     * Set the tile position and underlying transform; update the tile map.
-     */
+    /// <summary>
+    /// Set tile position and snap to tile location
+    /// </summary>
+    /// <param name="newTileX"></param>
+    /// <param name="newTileY"></param>
     public void SetTilePosition(int newTileX, int newTileY) {
-        _SetPosition (newTileX, newTileY, new Vector3(newTileX * TILE_SIZE, newTileY * TILE_SIZE));
+        _SetPosition (newTileX, newTileY, new Vector3(newTileX * TILE_SIZE, newTileY * TILE_SIZE) + gridOffset);
     }
 
     private void _SetPosition(int newTileX, int newTileY, Vector3 newPos) {
@@ -83,8 +90,10 @@ public class TileItem : MonoBehaviour
         if (tilePosMoved) {
             RemoveFromTileMap ();
         }
+
         tileX = newTileX;
         tileY = newTileY;
+
         transform.position = new Vector3(newPos.x, newPos.y, newPos.y);
         if (tilePosMoved) {
             AddToTileMap ();

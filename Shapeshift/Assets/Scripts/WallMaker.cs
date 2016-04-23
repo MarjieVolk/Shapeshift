@@ -17,10 +17,10 @@ public class WallMaker : MonoBehaviour {
 	private static Sprite[,,,] spriteConfig = new Sprite[2,2,2,2];
 	private static int[,,,] rotationConfig = new int[2,2,2,2];
 
-	// Save the sprite and rotation for a configuration of walls
-	void initConfig(int top, int bottom, int left, int right, Sprite s, int r) {
+    // Save the sprite and rotation for a configuration of walls
+    private void initConfig(int top, int bottom, int left, int right, Sprite s, int rotation) {
 		spriteConfig[top, bottom, left, right] = s;
-		rotationConfig [top, bottom, left, right] = r;
+		rotationConfig [top, bottom, left, right] = rotation;
 	}	
 
 	// Use this for initialization
@@ -169,20 +169,16 @@ public class WallMaker : MonoBehaviour {
 		// Debug.Log ("Adding a " + sprite.name + " wall at (" + x + ", " + y + "), rotated " + angle);
         GameObject g = Instantiate(wallPrefab).gameObject;
 
-		SpriteRenderer sr = g.GetComponent<SpriteRenderer> ();
+        GameObject spriteObj = g.transform.FindChild("Sprite").gameObject;
+        SpriteRenderer sr = spriteObj.GetComponent<SpriteRenderer> ();
         sr.sprite = sprite;
 		sr.flipX = flipX;
 
-        g.transform.Rotate (0, 0, angle);
+        spriteObj.transform.Rotate (0, 0, angle);
 
         g.layer = LayerMask.NameToLayer("VisibilityBlocking");
 
-		g.GetComponent<TileItem> ().SetTilePosition (x, y);
-		g.transform.Translate (0, 0, Room.ROOM_TILE_Z_INDEX); // TODO(aklen): Hack.
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
+		g.GetComponent<TileItem>().SetTilePosition(x, y);
+        //g.transform.position += new Vector3(TileItem.TILE_SIZE / 2, TileItem.TILE_SIZE / 2);
 	}
 }

@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 6e13726b10c8cab4faa4798732d9e408
-timeCreated: 1460920436
+timeCreated: 1461393187
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -65,17 +65,16 @@ TextureImporter:
         y: 0
         width: 32
         height: 32
-      alignment: 0
+      alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -3, y: 16}
-        - {x: -10, y: 12}
-        - {x: -12, y: 2}
-        - {x: -12, y: -16}
-        - {x: 14, y: -16}
-        - {x: 14, y: 8}
-        - {x: 12, y: 16}
+      - - {x: 9, y: 32}
+        - {x: 4, y: 26}
+        - {x: 4, y: 0}
+        - {x: 30, y: 0}
+        - {x: 30, y: 26}
+        - {x: 29, y: 32}
     - name: guardprofilespritesheet_1
       rect:
         serializedVersion: 2
@@ -83,17 +82,17 @@ TextureImporter:
         y: 0
         width: 32
         height: 32
-      alignment: 0
+      alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -6, y: 16}
-        - {x: -8, y: 14}
-        - {x: -8, y: 0}
-        - {x: -6, y: -16}
-        - {x: 7, y: -16}
-        - {x: 11, y: 0}
-        - {x: 11, y: 16}
+      - - {x: 10, y: 32}
+        - {x: 8, y: 30}
+        - {x: 8, y: 16}
+        - {x: 10, y: 0}
+        - {x: 23, y: 0}
+        - {x: 27, y: 16}
+        - {x: 27, y: 32}
     - name: guardprofilespritesheet_2
       rect:
         serializedVersion: 2
@@ -101,15 +100,15 @@ TextureImporter:
         y: 0
         width: 32
         height: 32
-      alignment: 0
+      alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -4, y: 16}
-        - {x: -11, y: 8}
-        - {x: -11, y: -16}
-        - {x: 13, y: -16}
-        - {x: 13, y: 16}
+      - - {x: 12, y: 32}
+        - {x: 5, y: 24}
+        - {x: 5, y: 0}
+        - {x: 29, y: 0}
+        - {x: 29, y: 32}
     - name: guardprofilespritesheet_3
       rect:
         serializedVersion: 2
@@ -117,17 +116,17 @@ TextureImporter:
         y: 0
         width: 32
         height: 32
-      alignment: 0
+      alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -6, y: 16}
-        - {x: -8, y: 14}
-        - {x: -8, y: 0}
-        - {x: -6, y: -16}
-        - {x: 7, y: -16}
-        - {x: 11, y: 0}
-        - {x: 11, y: 16}
+      - - {x: 10, y: 32}
+        - {x: 8, y: 30}
+        - {x: 8, y: 16}
+        - {x: 10, y: 0}
+        - {x: 23, y: 0}
+        - {x: 27, y: 16}
+        - {x: 27, y: 32}
     - name: guardprofilespritesheet_4
       rect:
         serializedVersion: 2
@@ -135,17 +134,16 @@ TextureImporter:
         y: 0
         width: 32
         height: 32
-      alignment: 0
+      alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -3, y: 16}
-        - {x: -10, y: 12}
-        - {x: -12, y: 2}
-        - {x: -12, y: -16}
-        - {x: 14, y: -16}
-        - {x: 14, y: 8}
-        - {x: 12, y: 16}
+      - - {x: 9, y: 32}
+        - {x: 4, y: 26}
+        - {x: 4, y: 0}
+        - {x: 30, y: 0}
+        - {x: 30, y: 26}
+        - {x: 29, y: 32}
     - name: guardprofilespritesheet_5
       rect:
         serializedVersion: 2
@@ -153,17 +151,17 @@ TextureImporter:
         y: 0
         width: 32
         height: 32
-      alignment: 0
+      alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -6, y: 16}
-        - {x: -8, y: 14}
-        - {x: -8, y: 0}
-        - {x: -6, y: -16}
-        - {x: 7, y: -16}
-        - {x: 11, y: 0}
-        - {x: 11, y: 16}
+      - - {x: 10, y: 32}
+        - {x: 8, y: 30}
+        - {x: 8, y: 16}
+        - {x: 10, y: 0}
+        - {x: 23, y: 0}
+        - {x: 27, y: 16}
+        - {x: 27, y: 32}
     - name: guardprofilespritesheet_6
       rect:
         serializedVersion: 2
@@ -171,15 +169,15 @@ TextureImporter:
         y: 0
         width: 32
         height: 32
-      alignment: 0
+      alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -4, y: 16}
-        - {x: -11, y: 8}
-        - {x: -11, y: -16}
-        - {x: 13, y: -16}
-        - {x: 13, y: 16}
+      - - {x: 12, y: 32}
+        - {x: 5, y: 24}
+        - {x: 5, y: 0}
+        - {x: 29, y: 0}
+        - {x: 29, y: 32}
     - name: guardprofilespritesheet_7
       rect:
         serializedVersion: 2
@@ -187,17 +185,17 @@ TextureImporter:
         y: 0
         width: 32
         height: 32
-      alignment: 0
+      alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -6, y: 16}
-        - {x: -8, y: 14}
-        - {x: -8, y: 0}
-        - {x: -6, y: -16}
-        - {x: 7, y: -16}
-        - {x: 11, y: 0}
-        - {x: 11, y: 16}
+      - - {x: 10, y: 32}
+        - {x: 8, y: 30}
+        - {x: 8, y: 16}
+        - {x: 10, y: 0}
+        - {x: 23, y: 0}
+        - {x: 27, y: 16}
+        - {x: 27, y: 32}
     outline: []
   spritePackingTag: 
   userData: 
