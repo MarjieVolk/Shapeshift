@@ -6,9 +6,21 @@ using UnityEngine;
 
 public class Pathfinding
 {
+    private static GameObject _cachedPlayer;
+    private static GameObject _player
+    {
+        get
+        {
+            if (_cachedPlayer == null)
+            {
+                _cachedPlayer = GameObject.FindObjectOfType<PlayerController>().gameObject;
+            }
+            return _cachedPlayer;
+        }
+    }
     public static List<Tile> FindPath(Tile startTile, Tile goalTile, bool isPlayerObstacle)
     {
-
+        Debug.Log("Finding path.");
         Dictionary<Tile, Tile> predecessors = new Dictionary<Tile, Tile>();
         Dictionary<Tile, float> costs = new Dictionary<Tile, float>();
         SortedList<ScoredTile, float> priorityQueue = new SortedList<ScoredTile, float>();
@@ -124,14 +136,9 @@ public class Pathfinding
 
     public static Tile GetPlayerTile()
     {
-        GameObject player = GameObject.FindObjectOfType<PlayerController>().gameObject;
-        if (player == null)
-        {
-            return null;
-        }
         return new Tile(
-            TileItem.GlobalToTilePosition(player.transform.position.x),
-            TileItem.GlobalToTilePosition(player.transform.position.y));
+            TileItem.GlobalToTilePosition(_player.transform.position.x),
+            TileItem.GlobalToTilePosition(_player.transform.position.y));
     }
 
     public static float GetDistance(Tile tile1, Tile tile2)
