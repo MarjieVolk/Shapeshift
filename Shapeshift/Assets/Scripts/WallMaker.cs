@@ -175,8 +175,7 @@ public class WallMaker : MonoBehaviour {
 		sr.flipX = flipX;
 
         spriteObj.transform.Rotate (0, 0, angle);
-
-        g.layer = LayerMask.NameToLayer("VisibilityBlocking");
+        spriteObj.layer = LayerMask.NameToLayer("VisibilityBlocking");
 
 		g.GetComponent<TileItem>().SetTilePosition(x, y);
         //g.transform.position += new Vector3(TileItem.TILE_SIZE / 2, TileItem.TILE_SIZE / 2);
