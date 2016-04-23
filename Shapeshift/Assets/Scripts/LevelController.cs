@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 
+[RequireComponent (typeof(AudioSource))]
 public class LevelController : MonoBehaviour {
 
     public AudioClip levelAdvanceSound;
@@ -15,27 +16,29 @@ public class LevelController : MonoBehaviour {
 
 	// Use this for initialization
 	void Awake () {
-        //if (INSTANCE == null) {
+        if (INSTANCE == null) {
             INSTANCE = this;
             DontDestroyOnLoad(this);
 
-            if (SceneManager.GetActiveScene().buildIndex == 0) {
+            currentLevel = SceneManager.GetActiveScene().buildIndex;
+            if (currentLevel == 0) {
                 // TODO: main menu first
                 SceneManager.LoadScene(1);
             }
+            
+        } else {
+            Destroy(this);
+        }
+    }
 
-            gameObject.AddComponent<AudioSource>();
-        //} else {
-        //    Destroy(this);
-        //}
+    void Start() {
+        VictoryTotem.INSTANCE.OnVictory += () => {
+            advanceToNextLevel();
+        };
     }
 
     void OnLevelWasLoaded(int level) {
         currentLevel = level;
-
-        VictoryTotem.INSTANCE.OnVictory += () => {
-            advanceToNextLevel();
-        };
     }
 
 	public void advanceToNextLevel() {
@@ -45,8 +48,6 @@ public class LevelController : MonoBehaviour {
 
         if (currentLevel + 1 <= nLevels) {
             SceneManager.LoadScene(currentLevel + 1);
-        } else {
-            // TODO: win screen
         }
     }
 }
