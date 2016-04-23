@@ -12,7 +12,6 @@ public class VictoryTotem : MonoBehaviour {
     public event VictoryHandler OnVictoryTotemAcquired;
 
     public bool WinOnAcquire = true;
-    public Collider2D EscapeZone;
     public Vector2 CarryOffset;
 
     private Vector2 oldPosition;
@@ -49,7 +48,7 @@ public class VictoryTotem : MonoBehaviour {
             transform.SetParent(player.transform);
             transform.localPosition = CarryOffset;
             // once the player returns to the escape zone, win!
-            EscapeZone.GetComponent<CollisionEventCommunicator>().OnTriggerEnter += PlayerEscapeHandler;
+            ExitStairs.INSTANCE.enableEscape(PlayerEscapeHandler);
 
             // TODO if the player dies, return to other place
             player.GetComponent<PlayerCaughtHandler>().PlayerCaughtAsHuman += resetTotem;
@@ -81,7 +80,7 @@ public class VictoryTotem : MonoBehaviour {
         transform.SetParent(null);
         transform.position = oldPosition;
 
-        EscapeZone.GetComponent<CollisionEventCommunicator>().OnTriggerEnter -= PlayerEscapeHandler;
+        ExitStairs.INSTANCE.disableEscape();
 
         FindObjectOfType<PlayerCaughtHandler>().PlayerCaughtAsHuman -= resetTotem;
     }
