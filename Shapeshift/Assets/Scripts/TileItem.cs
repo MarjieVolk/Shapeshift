@@ -123,10 +123,6 @@ public class TileItem : MonoBehaviour
     }
 
     private void AddToTileMap() {
-        //Debug.Log("AddToTileMap " + this + " at " + new Tile(tileX, tileY));
-        if (tileX == 0 && tileY == 0) {
-          Debug.Log("X and Y are 0");
-        }
         List<GameObject> ents;
         ForEachOfMyTiles ((int x, int y) => {
             long key = ToKey (x, y);
