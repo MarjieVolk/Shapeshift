@@ -12,4 +12,9 @@ public class Wall : MonoBehaviour {
 	void Update () {
 	
 	}
+
+    void OnDestroy()
+    {
+        GuardVision.removeBlocker(GetComponent<BlocksLineOfSight>());
+    }
 }
