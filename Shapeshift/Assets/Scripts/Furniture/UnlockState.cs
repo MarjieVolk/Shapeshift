@@ -21,17 +21,17 @@ class UnlockState : MonoBehaviour {
         } else {
             INSTANCE = this;
             DontDestroyOnLoad(this);
-        }
 
-        foreach (FurnitureType type in startingTypes) {
-            getData(type).lockedInScansCompleted += nScansPerUnlock;
-        }
+            foreach (FurnitureType type in startingTypes) {
+                getData(type).lockedInScansCompleted += nScansPerUnlock;
+            }
 
-        if (UnlockStateChanged != null) {
-            UnlockStateChanged();
-        }
+            if (UnlockStateChanged != null) {
+                UnlockStateChanged();
+            }
 
-        addEventHandlers();
+            addEventHandlers();
+        }
     }
 
     void OnLevelWasLoaded(int level) {
