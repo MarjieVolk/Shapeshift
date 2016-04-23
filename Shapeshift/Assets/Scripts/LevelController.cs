@@ -21,11 +21,6 @@ public class LevelController : MonoBehaviour {
             DontDestroyOnLoad(this);
 
             currentLevel = SceneManager.GetActiveScene().buildIndex;
-            if (currentLevel == 0) {
-                // TODO: main menu first
-                SceneManager.LoadScene(1);
-            }
-            
         } else {
             Destroy(this);
         }
