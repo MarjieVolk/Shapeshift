@@ -53,7 +53,8 @@ public class CardPanel : MonoBehaviour {
 
     private Button createButton(FurnitureType type, int currentQuality, string extraText) {
         GameObject buttonObj = Instantiate(cardPrefab);
-        buttonObj.transform.FindChild("Image").GetComponent<Image>().sprite = FurnitureRenderer.INSTANCE.getSprite(type, currentQuality);
+        buttonObj.transform.FindChild("ImageParent").FindChild("Image").GetComponent<Image>().sprite = 
+            FurnitureRenderer.INSTANCE.getSprite(type, currentQuality);
         buttonObj.transform.FindChild("Name").GetComponent<Text>().text = 
             FurnitureRenderer.INSTANCE.getDisplayString(type, currentQuality) + " " + extraText;
         buttonObj.transform.SetParent(this.transform);
