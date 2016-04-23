@@ -8,10 +8,9 @@ public class DirectionComponent : MonoBehaviour {
         get
         {
             //scale to a 0-4 angle representation
-            float quadrants = (Angle / (Mathf.PI / 2));
-
+            float quadrants = (Angle / (Mathf.PI / 2)) + .5f;
             //shift by 45 degrees clockwise and quantize
-            switch ((int)((quadrants + .5f) % 4))
+            switch ((int)(quadrants - 4 * Mathf.Floor(quadrants / 4)))
             {
                 case 0:
                     return Direction.EAST;
