@@ -3,8 +3,8 @@ using System.Collections;
 
 public class Tile {
 
-	private int xPos;
-	private int yPos;
+	private readonly int xPos;
+	private readonly int yPos;
 
 	public int X {
 		get { return xPos; }

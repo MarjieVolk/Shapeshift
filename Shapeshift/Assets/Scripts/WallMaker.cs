@@ -178,6 +178,7 @@ public class WallMaker : MonoBehaviour {
         spriteObj.layer = LayerMask.NameToLayer("VisibilityBlocking");
 
 		g.GetComponent<TileItem>().SetTilePosition(x, y);
-        //g.transform.position += new Vector3(TileItem.TILE_SIZE / 2, TileItem.TILE_SIZE / 2);
+
+        GuardVision.addBlocker(g.GetComponent<BlocksLineOfSight>());
 	}
 }

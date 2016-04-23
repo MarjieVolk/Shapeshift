@@ -7,9 +7,17 @@ using UnityEngine;
 public class GuardVision : MonoBehaviour {
 
 	public float MaxVisibilityDistance;
+    public int NumExtraRaycasts = 2;
 
     private List<FurnitureItem> furnitureInSight;
     private System.Random random;
+
+    private static List<BoxCollider2D> blockers = new List<BoxCollider2D>();
+
+    public static void addBlocker(BlocksLineOfSight blocksLineOfSight)
+    {
+        blockers.Add(blocksLineOfSight.GetComponent<BoxCollider2D>());
+    }
 
 	// Use this for initialization
 	void Start () {
@@ -20,53 +28,21 @@ public class GuardVision : MonoBehaviour {
 	// Update is called once per frame
 	public void Update()
 	{
-		// collect LOS blocking item in the scene
-		BlocksLineOfSight[] blockers = GameObject.FindObjectsOfType<BlocksLineOfSight>();
-
-		// Collect collider corners
-		HashSet<Vector2> points = new HashSet<Vector2>();
-		foreach (BlocksLineOfSight blocker in blockers)
-		{
-			GameObject blockingObject = blocker.gameObject;
-			BoxCollider2D blockingCollider = blockingObject.GetComponent<BoxCollider2D>();
-			Vector2 size = blockingCollider.size;
-			Vector2 position = blockingCollider.offset + (Vector2) blockingCollider.transform.position;
-			points.Add(position + size / 2.01f);
-			points.Add(position + size / 1.99f);
-			points.Add(position - size / 2.01f);
-			points.Add(position - size / 1.99f);
-			points.Add(position + Vector2.Reflect(size, Vector2.right) / 2.01f);
-			points.Add(position + Vector2.Reflect(size, Vector2.right) / 1.99f);
-			points.Add(position - Vector2.Reflect(size, Vector2.right) / 2.01f);
-			points.Add(position - Vector2.Reflect(size, Vector2.right) / 1.99f);
-		}
+        List<Vector3> points = enumerateColliderPoints();
 
 		// Filter out points not facing the same direction as the guard.
         float currentAngle = gameObject.GetComponentInParent<DirectionComponent>().Angle;
-		Vector2 currentPosition = new Vector2 (transform.position.x, transform.position.y);
-        HashSet<Vector2> filteredPoints = filterByDirection(new Vector2(Mathf.Cos(currentAngle), Mathf.Sin(currentAngle)), currentPosition, points);
-        filteredPoints.Add(currentPosition + new Vector2(Mathf.Cos(currentAngle - Mathf.PI / 4), Mathf.Sin(currentAngle - Mathf.PI / 4)));
-        filteredPoints.Add(currentPosition + new Vector2(Mathf.Cos(currentAngle + Mathf.PI / 4), Mathf.Sin(currentAngle + Mathf.PI / 4)));
+		Vector3 currentPosition = new Vector3 (transform.position.x, transform.position.y);
+        List<Vector3> filteredPoints = filterByDirection(new Vector3(Mathf.Cos(currentAngle), Mathf.Sin(currentAngle)), currentPosition, points);
+
+        // Add raycasts spread throughout visible cone in case there's nothing nearby
+        insertExtraRaycasts(filteredPoints, currentPosition, currentAngle);
 
 		// cast a ray for each corners to find the enclosing polygon
-		List<Vector2> extremeVisiblePoints = new List<Vector2>();
-		foreach (Vector2 point in filteredPoints)
-		{
-			RaycastHit2D hit = Physics2D.Raycast(transform.position, point - (Vector2)transform.position, MaxVisibilityDistance, 1 << LayerMask.NameToLayer("VisibilityBlocking"));
-            if (hit.collider != null)
-            {
-                extremeVisiblePoints.Add(hit.point - (Vector2)transform.position);
-            }
-            else
-            {
-                Vector2 extremePoint = (point - (Vector2)transform.position).normalized;
-                extremePoint.Scale(new Vector2(MaxVisibilityDistance, MaxVisibilityDistance));
-                extremeVisiblePoints.Add(extremePoint);
-            }
-		}
+        List<Vector3> extremeVisiblePoints = doRaycasts(filteredPoints);
 
         //offset the angle sort if necessary so the circle isn't split in the guard's flashlight
-        Func<Vector2, float> orderingFunction = (p) => -Mathf.Atan2(p.y, p.x);
+        Func<Vector3, float> orderingFunction = (p) => -Mathf.Atan2(p.y, p.x);
         Direction currentDirection = gameObject.GetComponentInParent<DirectionComponent>().Direction;
         if (currentDirection == Direction.WEST)
         {
@@ -77,8 +53,7 @@ public class GuardVision : MonoBehaviour {
 		// sort the points by angle (actually definitely)
 		List<Vector3> meshVertices = new List<Vector3>();
 		meshVertices.AddRange(extremeVisiblePoints
-			.OrderBy(orderingFunction)
-			.Select((v2) => new Vector3(v2.x, v2.y)));
+			.OrderBy(orderingFunction));
 
 		// Make sure Vector2.zero is inserted in the right place.
         meshVertices.Insert (0, Vector2.zero);
@@ -91,12 +66,99 @@ public class GuardVision : MonoBehaviour {
 		visibleMesh.uv = makeUVs(meshVertices).ToArray();
 
 		// Update polygon collider
-		Vector2[] colliderVertices = new Vector2[visibleMesh.vertices.Count()];
-		for (int i = 0; i < visibleMesh.vertices.Count(); i++) {
-			colliderVertices [i] = new Vector2 (visibleMesh.vertices [i].x, visibleMesh.vertices [i].y);
+        Vector2[] colliderVertices = new Vector2[meshVertices.Count()];
+        for (int i = 0; i < meshVertices.Count(); i++)
+        {
+            colliderVertices[i] = new Vector2(meshVertices[i].x, meshVertices[i].y);
 		}
         GetComponent<PolygonCollider2D>().SetPath(0, colliderVertices);	
 	}
+
+    void insertExtraRaycasts(List<Vector3> filteredPoints, Vector3 currentPosition, float midpointAngle)
+    {
+        float startingAngle = midpointAngle - Mathf.PI / 4;
+        float endingAngle = midpointAngle + Mathf.PI / 4;
+        float intervalAngle = (endingAngle - startingAngle) / (NumExtraRaycasts - 1);
+        for (int i = 0; i < NumExtraRaycasts; i++)
+        {
+            float currentAngle = startingAngle + intervalAngle * i;
+            filteredPoints.Add(currentPosition + new Vector3(Mathf.Cos(currentAngle), Mathf.Sin(currentAngle)));
+        }
+
+        filteredPoints.Add(currentPosition + new Vector3(Mathf.Cos(midpointAngle - Mathf.PI / 4), Mathf.Sin(midpointAngle - Mathf.PI / 4)));
+        filteredPoints.Add(currentPosition + new Vector3(Mathf.Cos(midpointAngle + Mathf.PI / 4), Mathf.Sin(midpointAngle + Mathf.PI / 4)));
+    }
+
+    List<Vector3> doRaycasts(List<Vector3> filteredPoints)
+    {
+        List<Vector3> extremeVisiblePoints = new List<Vector3>();
+        int layer = 1 << LayerMask.NameToLayer("VisibilityBlocking");
+        foreach (Vector3 point in filteredPoints)
+        {
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, point - transform.position, MaxVisibilityDistance, layer);
+            if (hit.collider != null)
+            {
+                extremeVisiblePoints.Add(hit.point - (Vector2)transform.position);
+            }
+            else
+            {
+                extremeVisiblePoints.Add(computeExtremePoint(point));
+            }
+        }
+
+        return extremeVisiblePoints;
+    }
+
+    Vector3 computeExtremePoint(Vector3 point)
+    {
+        Vector3 extremePoint = (point - transform.position);
+        extremePoint.z = 0;
+        extremePoint.Normalize();
+        extremePoint *= MaxVisibilityDistance;
+
+        return extremePoint;
+    }
+
+    List<Vector3> enumerateColliderPoints()
+    {
+        // Collect collider corners
+        List<Vector3> points = new List<Vector3>();
+        foreach (BoxCollider2D blockingCollider in blockers)
+        {
+            //TODO figure out which points to add more better
+            //should be able to get away with 4 or 5 points, every time, instead of 8
+            Vector3 size = blockingCollider.size;
+            Vector3 position = blockingCollider.offset + (Vector2)blockingCollider.transform.position;
+
+            Vector3 relativePosition = position - transform.position;
+            relativePosition.z = 0;
+            if (relativePosition.magnitude - size.magnitude >= MaxVisibilityDistance) continue;
+
+            addPointsForBox(position, size, points);
+        }
+
+        return points;
+    }
+
+    void addPointsForBox(Vector3 position, Vector3 size, List<Vector3> points)
+    {
+        Vector3 rotatedSize = Vector2.Reflect(size, Vector2.right);
+
+        Vector3 smallSize = size / 2.01f;
+        size /= 1.99f;
+
+        Vector3 smallRotatedSize = rotatedSize / 2.01f;
+        rotatedSize /= 1.99f;
+
+        points.Add(position + smallSize);
+        points.Add(position + size);
+        points.Add(position - smallSize);
+        points.Add(position - size);
+        points.Add(position + smallRotatedSize);
+        points.Add(position + rotatedSize);
+        points.Add(position - smallRotatedSize);
+        points.Add(position - rotatedSize);
+    }
 
     List<int> Triangulate(List<Vector3> meshVertices)
     {
@@ -167,10 +229,10 @@ public class GuardVision : MonoBehaviour {
         }
     }
     
-    HashSet<Vector2> filterByDirection(Vector2 directionVector, Vector2 position, HashSet<Vector2> points)
+    List<Vector3> filterByDirection(Vector3 directionVector, Vector3 position, List<Vector3> points)
     {
-        HashSet<Vector2> ret = new HashSet<Vector2>();
-        foreach (Vector2 point in points)
+        List<Vector3> ret = new List<Vector3>();
+        foreach (Vector3 point in points)
         {
             Vector2 difference = point - position;
             //directionness here really means 'projection of difference onto directionVector'
