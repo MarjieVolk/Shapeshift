@@ -88,9 +88,13 @@ public class InvestigatingFurnitureState : State {
 	
 	// Update is called once per frame
 	void Update () {
-        // look at the furniture
-        Vector2 lookVector = (investigationTarget.transform.position - transform.position).normalized;
-        // LOOK AT IT
-        GetComponent<DirectionComponent>().Angle = Mathf.Atan2(lookVector.y, lookVector.x);
+        if (investigationTarget == null) {
+            OnApproachInterrupted();
+        } else {
+            // look at the furniture
+            Vector2 lookVector = (investigationTarget.transform.position - transform.position).normalized;
+            // LOOK AT IT
+            GetComponent<DirectionComponent>().Angle = Mathf.Atan2(lookVector.y, lookVector.x);
+        }
 	}
 }
