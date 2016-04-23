@@ -6,20 +6,13 @@ using UnityEngine;
 
 public class Pathfinding
 {
-    private static GameObject _cachedPlayer;
-    private static GameObject _player
-    {
-        get
-        {
-            if (_cachedPlayer == null)
-            {
-                _cachedPlayer = GameObject.FindObjectOfType<PlayerController>().gameObject;
-            }
-            return _cachedPlayer;
-        }
-    }
+    private static GameObject _player;
+
     public static List<Tile> FindPath(Tile startTile, Tile goalTile, bool isPlayerObstacle)
     {
+        // cache the player reference
+        _player = GameObject.FindObjectOfType<PlayerController>().gameObject;
+
         Debug.Log("Finding path.");
         Dictionary<Tile, Tile> predecessors = new Dictionary<Tile, Tile>();
         Dictionary<Tile, float> costs = new Dictionary<Tile, float>();
