@@ -75,8 +75,27 @@ class UnlockState : MonoBehaviour {
         }
     }
 
+    public void abandonProgressOn(FurnitureType type)
+    {
+        getData(type).scanProgress = 0;
+        if (UnlockStateChanged != null)
+        {
+            UnlockStateChanged();
+        }
+    }
+
+    public void registerProgressOn(FurnitureType type, float progress)
+    {
+        getData(type).scanProgress += progress;
+        if (UnlockStateChanged != null)
+        {
+            UnlockStateChanged();
+        }
+    }
+
     public void completeScanOn(FurnitureType type) {
         getData(type).thisLevelScansCompleted++;
+        getData(type).scanProgress = 0;
         if (UnlockStateChanged != null) {
             UnlockStateChanged();
         }
@@ -99,8 +118,8 @@ class UnlockState : MonoBehaviour {
         return getQualityLevel(type) != -1;
     }
 
-    public int getScansAboveQualityLevel(FurnitureType type) {
-        return (getData(type).thisLevelScansCompleted + getData(type).lockedInScansCompleted) % nScansPerUnlock;
+    public float getScansAboveQualityLevel(FurnitureType type) {
+        return (getData(type).thisLevelScansCompleted + getData(type).lockedInScansCompleted + getData(type).scanProgress) % nScansPerUnlock;
     }
 
     public List<FurnitureType> getUnlocked() {
@@ -128,5 +147,6 @@ class UnlockState : MonoBehaviour {
         public int lockedInScansCompleted = 0;
         public int thisLevelScansCompleted = 0;
         public bool temporarilyLocked = false;
+        public float scanProgress = 0;
     }
 }

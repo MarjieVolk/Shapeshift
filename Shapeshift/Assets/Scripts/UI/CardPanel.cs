@@ -45,8 +45,13 @@ public class CardPanel : MonoBehaviour {
     }
 
     private void addPartial(FurnitureType type) {
-        int scans = UnlockState.INSTANCE.getScansAboveQualityLevel(type);
-        string extraText = "" + scans + "/" + UnlockState.INSTANCE.nScansPerUnlock;
+        float scans = UnlockState.INSTANCE.getScansAboveQualityLevel(type);
+        string formatString = "0.00";
+        if (Mathf.Abs(scans % 1) < 0.001f)
+        {
+            formatString = "0";
+        }
+        string extraText = "" + scans.ToString(formatString) + "/" + UnlockState.INSTANCE.nScansPerUnlock;
         Button button = createButton(type, 0, extraText);
         button.interactable = false;
     }
