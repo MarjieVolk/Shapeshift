@@ -9,6 +9,7 @@ public class TileItemHighlighter : MonoBehaviour {
 
     public Image highlightPrefab;
     public float fadeOutTime;
+    public float borderWidth;
 
     private Dictionary<TileItem, Image> activeHighlights;
     private List<Image> inactiveHighlightPool;
@@ -52,10 +53,13 @@ public class TileItemHighlighter : MonoBehaviour {
         fadingOut.Remove(item);
 
         Image highlight = getImage(item);
-        highlight.transform.position = new Vector3(item.transform.position.x, item.transform.position.y, Room.ROOM_TILE_Z_INDEX - 1);
+        highlight.transform.position = new Vector3(
+            item.transform.position.x - borderWidth, 
+            item.transform.position.y - borderWidth, 
+            Room.ROOM_TILE_Z_INDEX - 1);
         highlight.rectTransform.sizeDelta = new Vector2(
-            item.tileW * TileItem.TILE_SIZE, 
-            item.tileH * TileItem.TILE_SIZE);
+            (item.tileW * TileItem.TILE_SIZE) + (2 * borderWidth) - item.gridOffset.x, 
+            (item.tileH * TileItem.TILE_SIZE) + (2 * borderWidth) - item.gridOffset.y);
         highlight.color = color;
     }
 
