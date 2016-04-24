@@ -52,14 +52,19 @@ public class CardPanel : MonoBehaviour {
             formatString = "0";
         }
         string extraText = "" + scans.ToString(formatString) + "/" + UnlockState.INSTANCE.nScansPerUnlock;
-        Button button = createButton(type, 0, extraText);
+        Button button = createButton(type, 0, extraText, scans / UnlockState.INSTANCE.nScansPerUnlock);
         button.interactable = false;
     }
 
-    private Button createButton(FurnitureType type, int currentQuality, string extraText) {
+    private Button createButton(FurnitureType type, int currentQuality, string extraText, float partialProgress = 1) {
         GameObject buttonObj = Instantiate(cardPrefab);
-        buttonObj.transform.FindChild("ImageParent").FindChild("Image").GetComponent<Image>().sprite = 
-            FurnitureRenderer.INSTANCE.getSprite(type, currentQuality);
+
+        Image image = buttonObj.transform.FindChild("ImageParent").FindChild("Image").GetComponent<Image>();
+        image.sprite = FurnitureRenderer.INSTANCE.getSprite(type, currentQuality);
+        image.type = Image.Type.Filled;
+        image.fillAmount = partialProgress;
+        image.fillMethod = Image.FillMethod.Vertical;
+
         buttonObj.transform.FindChild("Name").GetComponent<Text>().text = 
             FurnitureRenderer.INSTANCE.getDisplayString(type, currentQuality) + " " + extraText;
         buttonObj.transform.SetParent(this.transform);
