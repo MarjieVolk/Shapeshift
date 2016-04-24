@@ -24,13 +24,9 @@ public class LevelOneTutorialController : MonoBehaviour {
     private bool goalPopupTriggered = false;
     private bool goalPopupDisplayed = false;
     private bool playerHasPickedUpBriefcase = false;
-    
-    private Canvas canvas;
 
 	// Use this for initialization
 	void Start () {
-        canvas = GameObject.FindObjectOfType<Canvas>();
-
         shiftPopupTriggeredTime = Time.time;
 
         goalRoom.OnTriggerEnter += (GameObject obj) => {
@@ -121,7 +117,7 @@ public class LevelOneTutorialController : MonoBehaviour {
 
     private TutorialText init() {
         TutorialText popup = Instantiate(tutorialTextPrefab.gameObject).GetComponent<TutorialText>();
-        popup.transform.SetParent(canvas.transform);
+        popup.transform.SetParent(transform);
         popup.transform.position += new Vector3(Screen.width / 4, Screen.height / 2);
         return popup;
     }
