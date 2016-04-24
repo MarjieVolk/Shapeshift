@@ -19,6 +19,11 @@ public class GuardVision : MonoBehaviour {
         blockers.Add(blocksLineOfSight.GetComponent<BoxCollider2D>());
     }
 
+    public static void removeBlocker(BlocksLineOfSight blocksLineOfSight)
+    {
+        blockers.Remove(blocksLineOfSight.GetComponent<BoxCollider2D>());
+    }
+
 	// Use this for initialization
 	void Start () {
         furnitureInSight = new List<FurnitureItem>();

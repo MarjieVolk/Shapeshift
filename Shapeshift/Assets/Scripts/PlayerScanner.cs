@@ -52,8 +52,15 @@ public class PlayerScanner : MonoBehaviour {
                     // Tried to scan and can't
                     player.PlayOneShot(cantScanSound);
                 }
+
+                if (currentlyScanning != null)
+                {
+                    UnlockState.INSTANCE.abandonProgressOn(currentlyScanning.furnitureType);
+                    currentlyScanning = null;
+                }
             } else if (currentlyScanning == toScan) {
                 // Continue scanning
+                UnlockState.INSTANCE.registerProgressOn(currentlyScanning.furnitureType, Time.deltaTime / scanCompletionSeconds);
                 if (scanStartTime != -1 && Time.time - scanStartTime >= scanCompletionSeconds) {
                     // Finish scanning
                     if (!currentlyScanning.hasBeenScanned) {
@@ -66,6 +73,10 @@ public class PlayerScanner : MonoBehaviour {
                     currentlyScanning = null;
                 }
             } else {
+                if (currentlyScanning != null)
+                {
+                    UnlockState.INSTANCE.abandonProgressOn(currentlyScanning.furnitureType);
+                }
                 // Start new scan
                 currentlyScanning = toScan;
                 scanStartTime = Time.time;
@@ -75,6 +86,12 @@ public class PlayerScanner : MonoBehaviour {
         } else {
             currentlyScanning = null;
             scanStartTime = -1;
+            if (currentlyScanning != null)
+            {
+                Debug.Log("Scan not pressed.");
+                UnlockState.INSTANCE.abandonProgressOn(currentlyScanning.furnitureType);
+                currentlyScanning = null;
+            }
         }
     }
 
