@@ -54,6 +54,10 @@ class UnlockState : MonoBehaviour {
 
         if (caughtHandler != null) {
             caughtHandler.PlayerCaughtAsFurniture += (FurnitureType type) => {
+                foreach (UnlockStateData data in state.Values)
+                {
+                    data.scanProgress = 0;
+                }
                 getData(type).temporarilyLocked = true;
 
                 if (UnlockStateChanged != null) {
@@ -64,6 +68,7 @@ class UnlockState : MonoBehaviour {
             caughtHandler.PlayerCaughtAsHuman += () => {
                 foreach (FurnitureType type in state.Keys) {
                     UnlockStateData data = getData(type);
+                    data.scanProgress = 0;
                     data.temporarilyLocked = false;
                     data.thisLevelScansCompleted = 0;
                 }

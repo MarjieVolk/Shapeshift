@@ -47,7 +47,6 @@ public class PlayerScanner : MonoBehaviour {
             }
 
             if (toScan == null) {
-                currentlyScanning = null;
                 if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift)) {
                     // Tried to scan and can't
                     player.PlayOneShot(cantScanSound);
@@ -84,7 +83,6 @@ public class PlayerScanner : MonoBehaviour {
                 player.PlayOneShot(startScanSound);
             }
         } else {
-            currentlyScanning = null;
             scanStartTime = -1;
             if (currentlyScanning != null)
             {
