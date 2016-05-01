@@ -30,6 +30,7 @@ public class CardPanel : MonoBehaviour {
             // If it has a fractional scan (i.e. it is currently being scanned)
             if (Mathf.Abs(scans % 1) > 0.001f && buttons.ContainsKey(type)) {
                 currentlyScanningButtonPosition = buttons[type].transform.position;
+                break;
             }
         }
 

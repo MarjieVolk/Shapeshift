@@ -51,6 +51,10 @@ public class ScanProgressJuicer : MonoBehaviour {
             makeJuice();
         }
 
+        foreach (Juice juice in _juices) {
+            juice.Destination = _panel.currentlyScanningButtonPosition;
+        }
+
         _lastScanned = _scanner.currentlyScanning;
     }
 
