@@ -12,7 +12,7 @@ public class Juice : MonoBehaviour {
     public float fadeOutDistance;
 
     public Vector3 Destination;
-    public Image Image;
+    public Image FurnitureImage;
 
     private Vector2 _velocity;
 
@@ -25,14 +25,15 @@ public class Juice : MonoBehaviour {
     void Start () {
         random = new System.Random();
         GetComponent<Rigidbody2D>().velocity = Random.insideUnitCircle * InitialSpeed;
-        int width = Image.sprite.texture.width;
-        int height = Image.sprite.texture.height;
+        //GetComponent<Image>().sprite = FurnitureImage.sprite;
+        int width = FurnitureImage.sprite.texture.width;
+        int height = FurnitureImage.sprite.texture.height;
         Color color = new Color(0, 0, 0, 0);
         while (color.a == 0)
         {
-            color = Image.sprite.texture.GetPixel(
-                (int)(Image.sprite.texture.width * Random.value),
-                (int)(Image.sprite.texture.height * Random.value));
+            color = FurnitureImage.sprite.texture.GetPixel(
+                (int)(FurnitureImage.sprite.texture.width * Random.value),
+                (int)(FurnitureImage.sprite.texture.height * Random.value));
         }
         GetComponent<Image>().color = color;
 	}
