@@ -64,6 +64,7 @@ public class ScanProgressJuicer : MonoBehaviour {
 
         GameObject juice = Instantiate<GameObject>(JuicePrefab);
         juice.GetComponent<Juice>().Destination = toPosition;
+        juice.GetComponent<Juice>().Image = _panel.currentlyScanningButton.transform.FindChild("ImageParent").GetChild(0).GetComponent<Image>();
         juice.transform.position = fromPosition;
         juice.transform.SetParent(this.transform);
 

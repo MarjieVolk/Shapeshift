@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using UnityEngine.UI;
 
 public class Juice : MonoBehaviour {
     public float InitialSpeed;
@@ -11,6 +12,7 @@ public class Juice : MonoBehaviour {
     public float fadeOutDistance;
 
     public Vector3 Destination;
+    public Image Image;
 
     private Vector2 _velocity;
 
@@ -23,6 +25,7 @@ public class Juice : MonoBehaviour {
     void Start () {
         random = new System.Random();
         GetComponent<Rigidbody2D>().velocity = Random.insideUnitCircle * InitialSpeed;
+        GetComponent<Image>().sprite = Image.sprite;
 	}
 	
 	// Update is called once per frame
