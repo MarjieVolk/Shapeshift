@@ -31,7 +31,7 @@ public class ScanProgressJuicer : MonoBehaviour {
             _juices.Clear();
         }
 
-        if (_panel.currentlyScanningButton == null || _scanner.currentlyScanning == null)
+        if (_panel.currentlyScanningButtonPosition == null || _scanner.currentlyScanning == null)
         {
             // abort juicing if there's nothing to juice
             lastJuiceTime = Time.time;
@@ -60,11 +60,11 @@ public class ScanProgressJuicer : MonoBehaviour {
     private void makeJuice()
     {
         Vector2 fromPosition = Camera.main.WorldToScreenPoint(_scanner.currentlyScanning.transform.position);
-        Vector2 toPosition = _panel.currentlyScanningButton.transform.position;
+        Vector2 toPosition = _panel.currentlyScanningButtonPosition;
 
         GameObject juice = Instantiate<GameObject>(JuicePrefab);
         juice.GetComponent<Juice>().Destination = toPosition;
-        juice.GetComponent<Juice>().FurnitureImage = _panel.currentlyScanningButton.transform.FindChild("ImageParent").GetChild(0).GetComponent<Image>();
+        juice.GetComponent<Juice>().FurnitureImage = _scanner.currentlyScanning.GetComponent<SpriteRenderer>().sprite.texture;
         juice.transform.position = fromPosition;
         juice.transform.SetParent(this.transform);
 

@@ -9,10 +9,13 @@ public class CardPanel : MonoBehaviour {
 
     public AudioClip transformSound;
     public GameObject cardPrefab;
-    public Button currentlyScanningButton;
+    public Vector3 currentlyScanningButtonPosition;
+
+    private Dictionary<FurnitureType, Button> buttons;
 
 	// Use this for initialization
 	void Start () {
+        buttons = new Dictionary<FurnitureType, Button>();
         UnlockState.INSTANCE.UnlockStateChanged += refresh;
         refresh();
 	}
@@ -22,6 +25,14 @@ public class CardPanel : MonoBehaviour {
     }
 	
     public void refresh() {
+        foreach (FurnitureType type in Enum.GetValues(typeof(FurnitureType))) {
+            float scans = UnlockState.INSTANCE.getScansAboveQualityLevel(type);
+            // If it has a fractional scan (i.e. it is currently being scanned)
+            if (Mathf.Abs(scans % 1) > 0.001f && buttons.ContainsKey(type)) {
+                currentlyScanningButtonPosition = buttons[type].transform.position;
+            }
+        }
+
         clear();
 
         foreach (FurnitureType type in Enum.GetValues(typeof(FurnitureType))) {
@@ -35,10 +46,11 @@ public class CardPanel : MonoBehaviour {
     }
 
     private void clear() {
-        currentlyScanningButton = null;
         for (int i = 0; i < transform.childCount; i++) {
             Destroy(transform.GetChild(i).gameObject);
         }
+
+        buttons.Clear();
     }
 
     private void add(FurnitureType type) {
@@ -47,21 +59,11 @@ public class CardPanel : MonoBehaviour {
     }
 
     private void addPartial(FurnitureType type) {
-        bool currentlyScanning = false;
         float scans = UnlockState.INSTANCE.getScansAboveQualityLevel(type);
         string formatString = "0";
-        if (Mathf.Abs(scans % 1) > 0.001f)
-        {
-            currentlyScanning = true;
-        }
         string extraText = "" + scans.ToString(formatString) + "/" + UnlockState.INSTANCE.nScansPerUnlock;
         Button button = createButton(type, 0, extraText, scans / UnlockState.INSTANCE.nScansPerUnlock);
         button.interactable = false;
-
-        if (currentlyScanning)
-        {
-            currentlyScanningButton = button;
-        }
     }
 
     private Button createButton(FurnitureType type, int currentQuality, string extraText, float partialProgress = 1) {
@@ -83,6 +85,7 @@ public class CardPanel : MonoBehaviour {
             GetComponent<AudioSource>().PlayOneShot(transformSound);
         });
 
+        buttons.Add(type, button);
         return button;
     }
 }
