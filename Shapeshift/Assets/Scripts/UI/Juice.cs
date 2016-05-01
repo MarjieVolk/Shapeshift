@@ -25,7 +25,15 @@ public class Juice : MonoBehaviour {
     void Start () {
         random = new System.Random();
         GetComponent<Rigidbody2D>().velocity = Random.insideUnitCircle * InitialSpeed;
-        GetComponent<Image>().sprite = Image.sprite;
+        int width = Image.sprite.texture.width;
+        int height = Image.sprite.texture.height;
+        Color color = new Color(0, 0, 0, 0);
+        while (color.a == 0)
+        {
+            color = Image.sprite.texture.GetPixel(
+                (int)(Image.sprite.texture.width * Random.value),
+                (int)(Image.sprite.texture.height * Random.value));
+        }
 	}
 	
 	// Update is called once per frame
