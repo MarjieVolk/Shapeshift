@@ -1,16 +1,27 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class Juice : MonoBehaviour {
     public float InitialSpeed;
     public float Acceleration;
 
+    public float minFadeTime;
+    public float maxFadeTime;
+    public float fadeOutDistance;
+
     public Vector3 Destination;
 
     private Vector2 _velocity;
 
-	// Use this for initialization
-	void Start () {
+    private float fadeTime = -1;
+    private float startFadeTime = -1;
+
+    private System.Random random;
+
+    // Use this for initialization
+    void Start () {
+        random = new System.Random();
         GetComponent<Rigidbody2D>().velocity = Random.insideUnitCircle * InitialSpeed;
 	}
 	
@@ -18,11 +29,33 @@ public class Juice : MonoBehaviour {
 	void Update () {
         // accelerate towards the destination
         Vector2 towardsDestination = Destination - transform.position;
+        if (towardsDestination.magnitude <= fadeOutDistance) {
+            fadeOut();
+        }
+
         towardsDestination.Normalize();
         towardsDestination *= Acceleration * Time.deltaTime;
         _velocity += towardsDestination;
 
         // move the juice
         GetComponent<Rigidbody2D>().velocity += towardsDestination;
+
+        // Fade out
+        if (fadeTime != -1) {
+            if (Time.time - startFadeTime >= fadeTime) {
+                Destroy(this.gameObject);
+            } else {
+                Color color = this.GetComponent<Image>().color;
+                color.a = 1 - (Time.time - startFadeTime) / fadeTime;
+                this.GetComponent<Image>().color = color;
+            }
+        }
 	}
+
+    public void fadeOut() {
+        if (fadeTime == -1) {
+            fadeTime = ((float)random.NextDouble() * (maxFadeTime - minFadeTime)) + minFadeTime;
+            startFadeTime = Time.time;
+        }
+    }
 }

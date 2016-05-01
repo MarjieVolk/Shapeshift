@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 
 public class ScanProgressJuicer : MonoBehaviour {
     public float JuicePerSecond;
@@ -9,14 +11,26 @@ public class ScanProgressJuicer : MonoBehaviour {
     private PlayerScanner _scanner;
     private float lastJuiceTime;
 
+    private Button _lastScannedButton;
+    private List<Juice> _juices;
+
 	// Use this for initialization
 	void Start () {
+        _juices = new List<Juice>();
         _panel = FindObjectOfType<CardPanel>();
         _scanner = FindObjectOfType<PlayerScanner>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
+        if (_panel.currentlyScanningButton != _lastScannedButton) {
+            foreach (Juice juice in _juices) {
+                juice.fadeOut();
+            }
+
+            _juices.Clear();
+        }
+
         if (_panel.currentlyScanningButton == null)
         {
             // abort juicing if there's nothing to juice
@@ -24,25 +38,21 @@ public class ScanProgressJuicer : MonoBehaviour {
             return;
         }
 
-        Debug.Log("Juicing...");
-
         // compute the quantity of juice to juice
         float delta = Time.time - lastJuiceTime;
-        Debug.Log(delta + " is delta");
-        Debug.Log(lastJuiceTime + " is last juice time.");
         int numJuices = (int)Mathf.Floor(JuicePerSecond * delta);
         if (numJuices == 0) return;
 
         lastJuiceTime += numJuices / JuicePerSecond;
-
-        Debug.Log(numJuices + " juices!");
 
         // do the juice
         for (int i = 0; i < numJuices; i++)
         {
             makeJuice();
         }
-	}
+
+        _lastScannedButton = _panel.currentlyScanningButton;
+    }
 
     /// <summary>
     /// Makes a juice.
@@ -56,5 +66,7 @@ public class ScanProgressJuicer : MonoBehaviour {
         juice.GetComponent<Juice>().Destination = toPosition;
         juice.transform.position = fromPosition;
         juice.transform.SetParent(this.transform);
+
+        _juices.Add(juice.GetComponent<Juice>());
     }
 }
