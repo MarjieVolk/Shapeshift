@@ -34,6 +34,7 @@ public class Juice : MonoBehaviour {
                 (int)(Image.sprite.texture.width * Random.value),
                 (int)(Image.sprite.texture.height * Random.value));
         }
+        GetComponent<Image>().color = color;
 	}
 	
 	// Update is called once per frame
