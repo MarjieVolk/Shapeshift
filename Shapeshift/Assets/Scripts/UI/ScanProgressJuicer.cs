@@ -59,7 +59,7 @@ public class ScanProgressJuicer : MonoBehaviour {
     /// </summary>
     private void makeJuice()
     {
-        Vector2 fromPosition = Camera.main.WorldToScreenPoint(_scanner.currentlyScanning.transform.position);
+        Vector2 fromPosition = Camera.main.WorldToScreenPoint(_scanner.currentlyScanning.GetComponent<TileItem>().getCenterPosition());
         Vector2 toPosition = _panel.currentlyScanningButtonPosition;
 
         GameObject juice = Instantiate<GameObject>(JuicePrefab);

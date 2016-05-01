@@ -56,6 +56,13 @@ public class TileItem : MonoBehaviour
         return p * TILE_SIZE;
     }
 
+    public Vector3 getCenterPosition() {
+        float xOffset = (TileToGlobalPosition(tileX + tileW) - TileToGlobalPosition(tileX)) / 2f;
+        float yOffset = (TileToGlobalPosition(tileY + tileH) - TileToGlobalPosition(tileY)) / 2f;
+
+        return new Vector3(TileToGlobalPosition(tileX) + xOffset, TileToGlobalPosition(tileY) + yOffset, transform.position.z);
+    }
+
     /// <summary>
     /// Set tile position based on transform position, and snap to tile location
     /// </summary>
