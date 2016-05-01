@@ -13,11 +13,8 @@ public class LevelTwoTutorialController : MonoBehaviour {
     private float unlockPopupTriggeredTime = -1;
     private bool unlockPopupDisplayed = false;
 
-    private Canvas canvas;
-
     // Use this for initialization
     void Start () {
-        canvas = GameObject.FindObjectOfType<Canvas>();
         scanPopupTriggeredTime = Time.time;
         UnlockState.INSTANCE.ScanCompleted += handleScanCompleted;
     }
@@ -66,7 +63,7 @@ public class LevelTwoTutorialController : MonoBehaviour {
 
     private TutorialText init() {
         TutorialText popup = Instantiate(tutorialTextPrefab.gameObject).GetComponent<TutorialText>();
-        popup.transform.SetParent(canvas.transform);
+        popup.transform.SetParent(transform);
         popup.transform.position += new Vector3(Screen.width / 4, Screen.height / 2);
         return popup;
     }

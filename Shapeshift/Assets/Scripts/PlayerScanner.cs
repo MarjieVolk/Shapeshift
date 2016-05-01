@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 [RequireComponent(typeof(TileItem))]
+[RequireComponent(typeof(AudioSource))]
 public class PlayerScanner : MonoBehaviour {
 
     public AudioClip startScanSound;
@@ -16,21 +17,39 @@ public class PlayerScanner : MonoBehaviour {
     public PlusOneText plusOneText;
     public Vector3 plusOneTextOffset;
 
+    public Color activeColor;
+    public Color potentialColor;
+
     public PlayableFurnitureItem currentlyScanning;
     private float scanStartTime;
 
-	// Use this for initialization
-	void Start () {
+    private List<PlayableFurnitureItem> shownHighlights;
+
+    // Use this for initialization
+    void Start () {
         player = gameObject.GetComponent<AudioSource>();
+        shownHighlights = new List<PlayableFurnitureItem>();
     }
 	
 	// Update is called once per frame
 	void Update () {
+        List<PlayableFurnitureItem> potentialScans;
+        PlayableFurnitureItem toScan = findItemToScan(out potentialScans);
+
+        clearHighlights();
+        foreach (PlayableFurnitureItem item in potentialScans) {
+            highlight(item, potentialColor);
+        }
+
         if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) {
-            PlayableFurnitureItem toScan = findItemToScan();
+            if (toScan != null) {
+                highlight(toScan, activeColor);
+            }
 
             if (toScan == null) {
+                currentlyScanning = null;
                 if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift)) {
+                    // Tried to scan and can't
                     player.PlayOneShot(cantScanSound);
                 }
 
@@ -65,6 +84,7 @@ public class PlayerScanner : MonoBehaviour {
                 player.PlayOneShot(startScanSound);
             }
         } else {
+            currentlyScanning = null;
             scanStartTime = -1;
             if (currentlyScanning != null)
             {
@@ -82,19 +102,21 @@ public class PlayerScanner : MonoBehaviour {
         text.transform.position = Camera.main.WorldToScreenPoint(this.transform.position + plusOneTextOffset);
     }
 
-    private PlayableFurnitureItem findItemToScan() {
-        TileItem ti = gameObject.GetComponent<TileItem>();
-
-        List<PlayableFurnitureItem> potentialScans = new List<PlayableFurnitureItem>();
-        for (int x = ti.tileX - 1; x <= ti.tileX + 1; x++) {
-            for (int y = ti.tileY - 1; y <= ti.tileY + 1; y++) {
-                foreach (PlayableFurnitureItem item in TileItem.GetObjectsAtPosition<PlayableFurnitureItem>(x, y)) {
-                    if (!item.hasBeenScanned && item.gameObject != GetComponent<PlayerTransformer>().getTransformation()) {
-                        potentialScans.Add(item);
-                    }
-                }
-            }
+    private void clearHighlights() {
+        foreach (PlayableFurnitureItem item in shownHighlights) {
+            TileItemHighlighter.INSTANCE.clearHighlight(item.GetComponent<TileItem>());
         }
+
+        shownHighlights.Clear();
+    }
+
+    private void highlight(PlayableFurnitureItem item, Color color) {
+        TileItemHighlighter.INSTANCE.highlight(item.GetComponent<TileItem>(), color);
+        shownHighlights.Add(item);
+    }
+
+    private PlayableFurnitureItem findItemToScan(out List<PlayableFurnitureItem> potentialScans) {
+        getPotentialScans(out potentialScans);
 
         if (potentialScans.Count == 0) {
             return null;
@@ -104,5 +126,30 @@ public class PlayerScanner : MonoBehaviour {
             // TODO - intelligently pick a good thing to scan
             return potentialScans[0];
         }
+    }
+
+    private void getPotentialScans(out List<PlayableFurnitureItem> potentialScans) {
+        potentialScans = new List<PlayableFurnitureItem>();
+
+        foreach (PlayableFurnitureItem item in getFurnitureInRange()) {
+            if (item.gameObject != GetComponent<PlayerTransformer>().getTransformation()) {
+                if (!item.hasBeenScanned) {
+                    potentialScans.Add(item);
+                }
+            }
+        }
+    }
+
+    private List<PlayableFurnitureItem> getFurnitureInRange() {
+        TileItem ti = gameObject.GetComponent<TileItem>();
+        List<PlayableFurnitureItem> furniture = new List<PlayableFurnitureItem>();
+
+        for (int x = ti.tileX - 1; x <= ti.tileX + 1; x++) {
+            for (int y = ti.tileY - 1; y <= ti.tileY + 1; y++) {
+                furniture.AddRange(TileItem.GetObjectsAtPosition<PlayableFurnitureItem>(x, y));
+            }
+        }
+
+        return furniture;
     }
 }
