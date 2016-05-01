@@ -11,7 +11,7 @@ public class ScanProgressJuicer : MonoBehaviour {
     private PlayerScanner _scanner;
     private float lastJuiceTime;
 
-    private Button _lastScannedButton;
+    private PlayableFurnitureItem _lastScanned;
     private List<Juice> _juices;
 
 	// Use this for initialization
@@ -23,7 +23,7 @@ public class ScanProgressJuicer : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (_panel.currentlyScanningButton != _lastScannedButton) {
+        if (_scanner.currentlyScanning != _lastScanned) {
             foreach (Juice juice in _juices) {
                 juice.fadeOut();
             }
@@ -31,7 +31,7 @@ public class ScanProgressJuicer : MonoBehaviour {
             _juices.Clear();
         }
 
-        if (_panel.currentlyScanningButton == null)
+        if (_panel.currentlyScanningButton == null || _scanner.currentlyScanning == null)
         {
             // abort juicing if there's nothing to juice
             lastJuiceTime = Time.time;
@@ -51,7 +51,7 @@ public class ScanProgressJuicer : MonoBehaviour {
             makeJuice();
         }
 
-        _lastScannedButton = _panel.currentlyScanningButton;
+        _lastScanned = _scanner.currentlyScanning;
     }
 
     /// <summary>
