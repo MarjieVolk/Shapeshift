@@ -16,7 +16,7 @@ public class PlayerScanner : MonoBehaviour {
     public PlusOneText plusOneText;
     public Vector3 plusOneTextOffset;
 
-    private PlayableFurnitureItem currentlyScanning;
+    public PlayableFurnitureItem currentlyScanning;
     private float scanStartTime;
 
 	// Use this for initialization

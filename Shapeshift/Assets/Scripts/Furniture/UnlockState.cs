@@ -87,7 +87,7 @@ class UnlockState : MonoBehaviour {
     public void registerProgressOn(FurnitureType type, float progress)
     {
         getData(type).scanProgress += progress;
-        if (UnlockStateChanged != null)
+        if (getData(type).scanProgress == progress && UnlockStateChanged != null)
         {
             UnlockStateChanged();
         }

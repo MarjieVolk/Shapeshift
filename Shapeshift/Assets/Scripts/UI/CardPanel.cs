@@ -9,6 +9,7 @@ public class CardPanel : MonoBehaviour {
 
     public AudioClip transformSound;
     public GameObject cardPrefab;
+    public Button currentlyScanningButton;
 
 	// Use this for initialization
 	void Start () {
@@ -34,6 +35,7 @@ public class CardPanel : MonoBehaviour {
     }
 
     private void clear() {
+        currentlyScanningButton = null;
         for (int i = 0; i < transform.childCount; i++) {
             Destroy(transform.GetChild(i).gameObject);
         }
@@ -45,15 +47,21 @@ public class CardPanel : MonoBehaviour {
     }
 
     private void addPartial(FurnitureType type) {
+        bool currentlyScanning = false;
         float scans = UnlockState.INSTANCE.getScansAboveQualityLevel(type);
-        string formatString = "0.00";
-        if (Mathf.Abs(scans % 1) < 0.001f)
+        string formatString = "0";
+        if (Mathf.Abs(scans % 1) > 0.001f)
         {
-            formatString = "0";
+            currentlyScanning = true;
         }
         string extraText = "" + scans.ToString(formatString) + "/" + UnlockState.INSTANCE.nScansPerUnlock;
         Button button = createButton(type, 0, extraText, scans / UnlockState.INSTANCE.nScansPerUnlock);
         button.interactable = false;
+
+        if (currentlyScanning)
+        {
+            currentlyScanningButton = button;
+        }
     }
 
     private Button createButton(FurnitureType type, int currentQuality, string extraText, float partialProgress = 1) {
