@@ -49,12 +49,12 @@ public class ScanProgressJuicer : MonoBehaviour {
     /// </summary>
     private void makeJuice()
     {
-        Vector2 fromPosition = _scanner.currentlyScanning.transform.position;
-        Vector2 toPosition = _panel.currentlyScanningButton.transform.position; // screen space? idk
+        Vector2 fromPosition = Camera.main.WorldToScreenPoint(_scanner.currentlyScanning.transform.position);
+        Vector2 toPosition = _panel.currentlyScanningButton.transform.position;
 
         GameObject juice = Instantiate<GameObject>(JuicePrefab);
-        juice.GetComponent<Juice>().Destination = Camera.current.ScreenToWorldPoint(toPosition);
+        juice.GetComponent<Juice>().Destination = toPosition;
         juice.transform.position = fromPosition;
-        juice.transform.SetParent(_panel.currentlyScanningButton.transform);
+        juice.transform.SetParent(this.transform);
     }
 }
