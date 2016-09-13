@@ -17,12 +17,18 @@ public class ExitStairs : MonoBehaviour {
 	}
 
     public void enableEscape(CollisionEventCommunicator.CollisionHandler escapeHandler) {
+        if (this.escapeHandler != null) {
+            GetComponent<CollisionEventCommunicator>().OnTriggerEnter -= this.escapeHandler;
+        }
+
+        this.escapeHandler = escapeHandler;
         GetComponent<CollisionEventCommunicator>().OnTriggerEnter += escapeHandler;
         GetComponent<SpriteRenderer>().enabled = true;
     }
 
     public void disableEscape() {
         GetComponent<CollisionEventCommunicator>().OnTriggerEnter -= escapeHandler;
+        escapeHandler = null;
         GetComponent<SpriteRenderer>().enabled = false;
     }
 }
